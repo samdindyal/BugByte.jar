@@ -33,6 +33,8 @@ public class TitlePanel extends JPanel
 		title 		= new JLabel("Bug Report System (BRS)", SwingConstants.RIGHT);
 		panelText 	= new JLabel(currentPanel, SwingConstants.RIGHT);
 
+		panelText.setForeground(Color.DARK_GRAY);
+
 		textPanel = new JPanel();
 		textPanel.setBackground(Color.WHITE);
 		textPanel.setLayout(new BorderLayout());
@@ -47,5 +49,16 @@ public class TitlePanel extends JPanel
 		add(panelImage, BorderLayout.WEST);
 		add(redStripe, BorderLayout.SOUTH);
 
+	}
+
+	public void setCurrentPanel(String newPanelText)
+	{
+		currentPanel = newPanelText;
+		panelText.setText(currentPanel);
+	}
+
+	public String getCurrentPanel()
+	{
+		return currentPanel;
 	}
 }
