@@ -6,7 +6,7 @@ import java.awt.BorderLayout;
 
 public class UserInterface extends JFrame
 {
-	private JPanel titlePanel;
+	private JPanel titlePanel, loginPanel;
 	public UserInterface()
 	{
 		setSize(720, 480);
@@ -18,8 +18,10 @@ public class UserInterface extends JFrame
 		setLayout(new BorderLayout());
 
 		titlePanel = new TitlePanel("login");
+		loginPanel = new LoginPanel();
 
 		add(titlePanel, BorderLayout.NORTH);
+		add(loginPanel, BorderLayout.CENTER);
 
 
 		setVisible(true);
