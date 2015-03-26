@@ -21,6 +21,7 @@ public class BRS implements ActionListener, MouseListener
 {
 	private BugSystem bugSystem;
 	private JPanel 	  currentPanel, previousPanel;
+	private String	  currentPanelName, previousPanelName;
 
 	//Components for the frame
 	private JFrame frame;
@@ -36,6 +37,9 @@ public class BRS implements ActionListener, MouseListener
 	//Components for the sign up panel
 	private JLabel		usernameLbl, passwordLbl, confirmPasswordLbl, firstNameLbl, lastNameLbl, emailAddressLbl;
 	private JTextField	usernameFld, passwordFld, confirmPasswordFld, firstNameFld, lastNameFld, emailAddressFld;
+
+	//Components for the navigation panel
+	private JButton	backButton, resetButton;
 
 /**
 	Creates a new BRS object
@@ -65,11 +69,14 @@ public class BRS implements ActionListener, MouseListener
 		titlePanel = new TitlePanel("Login");
 		initializeLoginPanel();
 		initializeSignUpPanel();
+		initializeNavigationPanel();
 
 		//Add components to the frame
 		frame.add(titlePanel, BorderLayout.NORTH);
 		frame.add(loginPanel, BorderLayout.CENTER);
-		currentPanel = loginPanel;
+		frame.add(navigationPanel, BorderLayout.SOUTH);
+		currentPanel 		= loginPanel;
+		currentPanelName 	= "Login";
 	}
 
 /**
@@ -241,19 +248,41 @@ public class BRS implements ActionListener, MouseListener
 		signUpPanel.add(emailAddressFld, c);
 	}
 
+	public void initializeNavigationPanel()
+	{
+		navigationPanel = new JPanel();
+
+		backButton 		= new JButton("Go Back");
+		resetButton 	= new JButton("Reset");
+
+		navigationPanel.add(backButton);
+		navigationPanel.add(resetButton);
+
+		backButton.addActionListener(this);
+
+	}
+
 	public void swapPanels(JPanel panel, String panelName)
 	{
 		frame.remove(currentPanel);
 		frame.add(panel, BorderLayout.CENTER);
 		frame.validate();
+		frame.repaint();
 
-		previousPanel 	= currentPanel;
-		currentPanel 	= panel;
+		previousPanelName 	= currentPanelName;
+		currentPanelName 	= panelName;
+		previousPanel 		= currentPanel;
+		currentPanel 		= panel;
+
 		((TitlePanel)titlePanel).setCurrentPanel(panelName);
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e){}
+	public void actionPerformed(ActionEvent e)
+	{
+		if (e.getSource() == backButton && previousPanel != null)
+			swapPanels(previousPanel, previousPanelName);
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e)
