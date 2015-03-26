@@ -1,11 +1,11 @@
 public class Bug
 {
-	private UUID			ID;
+	private String			ID;
 	private BugStatus 		status;
 	private String 			description;
 	private BugPriority 	priority;
 
-	public Bug(BugStatus status, BugPriority priority, String description, UUID ID)
+	public Bug(BugStatus status, BugPriority priority, String description, String ID)
 	{
 		this.status 		= status;
 		this.priority 		= priority;
