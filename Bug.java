@@ -1,17 +1,16 @@
-import java.util.UUID;
-
 public class Bug
 {
-	private final UUID		ID = UUID.randomUUID();
+	private UUID			ID;
 	private BugStatus 		status;
 	private String 			description;
 	private BugPriority 	priority;
 
-	public Bug(BugStatus status, BugPriority priority, String description)
+	public Bug(BugStatus status, BugPriority priority, String description, UUID ID)
 	{
 		this.status 		= status;
 		this.priority 		= priority;
 		this.description 	= description;
+		this.ID 			= ID;
 	}
 
 	public BugStatus getStatus(){return status;}
