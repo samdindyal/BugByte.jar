@@ -20,11 +20,11 @@ import java.awt.event.MouseListener;
 public class BRS implements ActionListener, MouseListener
 {
 	private BugSystem bugSystem;
-	private JPanel 	  currentPanel;
+	private JPanel 	  currentPanel, previousPanel;
 
 	//Components for the frame
 	private JFrame frame;
-	private JPanel	titlePanel, loginPanel, signUpPanel;
+	private JPanel	titlePanel, loginPanel, signUpPanel, navigationPanel;
 
 	//Components for the login panel
 	private JLabel		 usernameLabel, passwordLabel, forgotPassword, forgotUsername, signUp, loginStatus;
@@ -34,8 +34,8 @@ public class BRS implements ActionListener, MouseListener
 	private	GridBagConstraints c;
 
 	//Components for the sign up panel
-	private JLabel		usernameLbl, passwordLbl, confirmPasswordLbl;
-	private JTextField	usernameFld, passwordFld, confirmPasswordFld;
+	private JLabel		usernameLbl, passwordLbl, confirmPasswordLbl, firstNameLbl, lastNameLbl, emailAddressLbl;
+	private JTextField	usernameFld, passwordFld, confirmPasswordFld, firstNameFld, lastNameFld, emailAddressFld;
 
 /**
 	Creates a new BRS object
@@ -161,6 +161,9 @@ public class BRS implements ActionListener, MouseListener
 		loginButton.addActionListener(this);
 	}
 
+/**
+	Initializes the sign up panel and its components. Adds all the components to it using a GridBagLayout.
+*/
 	public void initializeSignUpPanel()
 	{
 		signUpPanel = new JPanel();
@@ -169,38 +172,73 @@ public class BRS implements ActionListener, MouseListener
 
 		c = new GridBagConstraints();
 
-		usernameLbl = new JLabel("Username:");
-		usernameFld = new JTextField("", 10);
+		usernameLbl 		= new JLabel("Username:");
+		passwordLbl 		= new JLabel("Password:");
+		confirmPasswordLbl 	= new JLabel("Confirm Password:");
+		firstNameLbl		= new JLabel("First Name:");
+		lastNameLbl			= new JLabel("Last Name:");
+		emailAddressLbl		= new JLabel("Email Address:");
 
-		passwordLbl = new JLabel("Password:");
-		passwordFld = new JPasswordField("", 10);
+		usernameFld 		= new JTextField("", 15);
+		passwordFld 		= new JPasswordField("", 15);
+		confirmPasswordFld 	= new JPasswordField("", 15);
+		firstNameFld		= new JTextField("", 15);
+		lastNameFld			= new JTextField("", 15);
+		emailAddressFld		= new JTextField("", 15);
 
-		confirmPasswordLbl = new JLabel("Confirm Password:");
-		confirmPasswordFld = new JPasswordField("", 10);
+		c.gridx = 0;
+		c.gridy = 0;
 
 		signUpPanel.add(usernameLbl, c);
 
-		c.gridx = 1;		
+		c.gridx++;		
 
 		signUpPanel.add(usernameFld, c);
 
 		c.gridx = 0;
-		c.gridy = 1;
+		c.gridy++;
 
 		signUpPanel.add(passwordLbl, c);
 
-		c.gridx = 1;
+		c.gridx++;
 
 		signUpPanel.add(passwordFld, c);
 
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy++;
 
 		signUpPanel.add(confirmPasswordLbl, c);
 
-		c.gridx = 1;
+		c.gridx++;
 
 		signUpPanel.add(confirmPasswordFld, c);
+
+		c.gridx = 0;
+		c.gridy++;
+
+		signUpPanel.add(firstNameLbl, c);
+
+		c.gridx++;
+
+		signUpPanel.add(firstNameFld, c);
+
+		c.gridx = 0;
+		c.gridy++;
+
+		signUpPanel.add(lastNameLbl, c);
+
+		c.gridx++;
+
+		signUpPanel.add(lastNameFld, c);
+
+		c.gridx = 0;
+		c.gridy++;
+
+		signUpPanel.add(emailAddressLbl, c);
+
+		c.gridx++;
+
+		signUpPanel.add(emailAddressFld, c);
 	}
 
 	public void swapPanels(JPanel panel, String panelName)
@@ -209,7 +247,8 @@ public class BRS implements ActionListener, MouseListener
 		frame.add(panel, BorderLayout.CENTER);
 		frame.validate();
 
-		currentPanel = panel;
+		previousPanel 	= currentPanel;
+		currentPanel 	= panel;
 		((TitlePanel)titlePanel).setCurrentPanel(panelName);
 	}
 
