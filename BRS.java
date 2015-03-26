@@ -14,9 +14,13 @@ import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class BRS
+public class BRS implements ActionListener, MouseListener
 {
+	private BugSystem bugSystem;
+
 	//Components for the frame
 	private JFrame frame;
 	private JPanel	titlePanel, loginPanel;
@@ -126,7 +130,7 @@ public class BRS
 
 		loginPanel.add(loginStatus, c);
 
-		c.gridwidth = 1;
+		c.gridwidth = 2;
 		c.gridx 	= 0;
 		c.gridy 	= 4;
 		c.insets = new Insets(0,0,0,0);
@@ -138,13 +142,36 @@ public class BRS
 
 		loginPanel.add(forgotUsername, c);
 
-		c.gridy = 4;
-		c.gridx = 1;
-		c.gridheight = 2;
+		c.gridy = 6;
+		c.gridx = 0;
 
 		loginPanel.add(signUp, c);
 
 		//Hide "loginStatus" while keeping its spot in the GridBagLayout
 		loginStatus.setForeground(Color.WHITE);
+
+		//Add listeners to components
+		forgotUsername.addMouseListener(this);
+		forgotPassword.addMouseListener(this);
+		signUp.addMouseListener(this);
+		loginButton.addActionListener(this);
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e){}
+
+	@Override
+	public void mouseClicked(MouseEvent e){}
+
+	@Override
+	public void mousePressed(MouseEvent e) {}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
 }
