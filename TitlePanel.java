@@ -30,7 +30,7 @@ public class TitlePanel extends JPanel
 		titleFont 		= new Font ("Arial", Font.BOLD, 36);
 		bodyTextFont 	= new Font("Arial", Font.PLAIN, 14);
 
-		title 		= new JLabel("Bug Report System (BRS)", SwingConstants.RIGHT);
+		title 		= new JLabel("Bug Report System (BRS)", SwingConstants.CENTER);
 		panelText 	= new JLabel(currentPanel, SwingConstants.RIGHT);
 
 		panelText.setForeground(Color.DARK_GRAY);
