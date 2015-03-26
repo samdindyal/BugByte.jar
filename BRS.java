@@ -28,8 +28,9 @@ public class BRS
 	private JButton		 loginButton;
 	private	GridBagConstraints c;
 
-
-
+/**
+	Creates a new BRS object
+*/
 	public BRS()
 	{
 		initializeFrame();
@@ -37,24 +38,33 @@ public class BRS
 		frame.setVisible(true);
 	}
 
+/**
+	Intializes the frame and initializes and adds all of the appropriate components to it.
+*/
 	public void initializeFrame()
 	{
+		//Build the frame
 		frame = new JFrame("Bug Report System (BSR)");
 		frame.setSize(720, 480);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(Color.WHITE);
-
 		frame.setLayout(new BorderLayout());
 
+		//Initialize the frame's components
 		titlePanel = new TitlePanel("Login");
 		initializeLoginPanel();
 
+		//Add components to the frame
 		frame.add(titlePanel, BorderLayout.NORTH);
 		frame.add(loginPanel, BorderLayout.CENTER);
 	}
 
+/**
+	Initializes the login panel, along with all of its components, and adds its components to it using a
+	GridBagLayout.
+*/
 	public void initializeLoginPanel()
 	{
 		loginPanel = new JPanel();
@@ -64,6 +74,7 @@ public class BRS
 
 		c = new GridBagConstraints();
 
+		//Intialize all components
 		usernameLabel 			= new JLabel("Username:", SwingConstants.RIGHT);
 		passwordLabel 			= new JLabel("Password:", SwingConstants.RIGHT);
 		forgotPassword 			= new JLabel("Forgot Password");
@@ -74,15 +85,15 @@ public class BRS
 
 		usernameField 	= new JTextField("", 10);
 		passwordField 	= new JPasswordField("", 10);
-
-		loginButton 		 	= new JButton("Log In");
+		loginButton 	= new JButton("Log In");
 		
+		//Set text colour for some components
 		forgotPassword.setForeground(Color.GRAY);
 		forgotUsername.setForeground(Color.GRAY);
 		signUp.setForeground(Color.GRAY);
 		loginStatus.setForeground(Color.RED);
 
-
+		//Set layout parameters and add the current component to the panel
 		c.gridx = 0;
 		c.gridy = 0;
 
@@ -133,6 +144,7 @@ public class BRS
 
 		loginPanel.add(signUp, c);
 
+		//Hide "loginStatus" while keeping its spot in the GridBagLayout
 		loginStatus.setForeground(Color.WHITE);
 	}
 }
