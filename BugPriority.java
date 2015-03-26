@@ -1,4 +1,6 @@
-public enum BugPriority
+import java.io.Serializable;
+
+public enum BugPriority implements Serializable
 {
 	LOW(1,"Low"),
 	MEDIUM(2,"Medium"),

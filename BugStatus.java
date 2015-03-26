@@ -1,4 +1,6 @@
-public enum BugStatus
+import java.io.Serializable;
+
+public enum BugStatus implements Serializable
 {
 	NOT_FIXED(0,"The bug has not been fixed."),
 	FIXED(1, "The bug has been fixed.");
