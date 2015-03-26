@@ -20,10 +20,11 @@ import java.awt.event.MouseListener;
 public class BRS implements ActionListener, MouseListener
 {
 	private BugSystem bugSystem;
+	private JPanel 	  currentPanel;
 
 	//Components for the frame
 	private JFrame frame;
-	private JPanel	titlePanel, loginPanel;
+	private JPanel	titlePanel, loginPanel, signUpPanel;
 
 	//Components for the login panel
 	private JLabel		 usernameLabel, passwordLabel, forgotPassword, forgotUsername, signUp, loginStatus;
@@ -31,6 +32,9 @@ public class BRS implements ActionListener, MouseListener
 	private JTextField 	 usernameField, passwordField;
 	private JButton		 loginButton;
 	private	GridBagConstraints c;
+
+	//Components for the sign up panel
+	private JLabel		userNameLbl, passwordLbl;
 
 /**
 	Creates a new BRS object
@@ -59,10 +63,12 @@ public class BRS implements ActionListener, MouseListener
 		//Initialize the frame's components
 		titlePanel = new TitlePanel("Login");
 		initializeLoginPanel();
+		initializeSignUpPanel();
 
 		//Add components to the frame
 		frame.add(titlePanel, BorderLayout.NORTH);
 		frame.add(loginPanel, BorderLayout.CENTER);
+		currentPanel = loginPanel;
 	}
 
 /**
@@ -154,11 +160,38 @@ public class BRS implements ActionListener, MouseListener
 		loginButton.addActionListener(this);
 	}
 
+	public void initializeSignUpPanel()
+	{
+		signUpPanel = new JPanel();
+		signUpPanel.setLayout(new GridBagLayout());
+		signUpPanel.setBackground(Color.WHITE);
+
+		c = new GridBagConstraints();
+
+		userNameLbl = new JLabel("Username:");
+
+		signUpPanel.add(userNameLbl, c);
+	}
+
+	public void swapPanels(JPanel panel)
+	{
+		frame.remove(currentPanel);
+		frame.add(panel, BorderLayout.CENTER);
+		frame.validate();
+
+		currentPanel = panel;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e){}
 
 	@Override
-	public void mouseClicked(MouseEvent e){}
+	public void mouseClicked(MouseEvent e)
+	{
+		if (e.getSource() == signUp)
+			swapPanels(signUpPanel);
+
+	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {}
