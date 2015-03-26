@@ -98,52 +98,49 @@ public class BRS implements ActionListener, MouseListener
 		loginStatus.setForeground(Color.RED);
 
 		//Set layout parameters and add the current component to the panel
-		c.gridx = 0;
-		c.gridy = 0;
+		c.gridx 	= 0;
+		c.gridy 	= 0;
+		c.weightx	= 1.0;
+		c.anchor 	= GridBagConstraints.CENTER;
 
 		loginPanel.add(usernameLabel, c);
 
-		c.gridx = 1;
+		c.gridy = 1;
 
 		loginPanel.add(usernameField, c);
 
-		c.gridx = 0;
-		c.gridy = 1;
+		c.gridy = 2;
 
 		loginPanel.add(passwordLabel, c);
 
-		c.gridx = 1;
+		c.gridy = 3;
 
 		loginPanel.add(passwordField,c);
 
-		c.gridx 	= 0;
-		c.gridy 	= 2;
+		c.gridy 	= 4;
 		c.gridwidth = 2;
 		
 
 		loginPanel.add(loginButton, c);
 
-		c.gridy 	= 3;
-		c.gridx 	= 0;
+		c.gridy 	= 5;
 		c.gridwidth = 3;
 		c.insets = new Insets(25,0,25,0);
 
 		loginPanel.add(loginStatus, c);
 
 		c.gridwidth = 2;
-		c.gridx 	= 0;
-		c.gridy 	= 4;
+		c.gridy 	= 6;
 		c.insets = new Insets(0,0,0,0);
 		
 
 		loginPanel.add(forgotPassword, c);
 
-		c.gridy = 5;
+		c.gridy = 7;
 
 		loginPanel.add(forgotUsername, c);
 
-		c.gridy = 6;
-		c.gridx = 0;
+		c.gridy = 8;
 
 		loginPanel.add(signUp, c);
 
