@@ -25,7 +25,7 @@ public class BRS implements ActionListener, MouseListener
 
 	//Components for the frame
 	private JFrame frame;
-	private JPanel	titlePanel, loginPanel, signUpPanel, navigationPanel;
+	private JPanel	titlePanel, loginPanel, signUpPanel, navigationPanel, forgotPasswordPanel, forgotUsernamePanel;
 
 	//Components for the login panel
 	private JLabel		 usernameLabel, passwordLabel, forgotPassword, forgotUsername, signUp, loginStatus;
@@ -71,6 +71,7 @@ public class BRS implements ActionListener, MouseListener
 		initializeLoginPanel();
 		initializeSignUpPanel();
 		initializeNavigationPanel();
+		initializeForgotPasswordPanel();
 
 		//Add components to the frame
 		frame.add(titlePanel, BorderLayout.NORTH);
@@ -274,6 +275,13 @@ public class BRS implements ActionListener, MouseListener
 
 	}
 
+	public void initializeForgotPasswordPanel()
+	{
+		forgotPasswordPanel = new JPanel();
+		forgotPasswordPanel.setLayout(new GridBagLayout());
+		forgotPasswordPanel.setBackground(Color.WHITE);
+	}
+
 	public void swapPanels(JPanel panel, String panelName)
 	{
 		frame.remove(currentPanel);
@@ -301,6 +309,8 @@ public class BRS implements ActionListener, MouseListener
 	{
 		if (e.getSource() == signUp)
 			swapPanels(signUpPanel, "Sign Up");
+		else if (e.getSource() == forgotPassword)
+			swapPanels(forgotPasswordPanel, "Forgot Password");
 
 	}
 
