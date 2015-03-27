@@ -52,6 +52,14 @@ public class BRS implements ActionListener, MouseListener
 	private	ButtonGroup		buttonGroup;
 	private JButton 		submitButton;
 
+	//Components for forgot username panel
+	private JLabel		emailAddressLbl3;
+	private JTextField	emailAddressFld3;
+	private JButton 	submitButton2;
+	private JPanel		inputLinePanel;
+
+
+
 
 /**
 	Creates a new BRS object
@@ -287,22 +295,44 @@ public class BRS implements ActionListener, MouseListener
 
 	}
 
-	public void initializeForgotPasswordPanel()
-	{
-		forgotPasswordPanel = new JPanel();
-		forgotPasswordPanel.setLayout(new GridBagLayout());
-		forgotPasswordPanel.setBackground(Color.WHITE);
-
-
-	}
-
 	public void initializeForgotUsernamePanel()
 	{
 		forgotUsernamePanel = new JPanel();
 		forgotUsernamePanel.setLayout(new GridBagLayout());
 		forgotUsernamePanel.setBackground(Color.WHITE);
 
+		emailAddressLbl3 = new JLabel("Email Address:");
+		emailAddressFld3 = new JTextField("", 10);
+		submitButton2 	 = new JButton("Submit");
+		submitButton2.setEnabled(false);
+
+		inputLinePanel = new JPanel();
+		inputLinePanel.setBackground(Color.WHITE);
+
+		inputLinePanel.add(emailAddressLbl3);
+		inputLinePanel.add(emailAddressFld3);
+
+		c = new GridBagConstraints();
+
+		c.gridx = 0;
+		c.gridy = 0;
+
+		forgotUsernamePanel.add(inputLinePanel, c);
+
+		c.gridy++;
+
+		forgotUsernamePanel.add(submitButton2, c);
+
+	}
+
+	public void initializeForgotPasswordPanel()
+	{
+		forgotPasswordPanel = new JPanel();
+		forgotPasswordPanel.setLayout(new GridBagLayout());
+		forgotPasswordPanel.setBackground(Color.WHITE);
+
 		submitButton = new JButton("Submit");
+		submitButton.setEnabled(false);
 
 		initializeUsernameResetPanel();
 		initializeEmailAddressResetPanel();
@@ -359,6 +389,8 @@ public class BRS implements ActionListener, MouseListener
 		usernameResetButton 	= new JRadioButton("Reset with username");
 		emailAddressResetButton = new JRadioButton("Reset with email address");
 		buttonGroup = new ButtonGroup();
+
+		usernameResetButton.setSelected(true);
 
 		buttonGroup.add(usernameResetButton);
 		buttonGroup.add(emailAddressResetButton);
