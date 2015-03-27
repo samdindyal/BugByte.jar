@@ -37,6 +37,7 @@ public class BRS implements ActionListener, MouseListener
 	//Components for the sign up panel
 	private JLabel		usernameLbl, passwordLbl, confirmPasswordLbl, firstNameLbl, lastNameLbl, emailAddressLbl;
 	private JTextField	usernameFld, passwordFld, confirmPasswordFld, firstNameFld, lastNameFld, emailAddressFld;
+	private JButton 	signUpButton;
 
 	//Components for the navigation panel
 	private JButton	backButton, resetButton;
@@ -193,6 +194,9 @@ public class BRS implements ActionListener, MouseListener
 		lastNameFld			= new JTextField("", 15);
 		emailAddressFld		= new JTextField("", 15);
 
+		signUpButton = new JButton("Finish Sign Up");
+		signUpButton.setEnabled(false);
+
 		c.gridx = 0;
 		c.gridy = 0;
 
@@ -246,6 +250,14 @@ public class BRS implements ActionListener, MouseListener
 		c.gridx++;
 
 		signUpPanel.add(emailAddressFld, c);
+
+		c.gridx 	= 0;
+		c.gridwidth = 2;
+		c.insets 	= new Insets(50,0,0,0);
+		c.gridy++;
+
+
+		signUpPanel.add(signUpButton, c);
 	}
 
 	public void initializeNavigationPanel()
