@@ -72,6 +72,7 @@ public class BRS implements ActionListener, MouseListener
 		initializeSignUpPanel();
 		initializeNavigationPanel();
 		initializeForgotPasswordPanel();
+		initializeForgotUsernamePanel();
 
 		//Add components to the frame
 		frame.add(titlePanel, BorderLayout.NORTH);
@@ -282,6 +283,13 @@ public class BRS implements ActionListener, MouseListener
 		forgotPasswordPanel.setBackground(Color.WHITE);
 	}
 
+	public void initializeForgotUsernamePanel()
+	{
+		forgotUsernamePanel = new JPanel();
+		forgotUsernamePanel.setLayout(new GridBagLayout());
+		forgotUsernamePanel.setBackground(Color.WHITE);
+	}
+
 	public void swapPanels(JPanel panel, String panelName)
 	{
 		frame.remove(currentPanel);
@@ -311,6 +319,8 @@ public class BRS implements ActionListener, MouseListener
 			swapPanels(signUpPanel, "Sign Up");
 		else if (e.getSource() == forgotPassword)
 			swapPanels(forgotPasswordPanel, "Forgot Password");
+		else if (e.getSource() == forgotUsername)
+			swapPanels(forgotUsernamePanel, "Forgot Username");
 
 	}
 
