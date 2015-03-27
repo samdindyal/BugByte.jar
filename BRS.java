@@ -5,6 +5,8 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 import java.awt.Color;
 import java.awt.BorderLayout;
@@ -41,6 +43,15 @@ public class BRS implements ActionListener, MouseListener
 
 	//Components for the navigation panel
 	private JButton	backButton, resetButton;
+
+	//Components for the forgot password panel
+	private JLabel			usernameLbl2, emailaddressLbl2, resetTypeLbl;
+	private JTextField		usernameFld2, emailAddressFld2;
+	private JPanel			usernameResetPanel, emailAddressResetPanel, togglePanel;
+	private JRadioButton	usernameResetButton, emailAddressResetButton;
+	private	ButtonGroup		buttonGroup;
+	private JButton 		submitButton;
+
 
 /**
 	Creates a new BRS object
@@ -281,6 +292,8 @@ public class BRS implements ActionListener, MouseListener
 		forgotPasswordPanel = new JPanel();
 		forgotPasswordPanel.setLayout(new GridBagLayout());
 		forgotPasswordPanel.setBackground(Color.WHITE);
+
+
 	}
 
 	public void initializeForgotUsernamePanel()
@@ -288,6 +301,57 @@ public class BRS implements ActionListener, MouseListener
 		forgotUsernamePanel = new JPanel();
 		forgotUsernamePanel.setLayout(new GridBagLayout());
 		forgotUsernamePanel.setBackground(Color.WHITE);
+
+		submitButton = new JButton("Submit");
+
+		initializeUsernameResetPanel();
+		initializeTogglePanel();
+
+		c = new GridBagConstraints();
+
+
+		c.gridx = 0;
+		c.gridy = 0;
+
+		forgotPasswordPanel.add(usernameResetPanel, c);
+
+		c.gridy++;
+
+		forgotPasswordPanel.add(togglePanel, c);
+
+		c.gridy++;
+		
+
+		forgotPasswordPanel.add(submitButton, c);
+	}
+
+	public void initializeUsernameResetPanel()
+	{
+		usernameResetPanel = new JPanel();
+		usernameResetPanel.setBackground(Color.WHITE);
+
+		usernameLbl2 = new JLabel("Username:");
+		usernameFld2 = new JTextField("", 10);
+
+		usernameResetPanel.add(usernameLbl2);
+		usernameResetPanel.add(usernameFld2);
+
+	}
+
+	public void initializeTogglePanel()
+	{
+		togglePanel = new JPanel();
+		togglePanel.setBackground(Color.WHITE);
+
+		usernameResetButton 	= new JRadioButton("Reset with username");
+		emailAddressResetButton = new JRadioButton("Reset with email address");
+		buttonGroup = new ButtonGroup();
+
+		buttonGroup.add(usernameResetButton);
+		buttonGroup.add(emailAddressResetButton);
+
+		togglePanel.add(usernameResetButton);
+		togglePanel.add(emailAddressResetButton);
 	}
 
 	public void swapPanels(JPanel panel, String panelName)
