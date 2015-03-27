@@ -45,7 +45,7 @@ public class BRS implements ActionListener, MouseListener
 	private JButton	backButton, resetButton;
 
 	//Components for the forgot password panel
-	private JLabel			usernameLbl2, emailaddressLbl2, resetTypeLbl;
+	private JLabel			usernameLbl2, emailAddressLbl2, resetTypeLbl;
 	private JTextField		usernameFld2, emailAddressFld2;
 	private JPanel			usernameResetPanel, emailAddressResetPanel, togglePanel;
 	private JRadioButton	usernameResetButton, emailAddressResetButton;
@@ -305,6 +305,7 @@ public class BRS implements ActionListener, MouseListener
 		submitButton = new JButton("Submit");
 
 		initializeUsernameResetPanel();
+		initializeEmailAddressResetPanel();
 		initializeTogglePanel();
 
 		c = new GridBagConstraints();
@@ -313,15 +314,14 @@ public class BRS implements ActionListener, MouseListener
 		c.gridx = 0;
 		c.gridy = 0;
 
-		forgotPasswordPanel.add(usernameResetPanel, c);
-
-		c.gridy++;
-
 		forgotPasswordPanel.add(togglePanel, c);
 
 		c.gridy++;
-		
 
+		forgotPasswordPanel.add(usernameResetPanel, c);		
+
+		c.gridy++;
+		
 		forgotPasswordPanel.add(submitButton, c);
 	}
 
@@ -335,6 +335,19 @@ public class BRS implements ActionListener, MouseListener
 
 		usernameResetPanel.add(usernameLbl2);
 		usernameResetPanel.add(usernameFld2);
+	}
+
+	public void initializeEmailAddressResetPanel()
+	{
+		emailAddressResetPanel = new JPanel();
+
+		emailAddressResetPanel.setBackground(Color.WHITE);
+
+		emailAddressLbl2 = new JLabel("Email Address:");
+		emailAddressFld2 = new JTextField("", 10);
+
+		emailAddressResetPanel.add(emailAddressLbl2);
+		emailAddressResetPanel.add(emailAddressFld2);
 
 	}
 
@@ -352,6 +365,9 @@ public class BRS implements ActionListener, MouseListener
 
 		togglePanel.add(usernameResetButton);
 		togglePanel.add(emailAddressResetButton);
+
+		usernameResetButton.addActionListener(this);
+		emailAddressResetButton.addActionListener(this);
 	}
 
 	public void swapPanels(JPanel panel, String panelName)
@@ -374,6 +390,28 @@ public class BRS implements ActionListener, MouseListener
 	{
 		if (e.getSource() == backButton && previousPanel != null)
 			swapPanels(previousPanel, previousPanelName);
+		else if (usernameResetButton.isSelected())
+		{
+			forgotPasswordPanel.remove(usernameResetPanel);
+			
+			c.gridy = 1;
+			c.gridx = 0;
+
+			forgotPasswordPanel.add(emailAddressResetPanel, c);
+			forgotPasswordPanel.validate();
+			forgotPasswordPanel.repaint();
+		}
+		else if(emailAddressResetButton.isSelected())
+		{
+			forgotPasswordPanel.remove(emailAddressResetPanel);
+			
+			c.gridy = 1;
+			c.gridx = 0;
+
+			forgotPasswordPanel.add(usernameResetPanel, c);
+			forgotPasswordPanel.validate();
+			forgotPasswordPanel.repaint();
+		}
 	}
 
 	@Override
