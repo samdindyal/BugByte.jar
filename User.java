@@ -1,7 +1,6 @@
 import java.io.Serializable;
 
 import java.util.HashSet;
-import java.util.UUID;
 
 public class User implements Serializable
 {
@@ -38,5 +37,7 @@ public class User implements Serializable
 	public void setPassword(String password){this.password = password;}
 	public void setfirstName(String firstName){this.firstName = firstName;}
 	public void setlastName(String lastName){this.lastName = lastName;}
-	public void setEmailAddress(String emailAddress){this.emailAddress = emailAddress;}		
+	public void setEmailAddress(String emailAddress){this.emailAddress = emailAddress;}
+
+	public boolean authenticate(String password){return this.password.equals(password);}		
 }
