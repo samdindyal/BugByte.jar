@@ -1,12 +1,17 @@
 import java.io.Serializable;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
+import java.util.UUID;
 import java.util.HashMap;
 import java.util.Set;
-import java.util.UUID;
 
 public class BugSystem implements Serializable
 {
-	private HashMap<String, User> 	users;
+	private HashMap<String, User> 		users;
 	private HashMap<String, Bug> 		bugs;
 
 	private String 					currentUserID;
@@ -30,6 +35,37 @@ public class BugSystem implements Serializable
 	{
 		String id = UUID.randomUUID().toString();
 		bugs.put(id, new Bug(status, priority, description, id));
+	}
+
+	public void writeToDisk(String dir) throws Exception
+	{
+
+		File file = new File(dir);
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+		oos.writeObject(this);
+	}
+
+	public void loadFromDisk(String dir) throws Exception
+	{
+		File file = new File(dir);
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+
+		BugSystem objectIn = (BugSystem)ois.readObject();
+		users = objectIn.users;
+		bugs = objectIn.bugs;
+
+		currentUserID = objectIn.currentUserID;
+	}
+
+	public boolean login(String username, String password)
+	{
+		if (users.get(username).authenticate(password))
+		{
+			currentUserID = username;
+			return true;
+		}
+		else
+			return false;
 	}
 	
 }
