@@ -67,5 +67,14 @@ public class BugSystem implements Serializable
 		else
 			return false;
 	}
+
+	public boolean logout()
+	{	
+		if (currentUserID.equals(""))
+			return false;
+		
+		currentUserID = "";
+		return true;
+	}
 	
 }
