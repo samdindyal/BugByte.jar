@@ -19,11 +19,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+
 public class BRS implements ActionListener, MouseListener
 {
-	private BugSystem bugSystem;
-	private JPanel 	  currentPanel, previousPanel;
-	private String	  currentPanelName, previousPanelName;
+	private BugSystem 	bugSystem;
+	private JPanel 	  	currentPanel, previousPanel;
+	private String	  	currentPanelName, previousPanelName;
+	private Pattern 	emailAddressPattern, usernamePattern, namePattern;
+	private Matcher 	matcher;
 
 	//Components for the frame
 	private JFrame frame;
@@ -68,9 +74,10 @@ public class BRS implements ActionListener, MouseListener
 	{
 		initializeFrame();
 
+		initializePatterns();
 		bugSystem = new BugSystem();
 
-		
+
 
 		frame.setVisible(true);
 	}
@@ -437,6 +444,37 @@ public class BRS implements ActionListener, MouseListener
 		((TitlePanel)titlePanel).setCurrentPanel(panelName);
 	}
 
+	public void initializePatterns()
+	{
+		String regex;
+
+		regex 					= "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+		emailAddressPattern 	= Pattern.compile(regex);
+
+		regex 				= "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+";
+		usernamePattern 	= Pattern.compile(regex);
+
+		regex 			= "^[a-zA-Z0-9]+";
+		namePattern 	= Pattern.compile(regex);
+	}
+
+	public boolean isValidEmailAddress(String emailAddress)
+	{
+		matcher = emailAddressPattern.matcher(emailAddress);
+		return matcher.matches();
+	}
+
+	public boolean isValidUsername(String username)
+	{
+		matcher = usernamePattern.matcher(username);
+		return matcher.matches();
+	}
+
+	public boolean isValidName(String name)
+	{
+		matcher = namePattern.matcher(name);
+		return matcher.matches();
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
