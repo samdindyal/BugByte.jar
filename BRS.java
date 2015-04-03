@@ -362,6 +362,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 		forgotUsernamePanel.add(submitButton2, c);
 
+		emailAddressFld3.addKeyListener(this);
+
 	}
 
 	public void initializeForgotPasswordPanel()
@@ -404,6 +406,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 		usernameResetPanel.add(usernameLbl2);
 		usernameResetPanel.add(usernameFld2);
+
+		usernameFld2.addKeyListener(this);
 	}
 
 	public void initializeEmailAddressResetPanel()
@@ -418,6 +422,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		emailAddressResetPanel.add(emailAddressLbl2);
 		emailAddressResetPanel.add(emailAddressFld2);
 
+		emailAddressFld2.addKeyListener(this);
 	}
 
 	public void initializeTogglePanel()
@@ -459,9 +464,15 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	public void swapPasswordResetPanels(JPanel panel)
 	{
 		if (panel == usernameResetPanel)
+		{
 			forgotPasswordPanel.remove(emailAddressResetPanel);
+			submitButton.setEnabled(isValidUsername(usernameFld2.getText()));
+		}
 		else if (panel == emailAddressResetPanel)
-			forgotPasswordPanel.remove(usernameResetPanel);
+			{
+				forgotPasswordPanel.remove(usernameResetPanel);
+				submitButton.setEnabled(isValidEmailAddress(emailAddressFld2.getText()));
+			}
 
 			c.gridy = 1;
 			c.gridx = 0;
@@ -562,7 +573,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 				&& ((JPasswordField)passwordField).getPassword().length > 0);
 		}
 
-		if (	e.getSource() == usernameFld
+		else if (	e.getSource() == usernameFld
 			||  e.getSource() == passwordFld
 			||	e.getSource() == confirmPasswordFld
 			||  e.getSource() == firstNameFld
@@ -575,6 +586,13 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 										&&	isValidName(lastNameFld.getText())
 										&&  isValidEmailAddress(emailAddressFld.getText())
 										);
+		else if (e.getSource() == usernameFld2)
+			submitButton.setEnabled(isValidUsername(usernameFld2.getText()));
+		else if (e.getSource() == emailAddressFld2)
+			submitButton.setEnabled(isValidEmailAddress(emailAddressFld2.getText()));
+		else if (e.getSource() == emailAddressFld3)
+			submitButton2.setEnabled(isValidEmailAddress(emailAddressFld3.getText()));
+
 	}
 
 	@Override
