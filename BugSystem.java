@@ -56,25 +56,39 @@ public class BugSystem implements Serializable
 		bugs.put(id, new Bug(status, priority, description, id));
 	}
 
-	public void writeToDisk() throws Exception
+	public void writeToDisk()
 	{
-		System.out.println("Writing to \"" + file.getPath() + "\"");
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-		oos.writeObject(this);
-		System.out.println("Successfully wrote to " + file.getPath() + ".");
+		try
+		{
+				System.out.println("Writing to \"" + file.getPath() + "\"");
+				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+				oos.writeObject(this);
+				System.out.println("Successfully wrote to " + file.getPath() + ".");
+		}
+		catch(Exception e)
+		{
+			System.err.println("Failed to write to " + file.getPath() + ".");
+		}
 	}
 
-	public void loadFromDisk() throws Exception
+	public void loadFromDisk()
 	{
-		System.out.println("Loading " + file.getPath() + ".");
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+		try
+		{
+			System.out.println("Loading " + file.getPath() + ".");
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 
-		BugSystem objectIn = (BugSystem)ois.readObject();
-		users = objectIn.users;
-		bugs = objectIn.bugs;
+			BugSystem objectIn = (BugSystem)ois.readObject();
+			users = objectIn.users;
+			bugs = objectIn.bugs;
 
-		currentUserID = objectIn.currentUserID;
-		System.out.println("Successfully loaded " + file.getPath() + ".");
+			currentUserID = objectIn.currentUserID;
+			System.out.println("Successfully loaded " + file.getPath() + ".");
+		}
+		catch(Exception e)
+		{
+			System.err.println("Failed to load " + file.getPath() + ".");
+		}
 	}
 
 	public boolean login(String username, String password)
