@@ -34,7 +34,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	private Matcher 	matcher;
 
 	//Components for the frame
-	private JFrame frame;
+	private JFrame 	frame;
 	private JPanel	titlePanel, loginPanel, signUpPanel, navigationPanel, forgotPasswordPanel, forgotUsernamePanel, submitBugPanel, dashboardPanel;
 
 	//Components for the login panel
@@ -61,7 +61,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	private JButton 		submitButton;
 
 	//Components for forgot username panel
-	private JLabel		emailAddressLbl3;
+	private JLabel		emailAddressLbl3, forgotUsernameMessageLbl;
 	private JTextField	emailAddressFld3;
 	private JButton 	submitButton2;
 	private JPanel		inputLinePanel;
@@ -336,10 +336,13 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		forgotUsernamePanel.setLayout(new GridBagLayout());
 		forgotUsernamePanel.setBackground(Color.WHITE);
 
-		emailAddressLbl3 = new JLabel("Email Address:");
-		emailAddressFld3 = new JTextField("", 15);
-		submitButton2 	 = new JButton("Submit");
+		emailAddressLbl3 			= new JLabel("Email Address:");
+		emailAddressFld3 			= new JTextField("", 15);
+		submitButton2 	 			= new JButton("Submit");
+		forgotUsernameMessageLbl 	= new JLabel("", SwingConstants.CENTER);
+
 		submitButton2.setEnabled(false);
+		forgotUsernameMessageLbl.setForeground(Color.GREEN.darker());
 
 		inputLinePanel = new JPanel();
 		inputLinePanel.setBackground(Color.WHITE);
@@ -355,11 +358,17 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		forgotUsernamePanel.add(inputLinePanel, c);
 
 		c.gridy++;
+		c.insets = new Insets(25, 0, 25, 0);
+
+		forgotUsernamePanel.add(forgotUsernameMessageLbl, c);
+
+		c.gridy++;
+		c.insets = new Insets(0, 0, 0, 0);
 
 		forgotUsernamePanel.add(submitButton2, c);
 
 		emailAddressFld3.addKeyListener(this);
-
+		submitButton2.addActionListener(this);
 	}
 
 	public void initializeForgotPasswordPanel()
@@ -565,6 +574,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			swapPasswordResetPanels(emailAddressResetPanel);
 		else if (e.getSource() == submitButton)
 			resetPassword();
+		else if (e.getSource() == submitButton2)
+			forgotUsernameMessageLbl.setText("An email containing your username has been sent to " + emailAddressFld3.getText() + ".");
 	}
 
 	@Override
@@ -614,11 +625,20 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 										&&  isValidEmailAddress(emailAddressFld.getText())
 										);
 		else if (e.getSource() == usernameFld2)
+		{
 			submitButton.setEnabled(isValidUsername(usernameFld2.getText()));
+			resetPasswordMessageLbl.setText("");
+		}
 		else if (e.getSource() == emailAddressFld2)
+		{
 			submitButton.setEnabled(isValidEmailAddress(emailAddressFld2.getText()));
+			resetPasswordMessageLbl.setText("");
+		}
 		else if (e.getSource() == emailAddressFld3)
+		{
 			submitButton2.setEnabled(isValidEmailAddress(emailAddressFld3.getText()));
+			forgotUsernameMessageLbl.setText("");
+		}
 
 	}
 
