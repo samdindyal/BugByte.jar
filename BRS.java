@@ -18,12 +18,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 
-public class BRS implements ActionListener, MouseListener
+public class BRS implements ActionListener, MouseListener, KeyListener
 {
 	private BugSystem 	bugSystem;
 	private JPanel 	  	currentPanel, previousPanel;
@@ -151,6 +153,8 @@ public class BRS implements ActionListener, MouseListener
 		signUp.setForeground(Color.GRAY);
 		loginStatus.setForeground(Color.RED);
 
+		loginButton.setEnabled(false);
+
 		//Set layout parameters and add the current component to the panel
 		c.gridx 	= 0;
 		c.gridy 	= 0;
@@ -206,6 +210,8 @@ public class BRS implements ActionListener, MouseListener
 		forgotPassword.addMouseListener(this);
 		signUp.addMouseListener(this);
 		loginButton.addActionListener(this);
+		usernameField.addKeyListener(this);
+		passwordField.addKeyListener(this);
 	}
 
 /**
@@ -305,6 +311,12 @@ public class BRS implements ActionListener, MouseListener
 
 		signUpPanel.add(signUpButton, c);
 
+		usernameFld.addKeyListener(this);
+		passwordFld.addKeyListener(this);
+		confirmPasswordFld.addKeyListener(this);
+		firstNameFld.addKeyListener(this);
+		lastNameFld.addKeyListener(this);
+		emailAddressFld.addKeyListener(this);
 		
 	}
 
@@ -541,4 +553,34 @@ public class BRS implements ActionListener, MouseListener
 
 	@Override
 	public void mouseExited(MouseEvent e) {}
+
+	@Override
+	public void keyReleased(KeyEvent e)
+	{
+		if (e.getSource() == usernameField || e.getSource() == passwordField)
+		{
+			loginButton.setEnabled(isValidUsername(usernameField.getText()) 
+				&& ((JPasswordField)passwordField).getPassword().length > 0);
+		}
+
+		if (	e.getSource() == usernameFld
+			||  e.getSource() == passwordFld
+			||	e.getSource() == confirmPasswordFld
+			||  e.getSource() == firstNameFld
+			|| 	e.getSource() == lastNameFld
+			|| 	e.getSource() == emailAddressFld)
+				signUpButton.setEnabled(	isValidUsername(usernameFld.getText())
+										&&  ((JPasswordField)passwordFld).getPassword().length > 0
+										&&	new String(((JPasswordField)confirmPasswordFld).getPassword()).equals(new String(((JPasswordField)passwordFld).getPassword()))
+										&& 	isValidName(firstNameFld.getText())
+										&&	isValidName(lastNameFld.getText())
+										&&  isValidEmailAddress(emailAddressFld.getText())
+										);
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e){}
+
+	@Override
+	public void keyTyped(KeyEvent e){}
 }
