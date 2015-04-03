@@ -59,7 +59,10 @@ public class BugSystem implements Serializable
 
 	public boolean login(String username, String password)
 	{
-		if (users.get(username).authenticate(password))
+		if (!users.containsKey(username))
+			return false;
+
+		else if (users.get(username).authenticate(password))
 		{
 			currentUserID = username;
 			return true;
