@@ -143,8 +143,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		loginStatus				= new JLabel("Incorrect login information. Please try again.",
 												SwingConstants.CENTER);
 
-		usernameField 	= new JTextField("", 10);
-		passwordField 	= new JPasswordField("", 10);
+		usernameField 	= new JTextField("", 15);
+		passwordField 	= new JPasswordField("", 15);
 		loginButton 	= new JButton("Log In");
 		
 		//Set text colour for some components
@@ -341,7 +341,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		forgotUsernamePanel.setBackground(Color.WHITE);
 
 		emailAddressLbl3 = new JLabel("Email Address:");
-		emailAddressFld3 = new JTextField("", 10);
+		emailAddressFld3 = new JTextField("", 15);
 		submitButton2 	 = new JButton("Submit");
 		submitButton2.setEnabled(false);
 
@@ -402,7 +402,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		usernameResetPanel.setBackground(Color.WHITE);
 
 		usernameLbl2 = new JLabel("Username:");
-		usernameFld2 = new JTextField("", 10);
+		usernameFld2 = new JTextField("", 15);
 
 		usernameResetPanel.add(usernameLbl2);
 		usernameResetPanel.add(usernameFld2);
@@ -417,7 +417,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		emailAddressResetPanel.setBackground(Color.WHITE);
 
 		emailAddressLbl2 = new JLabel("Email Address:");
-		emailAddressFld2 = new JTextField("", 10);
+		emailAddressFld2 = new JTextField("", 15);
 
 		emailAddressResetPanel.add(emailAddressLbl2);
 		emailAddressResetPanel.add(emailAddressFld2);
