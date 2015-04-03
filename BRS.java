@@ -66,9 +66,6 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	private JButton 	submitButton2;
 	private JPanel		inputLinePanel;
 
-
-
-
 /**
 	Creates a new BRS object
 */
@@ -77,7 +74,6 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		initializeFrame();
 		initializePatterns();
 		initializeBugSystem();
-
 
 		frame.setVisible(true);
 	}
@@ -227,7 +223,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		firstNameLbl		= new JLabel("First Name:");
 		lastNameLbl			= new JLabel("Last Name:");
 		emailAddressLbl		= new JLabel("Email Address:");
-		failedSignUpLbl		= new JLabel("User already exists.", SwingConstants.CENTER);
+		failedSignUpLbl		= new JLabel("", SwingConstants.CENTER);
 
 		usernameFld 		= new JTextField("", 15);
 		passwordFld 		= new JPasswordField("", 15);
@@ -239,7 +235,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		signUpButton = new JButton("Finish Sign Up");
 		signUpButton.setEnabled(false);
 
-		failedSignUpLbl.setForeground(Color.WHITE);
+		failedSignUpLbl.setForeground(Color.RED);
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -313,7 +309,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		firstNameFld.addKeyListener(this);
 		lastNameFld.addKeyListener(this);
 		emailAddressFld.addKeyListener(this);
-		
+		signUpButton.addActionListener(this);
 	}
 
 	public void initializeNavigationPanel()
@@ -552,6 +548,22 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		}
 	}
 
+	public void signUp()
+	{
+		if (bugSystem.addUser(	usernameFld.getText(),
+							new String(((JPasswordField)passwordFld).getPassword()),
+							firstNameFld.getText(),
+							lastNameFld.getText(),
+							emailAddressFld.getText()))
+		{
+			bugSystem.writeToDisk();
+			swapPanels(signUpPanel, "Dashboard");
+			System.out.println("Sign Up Successful.");
+		}
+		else
+			failedSignUpLbl.setText("User already exists.");
+	}
+
 	public void resetPassword()
 	{
 		if (emailAddressResetButton.isSelected())
@@ -576,6 +588,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			resetPassword();
 		else if (e.getSource() == submitButton2)
 			forgotUsernameMessageLbl.setText("An email containing your username has been sent to " + emailAddressFld3.getText() + ".");
+		else if (e.getSource() == signUpButton)
+			signUp();
 	}
 
 	@Override
