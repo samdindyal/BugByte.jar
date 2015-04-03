@@ -27,7 +27,7 @@ public class BRS implements ActionListener, MouseListener
 
 	//Components for the frame
 	private JFrame frame;
-	private JPanel	titlePanel, loginPanel, signUpPanel, navigationPanel, forgotPasswordPanel, forgotUsernamePanel, submitBugPanel;
+	private JPanel	titlePanel, loginPanel, signUpPanel, navigationPanel, forgotPasswordPanel, forgotUsernamePanel, submitBugPanel, dashboardPanel;
 
 	//Components for the login panel
 	private JLabel		 usernameLabel, passwordLabel, forgotPassword, forgotUsername, signUp, loginStatus;
@@ -37,7 +37,7 @@ public class BRS implements ActionListener, MouseListener
 	private	GridBagConstraints c;
 
 	//Components for the sign up panel
-	private JLabel		usernameLbl, passwordLbl, confirmPasswordLbl, firstNameLbl, lastNameLbl, emailAddressLbl;
+	private JLabel		usernameLbl, passwordLbl, confirmPasswordLbl, firstNameLbl, lastNameLbl, emailAddressLbl, failedSignUpLbl;
 	private JTextField	usernameFld, passwordFld, confirmPasswordFld, firstNameFld, lastNameFld, emailAddressFld;
 	private JButton 	signUpButton;
 
@@ -67,6 +67,10 @@ public class BRS implements ActionListener, MouseListener
 	public BRS()
 	{
 		initializeFrame();
+
+		bugSystem = new BugSystem();
+
+		
 
 		frame.setVisible(true);
 	}
@@ -214,6 +218,7 @@ public class BRS implements ActionListener, MouseListener
 		firstNameLbl		= new JLabel("First Name:");
 		lastNameLbl			= new JLabel("Last Name:");
 		emailAddressLbl		= new JLabel("Email Address:");
+		failedSignUpLbl		= new JLabel("User already exists.", SwingConstants.CENTER);
 
 		usernameFld 		= new JTextField("", 15);
 		passwordFld 		= new JPasswordField("", 15);
@@ -224,6 +229,8 @@ public class BRS implements ActionListener, MouseListener
 
 		signUpButton = new JButton("Finish Sign Up");
 		signUpButton.setEnabled(false);
+
+		failedSignUpLbl.setForeground(Color.WHITE);
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -281,11 +288,17 @@ public class BRS implements ActionListener, MouseListener
 
 		c.gridx 	= 0;
 		c.gridwidth = 2;
-		c.insets 	= new Insets(50,0,0,0);
+		c.insets 	= new Insets(25,0,25,0);
 		c.gridy++;
 
+		signUpPanel.add(failedSignUpLbl, c);
+		
+		c.gridy++;
+		c.insets 	= new Insets(0,0,0,0);
 
 		signUpPanel.add(signUpButton, c);
+
+		
 	}
 
 	public void initializeNavigationPanel()
@@ -424,6 +437,7 @@ public class BRS implements ActionListener, MouseListener
 		((TitlePanel)titlePanel).setCurrentPanel(panelName);
 	}
 
+
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -431,14 +445,15 @@ public class BRS implements ActionListener, MouseListener
 			swapPanels(previousPanel, previousPanelName);
 		if (e.getSource() == loginButton)
 		{
-			if (bugSystem.login(usernameField.getText(), String.valueOf(password.getPassword())))
+			if (bugSystem.login(usernameField.getText(), String.valueOf(((JPasswordField)passwordField).getPassword())))
 			{
-				loginStatus.setVisible(false);
+				loginStatus.setForeground(Color.WHITE);
 				swapPanels(dashboardPanel, "Dashboard");
+				System.out.println("Login successful");
 			}
 			else
 			{
-				loginStatus.setVisible(true);
+				loginStatus.setForeground(Color.RED);
 			}
 		}
 		else if (usernameResetButton.isSelected())
