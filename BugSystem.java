@@ -33,7 +33,10 @@ public class BugSystem implements Serializable
 			if (file.isFile())
 				loadFromDisk(dir);
 			else
+			{
+				System.out.println("\"" + dir + "\" not found.");
 				writeToDisk(dir);
+			}
 		}catch(Exception e){}
 
 	}
@@ -55,14 +58,15 @@ public class BugSystem implements Serializable
 
 	public void writeToDisk(String dir) throws Exception
 	{
-
 		file = new File(dir);
+		System.out.println("Writing to \"" + dir + "\"");
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 		oos.writeObject(this);
 	}
 
 	public void loadFromDisk(String dir) throws Exception
 	{
+		System.out.println("Loading " + dir + ".");
 		file = new File(dir);
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 
@@ -71,6 +75,7 @@ public class BugSystem implements Serializable
 		bugs = objectIn.bugs;
 
 		currentUserID = objectIn.currentUserID;
+		System.out.println("Successfully loaded " + dir + ".");
 	}
 
 	public boolean login(String username, String password)
