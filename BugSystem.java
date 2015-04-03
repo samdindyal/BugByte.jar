@@ -14,12 +14,28 @@ public class BugSystem implements Serializable
 	private HashMap<String, User> 		users;
 	private HashMap<String, Bug> 		bugs;
 
-	private String 					currentUserID;
+	private String 						currentUserID;
+	private File 						file;
 
 	public BugSystem()
 	{
 		users 	= new HashMap<String,User>();
 		bugs 	= new HashMap<String,Bug>();
+	}
+
+	public BugSystem(String dir)
+	{
+		this();
+
+		file = new File(dir);
+
+		try{
+			if (file.isFile())
+				loadFromDisk(dir);
+			else
+				writeToDisk(dir);
+		}catch(Exception e){}
+
 	}
 
 	public boolean addUser(String username, String password, String firstName, String lastName, String emailAddress)
@@ -40,14 +56,14 @@ public class BugSystem implements Serializable
 	public void writeToDisk(String dir) throws Exception
 	{
 
-		File file = new File(dir);
+		file = new File(dir);
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 		oos.writeObject(this);
 	}
 
 	public void loadFromDisk(String dir) throws Exception
 	{
-		File file = new File(dir);
+		file = new File(dir);
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 
 		BugSystem objectIn = (BugSystem)ois.readObject();
