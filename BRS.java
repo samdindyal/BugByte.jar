@@ -456,6 +456,22 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		((TitlePanel)titlePanel).setCurrentPanel(panelName);
 	}
 
+	public void swapPasswordResetPanels(JPanel panel)
+	{
+		if (panel == usernameResetPanel)
+			forgotPasswordPanel.remove(emailAddressResetPanel);
+		else if (panel == emailAddressResetPanel)
+			forgotPasswordPanel.remove(usernameResetPanel);
+
+			c.gridy = 1;
+			c.gridx = 0;
+
+			forgotPasswordPanel.add(panel, c);
+			forgotPasswordPanel.validate();
+			forgotPasswordPanel.repaint();
+
+	}
+
 	public void initializePatterns()
 	{
 		String regex;
@@ -507,27 +523,10 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			}
 		}
 		else if (usernameResetButton.isSelected())
-		{
-			forgotPasswordPanel.remove(usernameResetPanel);
-			
-			c.gridy = 1;
-			c.gridx = 0;
-
-			forgotPasswordPanel.add(emailAddressResetPanel, c);
-			forgotPasswordPanel.validate();
-			forgotPasswordPanel.repaint();
-		}
+			swapPasswordResetPanels(usernameResetPanel);
+		
 		else if(emailAddressResetButton.isSelected())
-		{
-			forgotPasswordPanel.remove(emailAddressResetPanel);
-			
-			c.gridy = 1;
-			c.gridx = 0;
-
-			forgotPasswordPanel.add(usernameResetPanel, c);
-			forgotPasswordPanel.validate();
-			forgotPasswordPanel.repaint();
-		}
+			swapPasswordResetPanels(emailAddressResetPanel);
 	}
 
 	@Override
