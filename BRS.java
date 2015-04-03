@@ -53,7 +53,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	private JButton	backButton, resetButton;
 
 	//Components for the forgot password panel
-	private JLabel			usernameLbl2, emailAddressLbl2, resetTypeLbl;
+	private JLabel			usernameLbl2, emailAddressLbl2, resetTypeLbl, resetPasswordMessageLbl;
 	private JTextField		usernameFld2, emailAddressFld2;
 	private JPanel			usernameResetPanel, emailAddressResetPanel, togglePanel;
 	private JRadioButton	usernameResetButton, emailAddressResetButton;
@@ -75,10 +75,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	public BRS()
 	{
 		initializeFrame();
-
 		initializePatterns();
-		bugSystem = new BugSystem();
-
+		initializeBugSystem();
 
 
 		frame.setVisible(true);
@@ -140,8 +138,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		forgotPassword 			= new JLabel("Forgot Password");
 		forgotUsername			= new JLabel("Forgot Username");
 		signUp					= new JLabel("Sign Up");
-		loginStatus				= new JLabel("Incorrect login information. Please try again.",
-												SwingConstants.CENTER);
+		loginStatus				= new JLabel("", SwingConstants.CENTER);
 
 		usernameField 	= new JTextField("", 15);
 		passwordField 	= new JPasswordField("", 15);
@@ -202,8 +199,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 		loginPanel.add(signUp, c);
 
-		//Hide "loginStatus" while keeping its spot in the GridBagLayout
-		loginStatus.setForeground(Color.WHITE);
+		loginStatus.setForeground(Color.RED);
 
 		//Add listeners to components
 		forgotUsername.addMouseListener(this);
@@ -375,6 +371,10 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		submitButton = new JButton("Submit");
 		submitButton.setEnabled(false);
 
+		resetPasswordMessageLbl = new JLabel("", SwingConstants.CENTER);
+
+		resetPasswordMessageLbl.setForeground(Color.GREEN.darker());
+
 		initializeUsernameResetPanel();
 		initializeEmailAddressResetPanel();
 		initializeTogglePanel();
@@ -392,8 +392,16 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		forgotPasswordPanel.add(usernameResetPanel, c);		
 
 		c.gridy++;
+		c.insets = new Insets(25,0,25,0);
 		
+		forgotPasswordPanel.add(resetPasswordMessageLbl, c);
+
+		c.gridy++;
+		c.insets = new Insets(0,0,0,0);
+
 		forgotPasswordPanel.add(submitButton, c);
+
+		submitButton.addActionListener(this);
 	}
 
 	public void initializeUsernameResetPanel()
@@ -446,6 +454,25 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		emailAddressResetButton.addActionListener(this);
 	}
 
+	public void initializePatterns()
+	{
+		String regex;
+
+		regex 					= "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+		emailAddressPattern 	= Pattern.compile(regex);
+
+		regex 				= "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+";
+		usernamePattern 	= Pattern.compile(regex);
+
+		regex 			= "^[a-zA-Z0-9]+";
+		namePattern 	= Pattern.compile(regex);
+	}
+
+	public void initializeBugSystem()
+	{
+		bugSystem = new BugSystem("res/bugsystem");
+	}
+
 	public void swapPanels(JPanel panel, String panelName)
 	{
 		frame.remove(currentPanel);
@@ -483,20 +510,6 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 	}
 
-	public void initializePatterns()
-	{
-		String regex;
-
-		regex 					= "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-		emailAddressPattern 	= Pattern.compile(regex);
-
-		regex 				= "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+";
-		usernamePattern 	= Pattern.compile(regex);
-
-		regex 			= "^[a-zA-Z0-9]+";
-		namePattern 	= Pattern.compile(regex);
-	}
-
 	public boolean isValidEmailAddress(String emailAddress)
 	{
 		matcher = emailAddressPattern.matcher(emailAddress);
@@ -515,29 +528,43 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		return matcher.matches();
 	}
 
+	public void login()
+	{
+		if (bugSystem.login(usernameField.getText(), String.valueOf(((JPasswordField)passwordField).getPassword())))
+		{
+			loginStatus.setText("");
+			swapPanels(dashboardPanel, "Dashboard");
+			System.out.println("Login successful");
+		}
+		else
+		{
+			loginStatus.setText("Incorrect login information. Please try again.");
+			System.out.println("Login failed. Incorrect credentials.");
+		}
+	}
+
+	public void resetPassword()
+	{
+		if (emailAddressResetButton.isSelected())
+			resetPasswordMessageLbl.setText("An email with a password reset link has been send to " + emailAddressFld2.getText() + ".");
+		else
+			resetPasswordMessageLbl.setText("An email with a password reset link has been send to the email associated it your account.");
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == backButton && previousPanel != null)
 			swapPanels(previousPanel, previousPanelName);
 		if (e.getSource() == loginButton)
-		{
-			if (bugSystem.login(usernameField.getText(), String.valueOf(((JPasswordField)passwordField).getPassword())))
-			{
-				loginStatus.setForeground(Color.WHITE);
-				swapPanels(dashboardPanel, "Dashboard");
-				System.out.println("Login successful");
-			}
-			else
-			{
-				loginStatus.setForeground(Color.RED);
-			}
-		}
-		else if (usernameResetButton.isSelected())
+			login();
+		else if (e.getSource() == usernameResetButton)
 			swapPasswordResetPanels(usernameResetPanel);
 		
-		else if(emailAddressResetButton.isSelected())
+		else if(e.getSource() == emailAddressResetButton)
 			swapPasswordResetPanels(emailAddressResetPanel);
+		else if (e.getSource() == submitButton)
+			resetPassword();
 	}
 
 	@Override
