@@ -62,6 +62,7 @@ public class BugSystem implements Serializable
 		System.out.println("Writing to \"" + dir + "\"");
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 		oos.writeObject(this);
+		System.out.println("Successfully wrote to " + dir + ".");
 	}
 
 	public void loadFromDisk(String dir) throws Exception
