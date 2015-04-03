@@ -23,19 +23,19 @@ public class BugSystem implements Serializable
 		bugs 	= new HashMap<String,Bug>();
 	}
 
-	public BugSystem(String dir)
+	public BugSystem(String directory)
 	{
 		this();
 
-		file = new File(dir);
+		file = new File(directory);
 
 		try{
 			if (file.isFile())
-				loadFromDisk(dir);
+				loadFromDisk();
 			else
 			{
-				System.out.println("\"" + dir + "\" not found.");
-				writeToDisk(dir);
+				System.out.println("\"" + file.getPath() + "\" not found.");
+				writeToDisk();
 			}
 		}catch(Exception e){}
 
@@ -56,19 +56,17 @@ public class BugSystem implements Serializable
 		bugs.put(id, new Bug(status, priority, description, id));
 	}
 
-	public void writeToDisk(String dir) throws Exception
+	public void writeToDisk() throws Exception
 	{
-		file = new File(dir);
-		System.out.println("Writing to \"" + dir + "\"");
+		System.out.println("Writing to \"" + file.getPath() + "\"");
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 		oos.writeObject(this);
-		System.out.println("Successfully wrote to " + dir + ".");
+		System.out.println("Successfully wrote to " + file.getPath() + ".");
 	}
 
-	public void loadFromDisk(String dir) throws Exception
+	public void loadFromDisk() throws Exception
 	{
-		System.out.println("Loading " + dir + ".");
-		file = new File(dir);
+		System.out.println("Loading " + file.getPath() + ".");
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 
 		BugSystem objectIn = (BugSystem)ois.readObject();
@@ -76,7 +74,7 @@ public class BugSystem implements Serializable
 		bugs = objectIn.bugs;
 
 		currentUserID = objectIn.currentUserID;
-		System.out.println("Successfully loaded " + dir + ".");
+		System.out.println("Successfully loaded " + file.getPath() + ".");
 	}
 
 	public boolean login(String username, String password)
