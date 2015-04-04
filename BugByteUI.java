@@ -27,9 +27,9 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 
-public class BRS implements ActionListener, MouseListener, KeyListener
+public class BugByteUI implements ActionListener, MouseListener, KeyListener
 {
-	private BugSystem 			bugSystem;
+	private BugReportSystem 			bugReportSystem;
 	private	GridBagConstraints 	c;
 	private JComponent  		currentComponent, previousComponent;
 	private String	  			currentComponentName, previousComponentName;
@@ -76,14 +76,14 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	private JButton     submitSummaryButton;
 
 /**
-	Creates a new BRS object
+	Creates a new BugByteUI object
 */
-	public BRS()
+	public BugByteUI()
 	{
 		initializeFrame();
 		initializePatterns();
 
-		bugSystem = new BugSystem("res/bugsystem");
+		bugReportSystem = new BugReportSystem("res/bugreportsystem.bb");
 
 		frame.setVisible(true);
 	}
@@ -94,7 +94,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	public void initializeFrame()
 	{
 		//Build the frame
-		frame = new JFrame("Bug Report System (BRS)");
+		frame = new JFrame("BugByte");
 		frame.setSize(720, 500);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
@@ -679,7 +679,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		submitButton.setVisible(component == forgotPasswordPanel);
 		submitButton2.setVisible(component == forgotUsernamePanel);
 		signUpButton.setVisible(component == signUpPanel);
-		dashboardButton.setEnabled(component != dashboardPanel && bugSystem.isLoggedIn());
+		dashboardButton.setEnabled(component != dashboardPanel && bugReportSystem.isLoggedIn());
 		
 		previousComponentName 	= currentComponentName;
 		currentComponentName 	= componentName;
@@ -731,9 +731,9 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 	public void toggleLogin()
 	{
-		if (!bugSystem.isLoggedIn())
+		if (!bugReportSystem.isLoggedIn())
 		{
-			if (bugSystem.login(usernameField.getText(), String.valueOf(((JPasswordField)passwordField).getPassword())))
+			if (bugReportSystem.login(usernameField.getText(), String.valueOf(((JPasswordField)passwordField).getPassword())))
 			{
 				loginStatus.setText("");
 				swapComponents(dashboardPanel, "Dashboard");
@@ -757,7 +757,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 				System.out.println("Login failed. Incorrect credentials.");
 			}
 		}
-		else if (bugSystem.logout())
+		else if (bugReportSystem.logout())
 		{
 			swapComponents(loginPanel, "Login");
 
@@ -781,13 +781,13 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 	public void signUp()
 	{
-		if (bugSystem.addUser(	usernameFld.getText(),
+		if (bugReportSystem.addUser(	usernameFld.getText(),
 							new String(((JPasswordField)passwordFld).getPassword()),
 							firstNameFld.getText(),
 							lastNameFld.getText(),
 							emailAddressFld.getText()))
 		{
-			bugSystem.writeToDisk();
+			bugReportSystem.writeToDisk();
 			swapComponents(dashboardPanel, "Dashboard");
 			System.out.println("Sign Up Successful.");
 
@@ -804,7 +804,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			previousComponent 		= loginPanel;
 			previousComponentName	= "Login";
 
-			bugSystem.login(usernameFld.getText(), new String(((JPasswordField)passwordFld).getPassword()));
+			bugReportSystem.login(usernameFld.getText(), new String(((JPasswordField)passwordFld).getPassword()));
 
 			populateAccountSummaryFields(new String(((JPasswordField)passwordFld).getPassword()));
 		}
@@ -814,7 +814,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 	public void populateAccountSummaryFields(String password)
 	{
-		User user = bugSystem.getUserAccount(password);
+		User user = bugReportSystem.getUserAccount(password);
 		
 		usernameSummaryField.setText(user.getUsername());
 		firstNameSummaryField.setText(user.getFirstName());
@@ -833,7 +833,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	public boolean submitAccountChanges(String password)
 	{
 		User user;
-		if ((user = bugSystem.getUserAccount(new String(((JPasswordField)oldPasswordSummaryField).getPassword()))) == null)
+		if ((user = bugReportSystem.getUserAccount(new String(((JPasswordField)oldPasswordSummaryField).getPassword()))) == null)
 		{
 			accountSummaryMessageLabel.setForeground(Color.RED);
 			accountSummaryMessageLabel.setText("Incorrect password. Please try again.");
@@ -855,7 +855,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		emailAddressMessageSummaryLabel.setText("");
 		passwordMessageSummaryLabel.setText("");
 
-		bugSystem.writeToDisk();
+		bugReportSystem.writeToDisk();
 
 		return true;
 	}

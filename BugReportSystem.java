@@ -9,7 +9,7 @@ import java.util.UUID;
 import java.util.HashMap;
 import java.util.Set;
 
-public class BugSystem implements Serializable
+public class BugReportSystem implements Serializable
 {
 	private HashMap<String, User> 		users;
 	private HashMap<String, Bug> 		bugs;
@@ -17,7 +17,7 @@ public class BugSystem implements Serializable
 	private transient String 			currentUserID;
 	private File 						file;
 
-	public BugSystem()
+	public BugReportSystem()
 	{
 		users 			= new HashMap<String,User>();
 		bugs 			= new HashMap<String,Bug>();
@@ -25,7 +25,7 @@ public class BugSystem implements Serializable
 
 	}
 
-	public BugSystem(String directory)
+	public BugReportSystem(String directory)
 	{
 		this();
 		file = new File(directory);
@@ -74,7 +74,7 @@ public class BugSystem implements Serializable
 			System.out.println("Loading \"" + file.getPath() + "\"...");
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 
-			BugSystem objectIn = (BugSystem)ois.readObject();
+			BugReportSystem objectIn = (BugReportSystem)ois.readObject();
 			users = objectIn.users;
 			bugs = objectIn.bugs;
 

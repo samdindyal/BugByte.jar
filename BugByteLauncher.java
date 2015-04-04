@@ -1,7 +1,7 @@
-public class BRSLauncher
+public class BugByteLauncher
 {
 	public static void main(String[] args)
 	{
-		BRS brs = new BRS();
+		BugByteUI bugByteUI = new BugByteUI();
 	}
 }
