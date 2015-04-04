@@ -18,11 +18,11 @@ public class TitlePanel extends JPanel
 
 	public TitlePanel(String currentPanel)
 	{
-		setBackground(Color.WHITE);
+		setBackground(Color.DARK_GRAY);
 		setBorder(new EmptyBorder(10, 10, 10, 10) );
 		setLayout(new BorderLayout());
 
-		panelImage = new JLabel(new ImageIcon("res/bug.png"));
+		panelImage = new JLabel(new ImageIcon(""));
 
 		redStripe = new JPanel();
 		redStripe.setBackground(Color.RED);
@@ -33,10 +33,11 @@ public class TitlePanel extends JPanel
 		title 		= new JLabel("Bug Report System (BRS)", SwingConstants.CENTER);
 		panelText 	= new JLabel(currentPanel, SwingConstants.RIGHT);
 
-		panelText.setForeground(Color.DARK_GRAY);
+		panelText.setForeground(Color.LIGHT_GRAY);
+		title.setForeground(Color.WHITE);
 
 		textPanel = new JPanel();
-		textPanel.setBackground(Color.WHITE);
+		textPanel.setBackground(Color.DARK_GRAY);
 		textPanel.setLayout(new BorderLayout());
 
 		title.setFont(titleFont);
