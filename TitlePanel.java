@@ -26,20 +26,22 @@ public class TitlePanel extends JPanel
 
 
 		try{
-			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(72f);
+			titleFont 		= Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(72f);
+			bodyTextFont 	= Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(28f);
 		}catch(Exception e)
 		{
-			titleFont = new Font ("Arial", Font.BOLD, 36);
+			titleFont 		= new Font ("Arial", Font.BOLD, 36);
+			bodyTextFont 	= new Font("Arial", Font.PLAIN, 14);
 		}	
 
 		panelImage = new JLabel(new ImageIcon("res/logo.png"));
 		panelImage.setBorder(new EmptyBorder(0, 10, 25, 10));
 		accentColour = new Color(72, 157, 2);
 
-		bodyTextFont 	= new Font("Arial", Font.PLAIN, 14);
+		
 
-		title 		= new JLabel("BugByte", SwingConstants.CENTER);
-		panelText 	= new JLabel(currentPanel, SwingConstants.CENTER);
+		title 		= new JLabel("BugByte", SwingConstants.LEFT);
+		panelText 	= new JLabel(currentPanel, SwingConstants.LEFT);
 
 		panelText.setForeground(accentColour.brighter());
 		title.setForeground(accentColour);
