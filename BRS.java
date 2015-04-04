@@ -99,6 +99,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		initializeNavigationPanel();
 		initializeForgotPasswordPanel();
 		initializeForgotUsernamePanel();
+		initializeDashboardPanel();
 
 		//Add components to the frame
 		frame.add(titlePanel, BorderLayout.NORTH);
@@ -459,6 +460,11 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		emailAddressResetButton.addActionListener(this);
 	}
 
+	public void initializeDashboardPanel()
+	{
+		dashboardPanel = new JPanel();
+	}
+
 	public void initializePatterns()
 	{
 		String regex;
@@ -533,19 +539,47 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		return matcher.matches();
 	}
 
-	public void login()
+	public void toggleLogin()
 	{
-		if (bugSystem.login(usernameField.getText(), String.valueOf(((JPasswordField)passwordField).getPassword())))
+		if (!bugSystem.isLoggedIn())
 		{
-			loginStatus.setText("");
-			swapPanels(dashboardPanel, "Dashboard");
-			System.out.println("Login successful");
+			if (bugSystem.login(usernameField.getText(), String.valueOf(((JPasswordField)passwordField).getPassword())))
+			{
+				loginStatus.setText("");
+				swapPanels(dashboardPanel, "Dashboard");
+				System.out.println("Login successful.");
+
+				usernameField.setEnabled(false);
+				passwordField.setEnabled(false);
+
+				loginButton.setText("Logout");
+			}
+			else
+			{
+				loginStatus.setForeground(Color.RED);
+				loginStatus.setText("Incorrect login information. Please try again.");
+				System.out.println("Login failed. Incorrect credentials.");
+			}
 		}
-		else
+		else if (bugSystem.logout())
 		{
-			loginStatus.setText("Incorrect login information. Please try again.");
-			System.out.println("Login failed. Incorrect credentials.");
+			swapPanels(loginPanel, "Login");
+
+			usernameField.setEnabled(true);
+			passwordField.setEnabled(true);
+			loginButton.setEnabled(false);
+
+			usernameField.setText("");
+			passwordField.setText("");
+
+			loginButton.setText("Login");
+
+			loginStatus.setForeground(Color.GREEN.darker());
+			loginStatus.setText("You have successfully been logged out.");
+
+			System.out.println("Logout successful.");
 		}
+
 	}
 
 	public void signUp()
@@ -557,8 +591,22 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 							emailAddressFld.getText()))
 		{
 			bugSystem.writeToDisk();
-			swapPanels(signUpPanel, "Dashboard");
+			swapPanels(dashboardPanel, "Dashboard");
 			System.out.println("Sign Up Successful.");
+
+			usernameField.setEnabled(false);
+			passwordField.setEnabled(false);
+			loginButton.setEnabled(true);
+
+			usernameField.setText(usernameFld.getText());
+			passwordField.setText(new String(((JPasswordField)passwordFld).getPassword()));
+
+			loginButton.setText("Logout");
+
+			previousPanel 		= loginPanel;
+			previousPanelName	= "Login";
+
+			bugSystem.login(usernameFld.getText(), new String(((JPasswordField)passwordFld).getPassword()));
 		}
 		else
 			failedSignUpLbl.setText("User already exists.");
@@ -578,7 +626,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		if (e.getSource() == backButton && previousPanel != null)
 			swapPanels(previousPanel, previousPanelName);
 		if (e.getSource() == loginButton)
-			login();
+			toggleLogin();
 		else if (e.getSource() == usernameResetButton)
 			swapPasswordResetPanels(usernameResetPanel);
 		
@@ -623,6 +671,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		{
 			loginButton.setEnabled(isValidUsername(usernameField.getText()) 
 				&& ((JPasswordField)passwordField).getPassword().length > 0);
+			loginStatus.setText("");
 		}
 
 		else if (	e.getSource() == usernameFld
