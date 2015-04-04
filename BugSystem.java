@@ -34,7 +34,7 @@ public class BugSystem implements Serializable
 				loadFromDisk();
 			else
 			{
-				System.out.println("\"" + file.getPath() + "\" not found.");
+				System.out.println("\"" + file.getPath() + "\" not found");
 				writeToDisk();
 			}
 		}catch(Exception e){}
@@ -60,14 +60,14 @@ public class BugSystem implements Serializable
 	{
 		try
 		{
-				System.out.println("Writing to \"" + file.getPath() + "\"");
+				System.out.println("Writing to \"" + file.getPath() + "\"...");
 				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 				oos.writeObject(this);
-				System.out.println("Successfully wrote to " + file.getPath() + ".");
+				System.out.println("Successfully wrote to \"" + file.getPath() + "\"");
 		}
 		catch(Exception e)
 		{
-			System.err.println("Failed to write to " + file.getPath() + ".");
+			System.err.println("Failed to write to \"" + file.getPath() + "\"");
 		}
 	}
 
@@ -75,7 +75,7 @@ public class BugSystem implements Serializable
 	{
 		try
 		{
-			System.out.println("Loading " + file.getPath() + ".");
+			System.out.println("Loading \"" + file.getPath() + "\"...");
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 
 			BugSystem objectIn = (BugSystem)ois.readObject();
@@ -83,11 +83,11 @@ public class BugSystem implements Serializable
 			bugs = objectIn.bugs;
 
 			currentUserID = objectIn.currentUserID;
-			System.out.println("Successfully loaded " + file.getPath() + ".");
+			System.out.println("Successfully loaded \"" + file.getPath() + "\"");
 		}
 		catch(Exception e)
 		{
-			System.err.println("Failed to load " + file.getPath() + ".");
+			System.err.println("Failed to load \"" + file.getPath() + "\"");
 		}
 	}
 
@@ -113,5 +113,7 @@ public class BugSystem implements Serializable
 		currentUserID = "";
 		return true;
 	}
+
+	public boolean isLoggedIn(){return currentUserID.equals("");}
 	
 }
