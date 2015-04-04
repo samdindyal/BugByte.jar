@@ -29,11 +29,12 @@ import java.util.regex.Matcher;
 
 public class BRS implements ActionListener, MouseListener, KeyListener
 {
-	private BugSystem 	bugSystem;
-	private JComponent  currentComponent, previousComponent;
-	private String	  	currentComponentName, previousComponentName;
-	private Pattern 	emailAddressPattern, usernamePattern, namePattern;
-	private Matcher 	matcher;
+	private BugSystem 			bugSystem;
+	private	GridBagConstraints 	c;
+	private JComponent  		currentComponent, previousComponent;
+	private String	  			currentComponentName, previousComponentName;
+	private Pattern 			emailAddressPattern, usernamePattern, namePattern;
+	private Matcher 			matcher;
 
 	//Components for the frame
 	private JFrame 		frame;
@@ -45,15 +46,14 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	private JPanel		 buttonPanel;
 	private JTextField 	 usernameField, passwordField;
 	private JButton		 loginButton;
-	private	GridBagConstraints c;
-
+	
 	//Components for the sign up panel
 	private JLabel		usernameLbl, passwordLbl, confirmPasswordLbl, firstNameLbl, lastNameLbl, emailAddressLbl, failedSignUpLbl;
 	private JTextField	usernameFld, passwordFld, confirmPasswordFld, firstNameFld, lastNameFld, emailAddressFld;
 	private JButton 	signUpButton;
 
 	//Components for the navigation panel
-	private JButton	backButton;
+	private JButton	backButton, dashboardButton;
 
 	//Components for the forgot password panel
 	private JLabel			usernameLbl2, emailAddressLbl2, resetTypeLbl, resetPasswordMessageLbl;
@@ -327,11 +327,16 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		navigationPanel = new JPanel();
 		navigationPanel.setBackground(Color.WHITE);
 
-		backButton = new JButton("Go Back");
+		backButton 		= new JButton("Go Back");
+		dashboardButton = new JButton("Dashboard");
+
+		dashboardButton.setEnabled(false);
 
 		navigationPanel.add(backButton);
+		navigationPanel.add(dashboardButton);
 
 		backButton.addActionListener(this);
+		dashboardButton.addActionListener(this);
 
 	}
 
@@ -641,6 +646,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		submitButton.setVisible(component == forgotPasswordPanel);
 		submitButton2.setVisible(component == forgotUsernamePanel);
 		signUpButton.setVisible(component == signUpPanel);
+		dashboardButton.setEnabled(component != dashboardPanel && bugSystem.isLoggedIn());
 		
 		previousComponentName 	= currentComponentName;
 		currentComponentName 	= componentName;
@@ -730,6 +736,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			passwordField.setText("");
 
 			loginButton.setText("Login");
+
+			dashboardButton.setEnabled(false);
 
 			loginStatus.setForeground(Color.GREEN.darker());
 			loginStatus.setText("You have successfully been logged out.");
@@ -838,6 +846,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			signUp();
 		else if (e.getSource() == submitSummaryButton)
 			submitAccountChanges(new String(((JPasswordField)passwordSummaryField).getPassword()));
+		else if (e.getSource() == dashboardButton)
+			swapComponents(dashboardPanel, "Dashboard");
 	}
 
 	@Override
