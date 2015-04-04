@@ -699,6 +699,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 				previousComponentName = "Logged in as " + usernameField.getText();
 
+				populateAccountSummaryFields(new String(((JPasswordField)passwordFld).getPassword()));
+
 				submitSummaryButton.setVisible(true);
 			}
 			else
@@ -726,7 +728,6 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 			System.out.println("Logout successful.");
 		}
-
 	}
 
 	public void signUp()
@@ -755,9 +756,23 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			previousComponentName	= "Login";
 
 			bugSystem.login(usernameFld.getText(), new String(((JPasswordField)passwordFld).getPassword()));
+
+			populateAccountSummaryFields(new String(((JPasswordField)passwordFld).getPassword()));
 		}
 		else
 			failedSignUpLbl.setText("User already exists.");
+	}
+
+	public void populateAccountSummaryFields(String password)
+	{
+		User user = bugSystem.getUserAccount(password);
+		
+		usernameSummaryField.setText(user.getUsername());
+		firstNameSummaryField.setText(user.getFirstName());
+		lastNameSummaryField.setText(user.getLastName());
+		emailAddressSummaryField.setText(user.getEmailAddress());
+		passwordSummaryField.setText("**********");
+		confirmPasswordSummaryField.setText("**********");
 	}
 
 	public void resetPassword()
@@ -796,7 +811,6 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			swapComponents(forgotPasswordPanel, "Forgot Password");
 		else if (e.getSource() == forgotUsername)
 			swapComponents(forgotUsernamePanel, "Forgot Username");
-
 	}
 
 	@Override
