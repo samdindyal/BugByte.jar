@@ -24,12 +24,12 @@ public class TitlePanel extends JPanel
 		setLayout(new BorderLayout());
 
 		panelImage = new JLabel(new ImageIcon(""));
-		accentColor = new Color(29, 126, 194);
+		accentColor = new Color(72, 157, 2);
 
 		titleFont 		= new Font ("Arial", Font.BOLD, 36);
 		bodyTextFont 	= new Font("Arial", Font.PLAIN, 14);
 
-		title 		= new JLabel("Bug Report System (BRS)", SwingConstants.CENTER);
+		title 		= new JLabel("BugByte", SwingConstants.CENTER);
 		panelText 	= new JLabel(currentPanel, SwingConstants.CENTER);
 
 		panelText.setForeground(accentColor.brighter());
