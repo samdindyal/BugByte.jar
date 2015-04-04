@@ -19,8 +19,10 @@ public class BugSystem implements Serializable
 
 	public BugSystem()
 	{
-		users 	= new HashMap<String,User>();
-		bugs 	= new HashMap<String,Bug>();
+		users 			= new HashMap<String,User>();
+		bugs 			= new HashMap<String,Bug>();
+		currentUserID 	= "";
+
 	}
 
 	public BugSystem(String directory)
@@ -114,6 +116,6 @@ public class BugSystem implements Serializable
 		return true;
 	}
 
-	public boolean isLoggedIn(){return currentUserID.equals("");}
+	public boolean isLoggedIn(){return !currentUserID.equals("");}
 	
 }
