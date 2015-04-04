@@ -35,6 +35,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	private String	  			currentComponentName, previousComponentName;
 	private Pattern 			emailAddressPattern, usernamePattern, namePattern;
 	private Matcher 			matcher;
+	private Color 				mainColour, accentColour;
 
 	//Components for the frame
 	private JFrame 		frame;
@@ -80,6 +81,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 */
 	public BugByteUI()
 	{
+		initializeColours();
 		initializeFrame();
 		initializePatterns();
 
@@ -157,12 +159,12 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		signUp.setForeground(Color.LIGHT_GRAY);
 		loginStatus.setForeground(Color.RED);
 
-		usernameLabel.setForeground(Color.WHITE);
-		passwordLabel.setForeground(Color.WHITE);
-		forgotPassword.setForeground(Color.WHITE);
-		forgotUsername.setForeground(Color.WHITE);
-		signUp.setForeground(Color.WHITE);
-		loginStatus.setForeground(Color.WHITE);
+		usernameLabel.setForeground(accentColour);
+		passwordLabel.setForeground(accentColour);
+		forgotPassword.setForeground(accentColour);
+		forgotUsername.setForeground(accentColour);
+		signUp.setForeground(accentColour);
+		loginStatus.setForeground(accentColour);
 
 		loginButton.setEnabled(false);
 
@@ -249,13 +251,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		signUpButton = new JButton("Finish Sign Up");
 		signUpButton.setEnabled(false);
 
-		usernameLbl.setForeground(Color.WHITE);
-		passwordLbl.setForeground(Color.WHITE);
-		confirmPasswordLbl.setForeground(Color.WHITE);
-		firstNameLbl.setForeground(Color.WHITE);
-		lastNameLbl.setForeground(Color.WHITE);
-		emailAddressLbl.setForeground(Color.WHITE);
-		failedSignUpLbl.setForeground(Color.WHITE);
+		usernameLbl.setForeground(accentColour);
+		passwordLbl.setForeground(accentColour);
+		confirmPasswordLbl.setForeground(accentColour);
+		firstNameLbl.setForeground(accentColour);
+		lastNameLbl.setForeground(accentColour);
+		emailAddressLbl.setForeground(accentColour);
+		failedSignUpLbl.setForeground(accentColour);
 
 		failedSignUpLbl.setForeground(Color.RED);
 
@@ -369,7 +371,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		submitButton2.setEnabled(false);
 		forgotUsernameMessageLbl.setForeground(Color.GREEN.darker());
 
-		emailAddressLbl3.setForeground(Color.WHITE);
+		emailAddressLbl3.setForeground(accentColour);
 
 		inputLinePanel = new JPanel();
 		inputLinePanel.setBackground(Color.DARK_GRAY);
@@ -447,7 +449,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		usernameLbl2 = new JLabel("Username:");
 		usernameFld2 = new JTextField("", 15);
 
-		usernameLbl2.setForeground(Color.WHITE);
+		usernameLbl2.setForeground(accentColour);
 
 		usernameResetPanel.add(usernameLbl2);
 		usernameResetPanel.add(usernameFld2);
@@ -464,7 +466,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		emailAddressLbl2 = new JLabel("Email Address:");
 		emailAddressFld2 = new JTextField("", 15);
 
-		emailAddressLbl2.setForeground(Color.WHITE);
+		emailAddressLbl2.setForeground(accentColour);
 
 		emailAddressResetPanel.add(emailAddressLbl2);
 		emailAddressResetPanel.add(emailAddressFld2);
@@ -481,8 +483,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		emailAddressResetButton = new JRadioButton("Reset with email address");
 		buttonGroup 			= new ButtonGroup();
 
-		usernameResetButton.setForeground(Color.WHITE);
-		emailAddressResetButton.setForeground(Color.WHITE);
+		usernameResetButton.setForeground(accentColour);
+		emailAddressResetButton.setForeground(accentColour);
 
 		usernameResetButton.setSelected(true);
 
@@ -499,6 +501,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	public void initializeDashboardPanel()
 	{
 		dashboardPanel = new JTabbedPane();
+		dashboardPanel.setForeground(accentColour);
 
 		initializeAccountSummaryPanel();
 
@@ -530,13 +533,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		emailAddressMessageSummaryLabel.setForeground(Color.GREEN.darker());
 		passwordMessageSummaryLabel.setForeground(Color.GREEN.darker());
 
-		firstNameSummaryLabel.setForeground(Color.WHITE);
-		lastNameSummaryLabel.setForeground(Color.WHITE);
-		usernameSummaryLabel.setForeground(Color.WHITE);
-		emailAddressSummaryLabel.setForeground(Color.WHITE);
-		oldPasswordSummaryLabel.setForeground(Color.WHITE);
-		passwordSummaryLabel.setForeground(Color.WHITE);
-		confirmPasswordSummaryLabel.setForeground(Color.WHITE);
+		firstNameSummaryLabel.setForeground(accentColour);
+		lastNameSummaryLabel.setForeground(accentColour);
+		usernameSummaryLabel.setForeground(accentColour);
+		emailAddressSummaryLabel.setForeground(accentColour);
+		oldPasswordSummaryLabel.setForeground(accentColour);
+		passwordSummaryLabel.setForeground(accentColour);
+		confirmPasswordSummaryLabel.setForeground(accentColour);
 
 		firstNameSummaryField 		= new JTextField("", 15);
 		lastNameSummaryField 		= new JTextField("", 15);
@@ -666,6 +669,12 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 		regex 			= "^[a-zA-Z0-9]+";
 		namePattern 	= Pattern.compile(regex);
+	}
+
+	public void initializeColours()
+	{
+		mainColour = new Color(72, 157, 2);
+		accentColour = mainColour.brighter().brighter();
 	}
 
 	public void swapComponents(JComponent component, String componentName)

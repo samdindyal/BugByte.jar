@@ -13,7 +13,7 @@ public class TitlePanel extends JPanel
 	private JLabel title, panelText, panelImage;
 	private JPanel textPanel;
 	private String currentPanel;
-	private Color accentColor;
+	private Color accentColour;
 
 	private Font titleFont, bodyTextFont;
 
@@ -24,7 +24,7 @@ public class TitlePanel extends JPanel
 		setLayout(new BorderLayout());
 
 		panelImage = new JLabel(new ImageIcon(""));
-		accentColor = new Color(72, 157, 2);
+		accentColour = new Color(72, 157, 2);
 
 		titleFont 		= new Font ("Arial", Font.BOLD, 36);
 		bodyTextFont 	= new Font("Arial", Font.PLAIN, 14);
@@ -32,8 +32,8 @@ public class TitlePanel extends JPanel
 		title 		= new JLabel("BugByte", SwingConstants.CENTER);
 		panelText 	= new JLabel(currentPanel, SwingConstants.CENTER);
 
-		panelText.setForeground(accentColor.brighter());
-		title.setForeground(accentColor);
+		panelText.setForeground(accentColour.brighter());
+		title.setForeground(accentColour);
 
 		textPanel = new JPanel();
 		textPanel.setBackground(Color.DARK_GRAY);
