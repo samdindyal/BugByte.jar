@@ -601,8 +601,6 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		confirmPasswordSummaryField.addKeyListener(this);
 
 		submitSummaryButton.addActionListener(this);
-
-
 	}
 
 	public void initializePatterns()
@@ -636,8 +634,6 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		submitButton2.setVisible(component == forgotUsernamePanel);
 		signUpButton.setVisible(component == signUpPanel);
 		
-		
-
 		previousComponentName 	= currentComponentName;
 		currentComponentName 	= componentName;
 		previousComponent 		= currentComponent;
@@ -866,8 +862,75 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitButton2.doClick();
 		}
+		else if(	e.getSource() == firstNameSummaryField
+				||  e.getSource() == lastNameSummaryField
+				|| 	e.getSource() == emailAddressSummaryField
+				|| 	e.getSource() == passwordSummaryField
+				|| 	e.getSource() == confirmPasswordSummaryField)
+		{
+			submitSummaryButton.setEnabled(	isValidName(firstNameSummaryField.getText())
+										&&	isValidName(lastNameSummaryField.getText())
+										&&	isValidEmailAddress(emailAddressSummaryField.getText())
+										&&  (new String(((JPasswordField)passwordSummaryField).getPassword()).equals(new String(((JPasswordField)confirmPasswordSummaryField).getPassword()))
+																		&& passwordSummaryField.getText().length() > 0)
+				);
+			if (e.getKeyChar() == KeyEvent.VK_ENTER)
+				submitSummaryButton.doClick();
 
-
+			if (e.getSource() == firstNameSummaryField)
+			{
+				if (isValidName(firstNameSummaryField.getText()))
+				{
+					firstNameSummaryMessageLabel.setText("Looks good!");
+					firstNameSummaryMessageLabel.setForeground(Color.GREEN.darker());
+				}
+				else
+				{
+					firstNameSummaryMessageLabel.setText("That's a funny name...");
+					firstNameSummaryMessageLabel.setForeground(Color.RED);
+				}
+			}
+			if (e.getSource() == lastNameSummaryField)
+			{
+				if (isValidName(lastNameSummaryField.getText()))
+				{
+					lastNameSummaryMessageLabel.setText("Looks good!");
+					lastNameSummaryMessageLabel.setForeground(Color.GREEN.darker());
+				}
+				else
+				{
+					lastNameSummaryMessageLabel.setText("That's a funny name...");
+					lastNameSummaryMessageLabel.setForeground(Color.RED);
+				}
+			}
+			if (e.getSource() == emailAddressSummaryField)
+			{
+				if (isValidEmailAddress(emailAddressSummaryField.getText()))
+				{
+					emailAddressMessageSummaryLabel.setText("Looks good!");
+					emailAddressMessageSummaryLabel.setForeground(Color.GREEN.darker());
+				}
+				else
+				{
+					emailAddressMessageSummaryLabel.setText("That's not an email address!");
+					emailAddressMessageSummaryLabel.setForeground(Color.RED);
+				}
+			}
+			if (e.getSource() == passwordSummaryField || e.getSource() == confirmPasswordSummaryField)
+			{
+				if (new String(((JPasswordField)passwordSummaryField).getPassword()).equals(new String(((JPasswordField)confirmPasswordSummaryField).getPassword()))
+								&& passwordSummaryField.getText().length() > 0)
+				{
+					passwordMessageSummaryLabel.setText("Passwords match.");
+					passwordMessageSummaryLabel.setForeground(Color.GREEN.darker());
+				}
+				else
+				{
+					passwordMessageSummaryLabel.setText(((JPasswordField)passwordSummaryField).getPassword().length > 0 ? "Passwords do not match." : "");
+					passwordMessageSummaryLabel.setForeground(Color.RED);
+				}
+			}
+		}
 	}
 
 	@Override
