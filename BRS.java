@@ -70,7 +70,9 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	private JPanel		inputLinePanel;
 
 	//Components for account summary panel
-	
+	private JLabel 		firstNameSummaryLabel, lastNameSummaryLabel, usernameSummaryLabel, emailAddressSummaryLabel, passwordSummaryLabel, confirmPasswordSummaryLabel;
+	private JTextField	usernameSummaryField, emailAddressSummaryField, passwordSummaryField, confirmPasswordSummaryField;
+	private JButton     submitSummaryButton;
 
 /**
 	Creates a new BRS object
@@ -636,7 +638,6 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			toggleLogin();
 		else if (e.getSource() == usernameResetButton)
 			swapPasswordResetPanels(usernameResetPanel);
-		
 		else if(e.getSource() == emailAddressResetButton)
 			swapPasswordResetPanels(emailAddressResetPanel);
 		else if (e.getSource() == submitButton)
@@ -679,6 +680,9 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			loginButton.setEnabled(isValidUsername(usernameField.getText()) 
 				&& ((JPasswordField)passwordField).getPassword().length > 0);
 			loginStatus.setText("");
+
+			if (e.getKeyChar() == KeyEvent.VK_ENTER)
+				loginButton.doClick();
 		}
 
 		else if (	e.getSource() == usernameFld
@@ -687,6 +691,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			||  e.getSource() == firstNameFld
 			|| 	e.getSource() == lastNameFld
 			|| 	e.getSource() == emailAddressFld)
+		{
 				signUpButton.setEnabled(	isValidUsername(usernameFld.getText())
 										&&  ((JPasswordField)passwordFld).getPassword().length > 0
 										&&	new String(((JPasswordField)confirmPasswordFld).getPassword()).equals(new String(((JPasswordField)passwordFld).getPassword()))
@@ -694,20 +699,29 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 										&&	isValidName(lastNameFld.getText())
 										&&  isValidEmailAddress(emailAddressFld.getText())
 										);
+				if (e.getKeyChar() == KeyEvent.VK_ENTER)
+				signUpButton.doClick();
+		}
 		else if (e.getSource() == usernameFld2)
 		{
 			submitButton.setEnabled(isValidUsername(usernameFld2.getText()));
 			resetPasswordMessageLbl.setText("");
+			if (e.getKeyChar() == KeyEvent.VK_ENTER)
+				submitButton.doClick();
 		}
 		else if (e.getSource() == emailAddressFld2)
 		{
 			submitButton.setEnabled(isValidEmailAddress(emailAddressFld2.getText()));
 			resetPasswordMessageLbl.setText("");
+			if (e.getKeyChar() == KeyEvent.VK_ENTER)
+				submitButton.doClick();
 		}
 		else if (e.getSource() == emailAddressFld3)
 		{
 			submitButton2.setEnabled(isValidEmailAddress(emailAddressFld3.getText()));
 			forgotUsernameMessageLbl.setText("");
+			if (e.getKeyChar() == KeyEvent.VK_ENTER)
+				submitButton2.doClick();
 		}
 
 	}
