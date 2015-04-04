@@ -82,7 +82,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	{
 		initializeFrame();
 		initializePatterns();
-		initializeBugSystem();
+		
+		bugSystem = new BugSystem("res/bugsystem");
 
 		frame.setVisible(true);
 	}
@@ -617,11 +618,6 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		namePattern 	= Pattern.compile(regex);
 	}
 
-	public void initializeBugSystem()
-	{
-		bugSystem = new BugSystem("res/bugsystem");
-	}
-
 	public void swapComponents(JComponent component, String componentName)
 	{
 		frame.remove(currentComponent);
@@ -699,7 +695,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 				previousComponentName = "Logged in as " + usernameField.getText();
 
-				populateAccountSummaryFields(new String(((JPasswordField)passwordFld).getPassword()));
+				populateAccountSummaryFields(new String(((JPasswordField)passwordField).getPassword()));
 
 				submitSummaryButton.setVisible(true);
 			}
