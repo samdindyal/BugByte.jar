@@ -593,6 +593,16 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 		submitSummaryButton.setVisible(false);
 		submitSummaryButton.setEnabled(false);
+
+		firstNameSummaryField.addKeyListener(this);
+		lastNameSummaryField.addKeyListener(this);
+		emailAddressSummaryField.addKeyListener(this);
+		passwordSummaryField.addKeyListener(this);
+		confirmPasswordSummaryField.addKeyListener(this);
+
+		submitSummaryButton.addActionListener(this);
+
+
 	}
 
 	public void initializePatterns()
@@ -694,11 +704,6 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 				previousComponentName = "Logged in as " + usernameField.getText();
 
 				submitSummaryButton.setVisible(true);
-
-				// navigationPanel.invalidate();
-				// navigationPanel.validate();
-				// navigationPanel.repaint();
-				
 			}
 			else
 			{
@@ -861,6 +866,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitButton2.doClick();
 		}
+
 
 	}
 
