@@ -94,7 +94,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	public void initializeFrame()
 	{
 		//Build the frame
-		frame = new JFrame("Bug Report System (BSR)");
+		frame = new JFrame("Bug Report System (BRS)");
 		frame.setSize(720, 500);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
