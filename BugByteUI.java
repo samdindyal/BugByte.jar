@@ -9,6 +9,8 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JTabbedPane;
 import javax.swing.JComponent;
+import javax.swing.ImageIcon;
+import javax.swing.UIManager;
 
 import java.awt.Color;
 import java.awt.BorderLayout;
@@ -82,10 +84,15 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	public BugByteUI()
 	{
 		initializeColours();
-		initializeFrame();
 		initializePatterns();
-
 		bugReportSystem = new BugReportSystem("res/bugreportsystem.bb");
+
+		try{
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}catch(Exception e){}
+
+		
+		initializeFrame();
 
 		frame.setVisible(true);
 	}
@@ -102,6 +109,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(Color.DARK_GRAY);
+		frame.setIconImage(new ImageIcon("res/logo.png").getImage());
 		frame.setLayout(new BorderLayout());
 
 		//Initialize the frame's components
