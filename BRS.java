@@ -99,7 +99,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setBackground(Color.WHITE);
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
 		frame.setLayout(new BorderLayout());
 
 		//Initialize the frame's components
@@ -135,7 +135,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		loginPanel = new JPanel();
 
 		loginPanel.setLayout(new GridBagLayout());
-		loginPanel.setBackground(Color.WHITE);
+		loginPanel.setBackground(Color.DARK_GRAY);
 
 		c = new GridBagConstraints();
 
@@ -152,10 +152,17 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		loginButton 	= new JButton("Log In");
 		
 		//Set text colour for some components
-		forgotPassword.setForeground(Color.GRAY);
-		forgotUsername.setForeground(Color.GRAY);
-		signUp.setForeground(Color.GRAY);
+		forgotPassword.setForeground(Color.LIGHT_GRAY);
+		forgotUsername.setForeground(Color.LIGHT_GRAY);
+		signUp.setForeground(Color.LIGHT_GRAY);
 		loginStatus.setForeground(Color.RED);
+
+		usernameLabel.setForeground(Color.WHITE);
+		passwordLabel.setForeground(Color.WHITE);
+		forgotPassword.setForeground(Color.WHITE);
+		forgotUsername.setForeground(Color.WHITE);
+		signUp.setForeground(Color.WHITE);
+		loginStatus.setForeground(Color.WHITE);
 
 		loginButton.setEnabled(false);
 
@@ -220,7 +227,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	{
 		signUpPanel = new JPanel();
 		signUpPanel.setLayout(new GridBagLayout());
-		signUpPanel.setBackground(Color.WHITE);
+		signUpPanel.setBackground(Color.DARK_GRAY);
 
 		c = new GridBagConstraints();
 
@@ -241,6 +248,14 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 		signUpButton = new JButton("Finish Sign Up");
 		signUpButton.setEnabled(false);
+
+		usernameLbl.setForeground(Color.WHITE);
+		passwordLbl.setForeground(Color.WHITE);
+		confirmPasswordLbl.setForeground(Color.WHITE);
+		firstNameLbl.setForeground(Color.WHITE);
+		lastNameLbl.setForeground(Color.WHITE);
+		emailAddressLbl.setForeground(Color.WHITE);
+		failedSignUpLbl.setForeground(Color.WHITE);
 
 		failedSignUpLbl.setForeground(Color.RED);
 
@@ -325,7 +340,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	public void initializeNavigationPanel()
 	{
 		navigationPanel = new JPanel();
-		navigationPanel.setBackground(Color.WHITE);
+		navigationPanel.setBackground(Color.DARK_GRAY);
 
 		backButton 		= new JButton("Go Back");
 		dashboardButton = new JButton("Dashboard");
@@ -344,7 +359,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	{
 		forgotUsernamePanel = new JPanel();
 		forgotUsernamePanel.setLayout(new GridBagLayout());
-		forgotUsernamePanel.setBackground(Color.WHITE);
+		forgotUsernamePanel.setBackground(Color.DARK_GRAY);
 
 		emailAddressLbl3 			= new JLabel("Email Address:");
 		emailAddressFld3 			= new JTextField("", 15);
@@ -354,8 +369,10 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		submitButton2.setEnabled(false);
 		forgotUsernameMessageLbl.setForeground(Color.GREEN.darker());
 
+		emailAddressLbl3.setForeground(Color.WHITE);
+
 		inputLinePanel = new JPanel();
-		inputLinePanel.setBackground(Color.WHITE);
+		inputLinePanel.setBackground(Color.DARK_GRAY);
 
 		inputLinePanel.add(emailAddressLbl3);
 		inputLinePanel.add(emailAddressFld3);
@@ -384,7 +401,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	{
 		forgotPasswordPanel = new JPanel();
 		forgotPasswordPanel.setLayout(new GridBagLayout());
-		forgotPasswordPanel.setBackground(Color.WHITE);
+		forgotPasswordPanel.setBackground(Color.DARK_GRAY);
 
 		submitButton = new JButton("Submit");
 		submitButton.setEnabled(false);
@@ -392,6 +409,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		resetPasswordMessageLbl = new JLabel("", SwingConstants.CENTER);
 
 		resetPasswordMessageLbl.setForeground(Color.GREEN.darker());
+
 
 		initializeUsernameResetPanel();
 		initializeEmailAddressResetPanel();
@@ -424,10 +442,12 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	public void initializeUsernameResetPanel()
 	{
 		usernameResetPanel = new JPanel();
-		usernameResetPanel.setBackground(Color.WHITE);
+		usernameResetPanel.setBackground(Color.DARK_GRAY);
 
 		usernameLbl2 = new JLabel("Username:");
 		usernameFld2 = new JTextField("", 15);
+
+		usernameLbl2.setForeground(Color.WHITE);
 
 		usernameResetPanel.add(usernameLbl2);
 		usernameResetPanel.add(usernameFld2);
@@ -439,10 +459,12 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	{
 		emailAddressResetPanel = new JPanel();
 
-		emailAddressResetPanel.setBackground(Color.WHITE);
+		emailAddressResetPanel.setBackground(Color.DARK_GRAY);
 
 		emailAddressLbl2 = new JLabel("Email Address:");
 		emailAddressFld2 = new JTextField("", 15);
+
+		emailAddressLbl2.setForeground(Color.WHITE);
 
 		emailAddressResetPanel.add(emailAddressLbl2);
 		emailAddressResetPanel.add(emailAddressFld2);
@@ -453,11 +475,14 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	public void initializeTogglePanel()
 	{
 		togglePanel = new JPanel();
-		togglePanel.setBackground(Color.WHITE);
+		togglePanel.setBackground(Color.DARK_GRAY);
 
 		usernameResetButton 	= new JRadioButton("Reset with username");
 		emailAddressResetButton = new JRadioButton("Reset with email address");
 		buttonGroup 			= new ButtonGroup();
+
+		usernameResetButton.setForeground(Color.WHITE);
+		emailAddressResetButton.setForeground(Color.WHITE);
 
 		usernameResetButton.setSelected(true);
 
@@ -484,7 +509,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	{
 		accountSummaryPanel = new JPanel();
 		accountSummaryPanel.setLayout(new GridBagLayout());
-		accountSummaryPanel.setBackground(Color.WHITE);
+		accountSummaryPanel.setBackground(Color.DARK_GRAY);
 
 		firstNameSummaryLabel 		= new JLabel("First Name:");
 		lastNameSummaryLabel 		= new JLabel("Last Name:");
@@ -504,6 +529,14 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		lastNameSummaryMessageLabel.setForeground(Color.GREEN.darker());
 		emailAddressMessageSummaryLabel.setForeground(Color.GREEN.darker());
 		passwordMessageSummaryLabel.setForeground(Color.GREEN.darker());
+
+		firstNameSummaryLabel.setForeground(Color.WHITE);
+		lastNameSummaryLabel.setForeground(Color.WHITE);
+		usernameSummaryLabel.setForeground(Color.WHITE);
+		emailAddressSummaryLabel.setForeground(Color.WHITE);
+		oldPasswordSummaryLabel.setForeground(Color.WHITE);
+		passwordSummaryLabel.setForeground(Color.WHITE);
+		confirmPasswordSummaryLabel.setForeground(Color.WHITE);
 
 		firstNameSummaryField 		= new JTextField("", 15);
 		lastNameSummaryField 		= new JTextField("", 15);
