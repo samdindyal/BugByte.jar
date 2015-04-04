@@ -116,5 +116,12 @@ public class BugSystem implements Serializable
 	}
 
 	public boolean isLoggedIn(){return !currentUserID.equals("");}
+
+	public User getUserAccount(String password)
+	{
+		if (users.get(currentUserID).authenticate(password))
+			return users.get(currentUserID);
+		return null;
+	}
 	
 }
