@@ -97,7 +97,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	{
 		//Build the frame
 		frame = new JFrame("BugByte");
-		frame.setSize(720, 500);
+		frame.setSize(720, 520);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -640,7 +640,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		c.gridx = 0;
 		c.gridy++;
 		c.gridwidth = 3;
-		c.insets = new Insets(25, 0, 0, 0);
+		c.insets = new Insets(15, 0, 0, 0);
 
 		accountSummaryPanel.add(accountSummaryMessageLabel, c);
 
