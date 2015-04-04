@@ -14,7 +14,7 @@ public class BugSystem implements Serializable
 	private HashMap<String, User> 		users;
 	private HashMap<String, Bug> 		bugs;
 
-	private String 						currentUserID;
+	private transient String 			currentUserID;
 	private File 						file;
 
 	public BugSystem()
@@ -78,7 +78,7 @@ public class BugSystem implements Serializable
 			users = objectIn.users;
 			bugs = objectIn.bugs;
 
-			currentUserID = objectIn.currentUserID;
+			currentUserID = "";
 			System.out.println("Successfully loaded \"" + file.getPath() + "\"");
 
 			return true;
