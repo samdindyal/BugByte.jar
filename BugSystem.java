@@ -31,16 +31,8 @@ public class BugSystem implements Serializable
 
 		file = new File(directory);
 
-		try{
-			if (file.isFile())
-				loadFromDisk();
-			else
-			{
-				System.out.println("\"" + file.getPath() + "\" not found");
+		if (!loadFromDisk())
 				writeToDisk();
-			}
-		}catch(Exception e){}
-
 	}
 
 	public boolean addUser(String username, String password, String firstName, String lastName, String emailAddress)
@@ -58,22 +50,25 @@ public class BugSystem implements Serializable
 		bugs.put(id, new Bug(status, priority, description, id));
 	}
 
-	public void writeToDisk()
+	public boolean writeToDisk()
 	{
 		try
 		{
-				System.out.println("Writing to \"" + file.getPath() + "\"...");
+
+				System.out.println((file.isFile() ? "Overwriting \"" : "Writing to \"" ) + file.getPath() + "\"...");
 				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 				oos.writeObject(this);
 				System.out.println("Successfully wrote to \"" + file.getPath() + "\"");
+				return true;
 		}
 		catch(Exception e)
 		{
 			System.err.println("Failed to write to \"" + file.getPath() + "\"");
+			return false;
 		}
 	}
 
-	public void loadFromDisk()
+	public boolean loadFromDisk()
 	{
 		try
 		{
@@ -86,10 +81,13 @@ public class BugSystem implements Serializable
 
 			currentUserID = objectIn.currentUserID;
 			System.out.println("Successfully loaded \"" + file.getPath() + "\"");
+
+			return true;
 		}
 		catch(Exception e)
 		{
 			System.err.println("Failed to load \"" + file.getPath() + "\"");
+			return false;
 		}
 	}
 
