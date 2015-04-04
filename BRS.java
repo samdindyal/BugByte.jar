@@ -70,9 +70,9 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	private JPanel		inputLinePanel;
 
 	//Components for account summary panel
-	private JLabel 		firstNameSummaryLabel, lastNameSummaryLabel, usernameSummaryLabel, emailAddressSummaryLabel, passwordSummaryLabel, confirmPasswordSummaryLabel, accountSummaryMessageLabel;
+	private JLabel 		firstNameSummaryLabel, lastNameSummaryLabel, usernameSummaryLabel, emailAddressSummaryLabel, passwordSummaryLabel, confirmPasswordSummaryLabel, oldPasswordSummaryLabel, accountSummaryMessageLabel;
 	private JLabel		firstNameSummaryMessageLabel, lastNameSummaryMessageLabel, emailAddressMessageSummaryLabel, passwordMessageSummaryLabel;
-	private JTextField	firstNameSummaryField, lastNameSummaryField, usernameSummaryField, emailAddressSummaryField, passwordSummaryField, confirmPasswordSummaryField;
+	private JTextField	firstNameSummaryField, lastNameSummaryField, usernameSummaryField, emailAddressSummaryField, passwordSummaryField, confirmPasswordSummaryField, oldPasswordSummaryField;
 	private JButton     submitSummaryButton;
 
 /**
@@ -82,7 +82,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	{
 		initializeFrame();
 		initializePatterns();
-		
+
 		bugSystem = new BugSystem("res/bugsystem");
 
 		frame.setVisible(true);
@@ -95,7 +95,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	{
 		//Build the frame
 		frame = new JFrame("Bug Report System (BSR)");
-		frame.setSize(720, 480);
+		frame.setSize(720, 500);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -485,6 +485,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		lastNameSummaryLabel 		= new JLabel("Last Name:");
 		usernameSummaryLabel 		= new JLabel("Username:");
 		emailAddressSummaryLabel 	= new JLabel("Email address:");
+		oldPasswordSummaryLabel		= new JLabel("Old password:");
 		passwordSummaryLabel 		= new JLabel("Password:");
 		confirmPasswordSummaryLabel = new JLabel("Confirm Password:");
 		accountSummaryMessageLabel 	= new JLabel(""); 
@@ -503,6 +504,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		lastNameSummaryField 		= new JTextField("", 15);
 		usernameSummaryField 		= new JTextField("", 15);
 		emailAddressSummaryField 	= new JTextField("", 15);
+		oldPasswordSummaryField 	= new JPasswordField("", 15);
 		passwordSummaryField 		= new JPasswordField("", 15);
 		confirmPasswordSummaryField = new JPasswordField("", 15);
 
@@ -564,6 +566,15 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		c.gridy++;
 		c.gridx = 0;
 
+		accountSummaryPanel.add(oldPasswordSummaryLabel, c);
+
+		c.gridx++;
+
+		accountSummaryPanel.add(oldPasswordSummaryField, c);
+
+		c.gridy++;
+		c.gridx = 0;
+
 		accountSummaryPanel.add(passwordSummaryLabel, c);
 
 		c.gridx++;
@@ -600,6 +611,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		emailAddressSummaryField.addKeyListener(this);
 		passwordSummaryField.addKeyListener(this);
 		confirmPasswordSummaryField.addKeyListener(this);
+		oldPasswordSummaryField.addKeyListener(this);
 
 		submitSummaryButton.addActionListener(this);
 	}
@@ -767,8 +779,6 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		firstNameSummaryField.setText(user.getFirstName());
 		lastNameSummaryField.setText(user.getLastName());
 		emailAddressSummaryField.setText(user.getEmailAddress());
-		passwordSummaryField.setText("**********");
-		confirmPasswordSummaryField.setText("**********");
 	}
 
 	public void resetPassword()
@@ -777,6 +787,36 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			resetPasswordMessageLbl.setText("An email with a password reset link has been send to " + emailAddressFld2.getText() + ".");
 		else
 			resetPasswordMessageLbl.setText("An email with a password reset link has been send to the email associated it your account.");
+	}
+
+	public boolean submitAccountChanges(String password)
+	{
+		User user;
+		if ((user = bugSystem.getUserAccount(new String(((JPasswordField)oldPasswordSummaryField).getPassword()))) == null)
+		{
+			accountSummaryMessageLabel.setForeground(Color.RED);
+			accountSummaryMessageLabel.setText("Incorrect password. Please try again.");
+		 	return false;
+		}
+
+		user.setfirstName(firstNameSummaryField.getText());
+		user.setlastName(lastNameSummaryField.getText());
+		user.setEmailAddress(emailAddressSummaryField.getText());
+
+		if (!passwordMessageSummaryLabel.equals(""))
+			user.setPassword(password);
+
+		accountSummaryMessageLabel.setForeground(Color.GREEN.darker());
+		accountSummaryMessageLabel.setText("All changes have been sucessfully saved.");
+
+		firstNameSummaryMessageLabel.setText("");
+		lastNameSummaryMessageLabel.setText("");
+		emailAddressMessageSummaryLabel.setText("");
+		passwordMessageSummaryLabel.setText("");
+
+		bugSystem.writeToDisk();
+
+		return true;
 	}
 
 	@Override
@@ -796,6 +836,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			forgotUsernameMessageLbl.setText("An email containing your username has been sent to " + emailAddressFld3.getText() + ".");
 		else if (e.getSource() == signUpButton)
 			signUp();
+		else if (e.getSource() == submitSummaryButton)
+			submitAccountChanges(new String(((JPasswordField)passwordSummaryField).getPassword()));
 	}
 
 	@Override
@@ -876,14 +918,18 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 				||  e.getSource() == lastNameSummaryField
 				|| 	e.getSource() == emailAddressSummaryField
 				|| 	e.getSource() == passwordSummaryField
-				|| 	e.getSource() == confirmPasswordSummaryField)
+				|| 	e.getSource() == confirmPasswordSummaryField
+				|| 	e.getSource() == oldPasswordSummaryField)
 		{
 			submitSummaryButton.setEnabled(	isValidName(firstNameSummaryField.getText())
 										&&	isValidName(lastNameSummaryField.getText())
 										&&	isValidEmailAddress(emailAddressSummaryField.getText())
 										&&  (new String(((JPasswordField)passwordSummaryField).getPassword()).equals(new String(((JPasswordField)confirmPasswordSummaryField).getPassword()))
 																		&& passwordSummaryField.getText().length() > 0)
+										&&  ((JPasswordField)oldPasswordSummaryField).getPassword().length > 0
 				);
+
+			accountSummaryMessageLabel.setText("");
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitSummaryButton.doClick();
 
