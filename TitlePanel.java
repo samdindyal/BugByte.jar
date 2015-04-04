@@ -11,8 +11,9 @@ import java.awt.BorderLayout;
 public class TitlePanel extends JPanel
 {
 	private JLabel title, panelText, panelImage;
-	private JPanel textPanel, redStripe;
+	private JPanel textPanel;
 	private String currentPanel;
+	private Color accentColor;
 
 	private Font titleFont, bodyTextFont;
 
@@ -23,18 +24,16 @@ public class TitlePanel extends JPanel
 		setLayout(new BorderLayout());
 
 		panelImage = new JLabel(new ImageIcon(""));
-
-		redStripe = new JPanel();
-		redStripe.setBackground(Color.RED);
+		accentColor = new Color(29, 126, 194);
 
 		titleFont 		= new Font ("Arial", Font.BOLD, 36);
 		bodyTextFont 	= new Font("Arial", Font.PLAIN, 14);
 
 		title 		= new JLabel("Bug Report System (BRS)", SwingConstants.CENTER);
-		panelText 	= new JLabel(currentPanel, SwingConstants.RIGHT);
+		panelText 	= new JLabel(currentPanel, SwingConstants.CENTER);
 
-		panelText.setForeground(Color.LIGHT_GRAY);
-		title.setForeground(Color.WHITE);
+		panelText.setForeground(accentColor.brighter());
+		title.setForeground(accentColor);
 
 		textPanel = new JPanel();
 		textPanel.setBackground(Color.DARK_GRAY);
@@ -48,7 +47,6 @@ public class TitlePanel extends JPanel
 
 		add(textPanel, BorderLayout.CENTER);
 		add(panelImage, BorderLayout.WEST);
-		add(redStripe, BorderLayout.SOUTH);
 
 	}
 
