@@ -7,6 +7,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JTabbedPane;
+import javax.swing.JComponent;
 
 import java.awt.Color;
 import java.awt.BorderLayout;
@@ -28,14 +30,15 @@ import java.util.regex.Matcher;
 public class BRS implements ActionListener, MouseListener, KeyListener
 {
 	private BugSystem 	bugSystem;
-	private JPanel 	  	currentPanel, previousPanel;
-	private String	  	currentPanelName, previousPanelName;
+	private JComponent  currentComponent, previousComponent;
+	private String	  	currentComponentName, previousComponentName;
 	private Pattern 	emailAddressPattern, usernamePattern, namePattern;
 	private Matcher 	matcher;
 
 	//Components for the frame
-	private JFrame 	frame;
-	private JPanel	titlePanel, loginPanel, signUpPanel, navigationPanel, forgotPasswordPanel, forgotUsernamePanel, submitBugPanel, dashboardPanel;
+	private JFrame 		frame;
+	private JPanel		titlePanel, loginPanel, signUpPanel, navigationPanel, forgotPasswordPanel, forgotUsernamePanel, submitBugPanel, accountSummaryPanel;
+	private JTabbedPane dashboardPanel;
 
 	//Components for the login panel
 	private JLabel		 usernameLabel, passwordLabel, forgotPassword, forgotUsername, signUp, loginStatus;
@@ -65,6 +68,9 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	private JTextField	emailAddressFld3;
 	private JButton 	submitButton2;
 	private JPanel		inputLinePanel;
+
+	//Components for account summary panel
+	
 
 /**
 	Creates a new BRS object
@@ -105,8 +111,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		frame.add(titlePanel, BorderLayout.NORTH);
 		frame.add(loginPanel, BorderLayout.CENTER);
 		frame.add(navigationPanel, BorderLayout.SOUTH);
-		currentPanel 		= loginPanel;
-		currentPanelName 	= "Login";
+		currentComponent 	= loginPanel;
+		currentComponentName 	= "Login";
 	}
 
 	public void initializeSubmitBugPanel()
@@ -462,7 +468,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 	public void initializeDashboardPanel()
 	{
-		dashboardPanel = new JPanel();
+		dashboardPanel = new JTabbedPane();
 	}
 
 	public void initializePatterns()
@@ -484,19 +490,19 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		bugSystem = new BugSystem("res/bugsystem");
 	}
 
-	public void swapPanels(JPanel panel, String panelName)
+	public void swapComponents(JComponent component, String componentName)
 	{
-		frame.remove(currentPanel);
-		frame.add(panel, BorderLayout.CENTER);
+		frame.remove(currentComponent);
+		frame.add(component, BorderLayout.CENTER);
 		frame.validate();
 		frame.repaint();
 
-		previousPanelName 	= currentPanelName;
-		currentPanelName 	= panelName;
-		previousPanel 		= currentPanel;
-		currentPanel 		= panel;
+		previousComponentName 	= currentComponentName;
+		currentComponentName 	= componentName;
+		previousComponent 		= currentComponent;
+		currentComponent 		= component;
 
-		((TitlePanel)titlePanel).setCurrentPanel(panelName);
+		((TitlePanel)titlePanel).setCurrentPanel(componentName);
 	}
 
 	public void swapPasswordResetPanels(JPanel panel)
@@ -546,7 +552,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			if (bugSystem.login(usernameField.getText(), String.valueOf(((JPasswordField)passwordField).getPassword())))
 			{
 				loginStatus.setText("");
-				swapPanels(dashboardPanel, "Dashboard");
+				swapComponents(dashboardPanel, "Dashboard");
 				System.out.println("Login successful.");
 
 				usernameField.setEnabled(false);
@@ -563,7 +569,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		}
 		else if (bugSystem.logout())
 		{
-			swapPanels(loginPanel, "Login");
+			swapComponents(loginPanel, "Login");
 
 			usernameField.setEnabled(true);
 			passwordField.setEnabled(true);
@@ -591,7 +597,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 							emailAddressFld.getText()))
 		{
 			bugSystem.writeToDisk();
-			swapPanels(dashboardPanel, "Dashboard");
+			swapComponents(dashboardPanel, "Dashboard");
 			System.out.println("Sign Up Successful.");
 
 			usernameField.setEnabled(false);
@@ -602,9 +608,10 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 			passwordField.setText(new String(((JPasswordField)passwordFld).getPassword()));
 
 			loginButton.setText("Logout");
+			loginStatus.setText("");
 
-			previousPanel 		= loginPanel;
-			previousPanelName	= "Login";
+			previousComponent 		= loginPanel;
+			previousComponentName	= "Login";
 
 			bugSystem.login(usernameFld.getText(), new String(((JPasswordField)passwordFld).getPassword()));
 		}
@@ -623,8 +630,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == backButton && previousPanel != null)
-			swapPanels(previousPanel, previousPanelName);
+		if (e.getSource() == backButton && previousComponent != null)
+			swapComponents(previousComponent, previousComponentName);
 		if (e.getSource() == loginButton)
 			toggleLogin();
 		else if (e.getSource() == usernameResetButton)
@@ -644,11 +651,11 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	public void mouseClicked(MouseEvent e)
 	{
 		if (e.getSource() == signUp)
-			swapPanels(signUpPanel, "Sign Up");
+			swapComponents(signUpPanel, "Sign Up");
 		else if (e.getSource() == forgotPassword)
-			swapPanels(forgotPasswordPanel, "Forgot Password");
+			swapComponents(forgotPasswordPanel, "Forgot Password");
 		else if (e.getSource() == forgotUsername)
-			swapPanels(forgotUsernamePanel, "Forgot Username");
+			swapComponents(forgotUsernamePanel, "Forgot Username");
 
 	}
 
