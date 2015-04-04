@@ -53,7 +53,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	private JButton 	signUpButton;
 
 	//Components for the navigation panel
-	private JButton	backButton, resetButton;
+	private JButton	backButton;
 
 	//Components for the forgot password panel
 	private JLabel			usernameLbl2, emailAddressLbl2, resetTypeLbl, resetPasswordMessageLbl;
@@ -70,8 +70,8 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	private JPanel		inputLinePanel;
 
 	//Components for account summary panel
-	private JLabel 		firstNameSummaryLabel, lastNameSummaryLabel, usernameSummaryLabel, emailAddressSummaryLabel, passwordSummaryLabel, confirmPasswordSummaryLabel;
-	private JTextField	usernameSummaryField, emailAddressSummaryField, passwordSummaryField, confirmPasswordSummaryField;
+	private JLabel 		firstNameSummaryLabel, lastNameSummaryLabel, usernameSummaryLabel, emailAddressSummaryLabel, passwordSummaryLabel, confirmPasswordSummaryLabel, accountSummaryMessageLabel, confirmPasswordSummaryMessageLabel;
+	private JTextField	firstNameSummaryField, lastNameSummaryField, usernameSummaryField, emailAddressSummaryField, passwordSummaryField, confirmPasswordSummaryField;
 	private JButton     submitSummaryButton;
 
 /**
@@ -102,9 +102,9 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 		//Initialize the frame's components
 		titlePanel = new TitlePanel("Login");
+		initializeNavigationPanel();
 		initializeLoginPanel();
 		initializeSignUpPanel();
-		initializeNavigationPanel();
 		initializeForgotPasswordPanel();
 		initializeForgotUsernamePanel();
 		initializeDashboardPanel();
@@ -165,42 +165,38 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 		loginPanel.add(usernameLabel, c);
 
-		c.gridy = 1;
+		c.gridy++;
 
 		loginPanel.add(usernameField, c);
 
-		c.gridy = 2;
+		c.gridy++;
 
 		loginPanel.add(passwordLabel, c);
 
-		c.gridy = 3;
+		c.gridy++;
 
 		loginPanel.add(passwordField,c);
 
-		c.gridy 	= 4;
-		c.gridwidth = 2;
-		
+		navigationPanel.add(loginButton);
 
-		loginPanel.add(loginButton, c);
-
-		c.gridy 	= 5;
+		c.gridy++;
 		c.gridwidth = 3;
 		c.insets = new Insets(25,0,25,0);
 
 		loginPanel.add(loginStatus, c);
 
 		c.gridwidth = 2;
-		c.gridy 	= 6;
+		c.gridy++;
 		c.insets = new Insets(0,0,0,0);
 		
 
 		loginPanel.add(forgotPassword, c);
 
-		c.gridy = 7;
+		c.gridy++;
 
 		loginPanel.add(forgotUsername, c);
 
-		c.gridy = 8;
+		c.gridy++;
 
 		loginPanel.add(signUp, c);
 
@@ -310,7 +306,9 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		c.gridy++;
 		c.insets 	= new Insets(0,0,0,0);
 
-		signUpPanel.add(signUpButton, c);
+		navigationPanel.add(signUpButton);
+
+		signUpButton.setVisible(false);
 
 		usernameFld.addKeyListener(this);
 		passwordFld.addKeyListener(this);
@@ -325,11 +323,9 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	{
 		navigationPanel = new JPanel();
 
-		backButton 		= new JButton("Go Back");
-		resetButton 	= new JButton("Reset");
+		backButton = new JButton("Go Back");
 
 		navigationPanel.add(backButton);
-		navigationPanel.add(resetButton);
 
 		backButton.addActionListener(this);
 
@@ -367,10 +363,9 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 		forgotUsernamePanel.add(forgotUsernameMessageLbl, c);
 
-		c.gridy++;
-		c.insets = new Insets(0, 0, 0, 0);
+		navigationPanel.add(submitButton2);
 
-		forgotUsernamePanel.add(submitButton2, c);
+		submitButton2.setVisible(false);
 
 		emailAddressFld3.addKeyListener(this);
 		submitButton2.addActionListener(this);
@@ -410,10 +405,9 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		
 		forgotPasswordPanel.add(resetPasswordMessageLbl, c);
 
-		c.gridy++;
-		c.insets = new Insets(0,0,0,0);
+		navigationPanel.add(submitButton);
 
-		forgotPasswordPanel.add(submitButton, c);
+		submitButton.setVisible(false);
 
 		submitButton.addActionListener(this);
 	}
@@ -454,7 +448,7 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 
 		usernameResetButton 	= new JRadioButton("Reset with username");
 		emailAddressResetButton = new JRadioButton("Reset with email address");
-		buttonGroup = new ButtonGroup();
+		buttonGroup 			= new ButtonGroup();
 
 		usernameResetButton.setSelected(true);
 
@@ -471,6 +465,104 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 	public void initializeDashboardPanel()
 	{
 		dashboardPanel = new JTabbedPane();
+
+		initializeAccountSummaryPanel();
+
+		dashboardPanel.addTab("Account Summary", null, accountSummaryPanel, "Account Summary");
+	}
+
+	public void initializeAccountSummaryPanel()
+	{
+		accountSummaryPanel = new JPanel();
+		accountSummaryPanel.setLayout(new GridBagLayout());
+		accountSummaryPanel.setBackground(Color.WHITE);
+
+		firstNameSummaryLabel 		= new JLabel("First Name:");
+		lastNameSummaryLabel 		= new JLabel("Last Name:");
+		usernameSummaryLabel 		= new JLabel("Username:");
+		emailAddressSummaryLabel 	= new JLabel("Email address:");
+		passwordSummaryLabel 		= new JLabel("Password:");
+		confirmPasswordSummaryLabel = new JLabel("Confirm Password:");
+		accountSummaryMessageLabel 	= new JLabel("Success!"); 
+
+		firstNameSummaryField 		= new JTextField("", 15);
+		lastNameSummaryField 		= new JTextField("", 15);
+		usernameSummaryField 		= new JTextField("", 15);
+		emailAddressSummaryField 	= new JTextField("", 15);
+		passwordSummaryField 		= new JPasswordField("", 15);
+		confirmPasswordSummaryField = new JPasswordField("", 15);
+
+		submitSummaryButton = new JButton("Submit changes");
+
+		usernameSummaryField.setEnabled(false);
+		accountSummaryMessageLabel.setForeground(Color.GREEN.darker());
+
+		c = new GridBagConstraints();
+
+		c.gridx = 0;
+		c.gridy = 0;
+
+		accountSummaryPanel.add(firstNameSummaryLabel, c);
+
+		c.gridx++;
+
+		accountSummaryPanel.add(firstNameSummaryField, c);
+
+		c.gridx = 0;
+		c.gridy++;
+
+		accountSummaryPanel.add(lastNameSummaryLabel, c);
+
+		c.gridx++;
+
+		accountSummaryPanel.add(lastNameSummaryField, c);
+
+		c.gridx = 0;
+		c.gridy++;
+
+		accountSummaryPanel.add(usernameSummaryLabel, c);
+
+		c.gridx++;
+
+		accountSummaryPanel.add(usernameSummaryField, c);
+
+		c.gridy++;
+		c.gridx = 0;
+
+		accountSummaryPanel.add(emailAddressSummaryLabel, c);
+
+		c.gridx++;
+
+		accountSummaryPanel.add(emailAddressSummaryField, c);
+
+		c.gridy++;
+		c.gridx = 0;
+
+		accountSummaryPanel.add(passwordSummaryLabel, c);
+
+		c.gridx++;
+
+		accountSummaryPanel.add(passwordSummaryField, c);
+
+		c.gridy++;
+		c.gridx = 0;
+
+		accountSummaryPanel.add(confirmPasswordSummaryLabel, c);
+
+		c.gridx++;
+
+		accountSummaryPanel.add(confirmPasswordSummaryField, c);
+
+		c.gridx = 0;
+		c.gridy++;
+		c.gridwidth = 2;
+		c.insets = new Insets(25, 0, 0, 0);
+
+		accountSummaryPanel.add(accountSummaryMessageLabel, c);
+
+		navigationPanel.add(submitSummaryButton);
+
+		submitSummaryButton.setVisible(false);
 	}
 
 	public void initializePatterns()
@@ -498,6 +590,13 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 		frame.add(component, BorderLayout.CENTER);
 		frame.validate();
 		frame.repaint();
+
+		submitSummaryButton.setVisible(component == dashboardPanel);
+		submitButton.setVisible(component == forgotPasswordPanel);
+		submitButton2.setVisible(component == forgotUsernamePanel);
+		signUpButton.setVisible(component == signUpPanel);
+		
+		
 
 		previousComponentName 	= currentComponentName;
 		currentComponentName 	= componentName;
@@ -561,6 +660,15 @@ public class BRS implements ActionListener, MouseListener, KeyListener
 				passwordField.setEnabled(false);
 
 				loginButton.setText("Logout");
+
+				previousComponentName = "Logged in as " + usernameField.getText();
+
+				submitSummaryButton.setVisible(true);
+
+				// navigationPanel.invalidate();
+				// navigationPanel.validate();
+				// navigationPanel.repaint();
+				
 			}
 			else
 			{
