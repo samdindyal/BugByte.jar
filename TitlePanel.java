@@ -8,25 +8,34 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.BorderLayout;
 
+import java.io.File;
+
 public class TitlePanel extends JPanel
 {
-	private JLabel title, panelText, panelImage;
-	private JPanel textPanel;
-	private String currentPanel;
-	private Color accentColour;
+	private JLabel 	title, panelText, panelImage;
+	private JPanel 	textPanel;
+	private String 	currentPanel;
+	private Color 	accentColour;
 
 	private Font titleFont, bodyTextFont;
 
 	public TitlePanel(String currentPanel)
 	{
 		setBackground(Color.DARK_GRAY);
-		setBorder(new EmptyBorder(10, 10, 10, 10) );
-		setLayout(new BorderLayout());
+		setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		panelImage = new JLabel(new ImageIcon(""));
+
+		try{
+			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(72f);
+		}catch(Exception e)
+		{
+			titleFont = new Font ("Arial", Font.BOLD, 36);
+		}	
+
+		panelImage = new JLabel(new ImageIcon("res/logo.png"));
+		panelImage.setBorder(new EmptyBorder(0, 10, 25, 10));
 		accentColour = new Color(72, 157, 2);
 
-		titleFont 		= new Font ("Arial", Font.BOLD, 36);
 		bodyTextFont 	= new Font("Arial", Font.PLAIN, 14);
 
 		title 		= new JLabel("BugByte", SwingConstants.CENTER);
@@ -45,8 +54,9 @@ public class TitlePanel extends JPanel
 		textPanel.add(title, BorderLayout.CENTER);
 		textPanel.add(panelText, BorderLayout.AFTER_LAST_LINE);
 
-		add(textPanel, BorderLayout.CENTER);
-		add(panelImage, BorderLayout.WEST);
+		add(panelImage);
+		add(textPanel);
+		
 
 	}
 

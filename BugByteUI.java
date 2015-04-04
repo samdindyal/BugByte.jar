@@ -181,10 +181,12 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		loginPanel.add(usernameField, c);
 
 		c.gridy++;
+		c.insets = new Insets(10, 0, 0, 0);
 
 		loginPanel.add(passwordLabel, c);
 
 		c.gridy++;
+		c.insets = new Insets(0, 0, 0, 0);
 
 		loginPanel.add(passwordField,c);
 
