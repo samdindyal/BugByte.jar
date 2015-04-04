@@ -28,9 +28,7 @@ public class BugSystem implements Serializable
 	public BugSystem(String directory)
 	{
 		this();
-
 		file = new File(directory);
-
 		if (!loadFromDisk())
 				writeToDisk();
 	}
