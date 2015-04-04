@@ -54,12 +54,13 @@ public class BugSystem implements Serializable
 	{
 		try
 		{
-
-				System.out.println((file.isFile() ? "Overwriting \"" : "Writing to \"" ) + file.getPath() + "\"...");
-				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-				oos.writeObject(this);
-				System.out.println("Successfully wrote to \"" + file.getPath() + "\"");
-				return true;
+			if (!new File("res").isDirectory())
+				new File("res").mkdir();
+			System.out.println((file.isFile() ? "Overwriting \"" : "Writing to \"" ) + file.getPath() + "\"...");
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+			oos.writeObject(this);
+			System.out.println("Successfully wrote to \"" + file.getPath() + "\"");
+			return true;
 		}
 		catch(Exception e)
 		{
