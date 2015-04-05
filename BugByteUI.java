@@ -943,6 +943,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 					commonComponents[SIGN_UP_PANEL][5][1].setBackground(failureColour);
 				}
 			}
+			else if (e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][4][1])
+				commonComponents[ACCOUNT_SUMMARY_PANEL][4][1].setBackground(Color.WHITE);
 		}
 		else if (e.getSource() == commonComponents[FORGOT_PASSWORD_PANEL][0][1])
 		{
