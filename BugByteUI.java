@@ -44,7 +44,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	private 				Matcher 				matcher;
 	private 				Color 					mainColour, accentColour, successColour, failureColour, backgroundColour;
 	private 				Font 					subtitle;
-	private static final 	boolean	NOT_OSX = !System.getProperty("os.name").startsWith("Mac OS X");
+	private static final 	boolean					NOT_OSX = !System.getProperty("os.name").startsWith("Mac OS X");
+	private static final 	int 					LOGIN_PANEL 			= 0,
+													FORGOT_PASSWORD_PANEL 	= 1,
+													FORGOT_USERNAME_PANEL 	= 2,
+													SIGN_UP_PANEL 			= 3,
+													ACCOUNT_SUMMARY_PANEL 	= 4;
+													
 
 	//Common Components
 	private					JComponent commonComponents[][][];
@@ -208,18 +214,18 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		c.gridx = 0;
 		c.gridy = 0;
 
-		for (int i = 0; i < commonComponents[0].length; i++)
+		for (int i = 0; i < commonComponents[LOGIN_PANEL].length; i++)
 		{
 			c.gridx = 0;
-			for (int j = 0; j < commonComponents[0][i].length; j++)
+			for (int j = 0; j < commonComponents[LOGIN_PANEL][i].length; j++)
 			{
-				loginPanel.add(commonComponents[0][i][j], c);
+				loginPanel.add(commonComponents[LOGIN_PANEL][i][j], c);
 				c.insets = new Insets((i == 0 && j == 1) ? 10 : 0, 0, 0, 0);
 
 				if (j == 1)
-					commonComponents[0][i][j].addKeyListener(this);
+					commonComponents[LOGIN_PANEL][i][j].addKeyListener(this);
 				else
-					commonComponents[0][i][j].setForeground(accentColour);
+					commonComponents[LOGIN_PANEL][i][j].setForeground(accentColour);
 				c.gridy++;
 			}			
 			c.gridy++;
@@ -274,15 +280,15 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		signUpButton = new JButton("Finish Sign Up");
 		signUpButton.setEnabled(false);
 
-		for (int i = 0; i < commonComponents[3].length; i++)
+		for (int i = 0; i < commonComponents[SIGN_UP_PANEL].length; i++)
 		{
-			for (int j = 0; j < commonComponents[3][i].length; j++)
+			for (int j = 0; j < commonComponents[SIGN_UP_PANEL][i].length; j++)
 			{
 				if (j == 0)
-					commonComponents[3][i][j].setForeground(accentColour);
+					commonComponents[SIGN_UP_PANEL][i][j].setForeground(accentColour);
 				else
-					commonComponents[3][i][j].addKeyListener(this);
-				signUpPanel.add(commonComponents[3][i][j], c);
+					commonComponents[SIGN_UP_PANEL][i][j].addKeyListener(this);
+				signUpPanel.add(commonComponents[SIGN_UP_PANEL][i][j], c);
 				c.gridx++;
 			}
 			c.gridy++;
@@ -347,13 +353,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		c.gridx = 0;
 		c.gridy = 0;
 
-		for (int i = 0; i < commonComponents[2][0].length; i++)
+		for (int i = 0; i < commonComponents[FORGOT_USERNAME_PANEL][0].length; i++)
 		{
 			if (i == 0)
-				commonComponents[2][0][i].setForeground(accentColour);
+				commonComponents[FORGOT_USERNAME_PANEL][0][i].setForeground(accentColour);
 			else
-				commonComponents[2][0][1].addKeyListener(this);	
-			inputLinePanel.add(commonComponents[2][0][i]);	
+				commonComponents[FORGOT_USERNAME_PANEL][0][1].addKeyListener(this);	
+			inputLinePanel.add(commonComponents[FORGOT_USERNAME_PANEL][0][i]);	
 		}
 
 		c.gridy++;
@@ -423,13 +429,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		usernameResetPanel = new JPanel();
 		usernameResetPanel.setBackground(backgroundColour);
 
-		for (int i = 0; i < commonComponents[1][0].length; i++)
+		for (int i = 0; i < commonComponents[FORGOT_PASSWORD_PANEL][0].length; i++)
 		{
 			if (i == 0)
-				commonComponents[1][0][i].setForeground(accentColour);				
+				commonComponents[FORGOT_PASSWORD_PANEL][0][i].setForeground(accentColour);				
 			else
-				commonComponents[1][0][i].addKeyListener(this);
-			usernameResetPanel.add(commonComponents[1][0][i]);
+				commonComponents[FORGOT_PASSWORD_PANEL][0][i].addKeyListener(this);
+			usernameResetPanel.add(commonComponents[FORGOT_PASSWORD_PANEL][0][i]);
 		}
 	}
 
@@ -439,13 +445,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 		emailAddressResetPanel.setBackground(backgroundColour);
 
-		for (int i = 0; i < commonComponents[1][1].length; i++)
+		for (int i = 0; i < commonComponents[FORGOT_PASSWORD_PANEL][1].length; i++)
 		{
 			if (i == 0)
-				commonComponents[1][1][i].setForeground(accentColour);				
+				commonComponents[FORGOT_PASSWORD_PANEL][1][i].setForeground(accentColour);				
 			else
-				commonComponents[1][1][i].addKeyListener(this);
-			emailAddressResetPanel.add(commonComponents[1][1][i]);
+				commonComponents[FORGOT_PASSWORD_PANEL][1][i].addKeyListener(this);
+			emailAddressResetPanel.add(commonComponents[FORGOT_PASSWORD_PANEL][1][i]);
 		}
 	}
 
@@ -502,17 +508,17 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		c.gridx = 0;
 		c.gridy = 0;
 
-		commonComponents[4][0][1].setEnabled(false);
+		commonComponents[ACCOUNT_SUMMARY_PANEL][0][1].setEnabled(false);
 
-		for (int i = 0; i < commonComponents[4].length; i++)
+		for (int i = 0; i < commonComponents[ACCOUNT_SUMMARY_PANEL].length; i++)
 		{
-			for (int j = 0; j < commonComponents[4][i].length; j++)
+			for (int j = 0; j < commonComponents[ACCOUNT_SUMMARY_PANEL][i].length; j++)
 			{
 				if (j == 0)
-					commonComponents[4][i][j].setForeground(accentColour);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][i][j].setForeground(accentColour);
 				else
-					commonComponents[4][i][j].addKeyListener(this);
-				accountSummaryPanel.add(commonComponents[4][i][j], c);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][i][j].addKeyListener(this);
+				accountSummaryPanel.add(commonComponents[ACCOUNT_SUMMARY_PANEL][i][j], c);
 				c.gridx++;
 			}
 			c.gridy++;
@@ -608,12 +614,12 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		if (panel == usernameResetPanel)
 		{
 			forgotPasswordPanel.remove(emailAddressResetPanel);
-			submitButton.setEnabled(isValidUsername(((JTextField)commonComponents[1][0][1]).getText()));
+			submitButton.setEnabled(isValidUsername(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][0][1]).getText()));
 		}
 		else if (panel == emailAddressResetPanel)
 			{
 				forgotPasswordPanel.remove(usernameResetPanel);
-				submitButton.setEnabled(isValidEmailAddress(((JTextField)commonComponents[1][1][1]).getText()));
+				submitButton.setEnabled(isValidEmailAddress(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][1][1]).getText()));
 			}
 
 			c.gridy = 1;
@@ -647,20 +653,20 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	{
 		if (!bugReportSystem.isLoggedIn())
 		{
-			if (bugReportSystem.login(((JTextField)commonComponents[0][0][1]).getText(), String.valueOf(((JPasswordField)commonComponents[0][1][1]).getPassword())))
+			if (bugReportSystem.login(((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText(), String.valueOf(((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).getPassword())))
 			{
 				loginStatus.setForeground(backgroundColour);
 				swapComponents(dashboardPanel);
 				System.out.println("Login successful.");
 
-				commonComponents[0][0][1].setEnabled(false);
-				commonComponents[0][1][1].setEnabled(false);
+				commonComponents[LOGIN_PANEL][0][1].setEnabled(false);
+				commonComponents[LOGIN_PANEL][1][1].setEnabled(false);
 
 				loginButton.setText("Logout");
 
-				loginBorder.setTitle("Logged in as " + ((JTextField)commonComponents[0][0][1]).getText());
+				loginBorder.setTitle("Logged in as " + ((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText());
 
-				populateAccountSummaryFields(new String(((JPasswordField)commonComponents[0][1][1]).getPassword()));
+				populateAccountSummaryFields(new String(((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).getPassword()));
 
 				forgotUsername.setForeground(backgroundColour.brighter());
 				forgotPassword.setForeground(backgroundColour.brighter());
@@ -674,8 +680,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 				loginStatus.setText("Incorrect login information. Please try again.");
 				System.out.println("Login failed. Incorrect credentials.");
 
-				commonComponents[0][0][1].setBackground(failureColour);
-				commonComponents[0][1][1].setBackground(failureColour);
+				commonComponents[LOGIN_PANEL][0][1].setBackground(failureColour);
+				commonComponents[LOGIN_PANEL][1][1].setBackground(failureColour);
 			}
 		}
 		else if (bugReportSystem.logout())
@@ -683,12 +689,12 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 			loginBorder.setTitle("Login");
 			swapComponents(loginPanel);
 
-			commonComponents[0][0][1].setEnabled(true);
-			commonComponents[0][1][1].setEnabled(true);
+			commonComponents[LOGIN_PANEL][0][1].setEnabled(true);
+			commonComponents[LOGIN_PANEL][1][1].setEnabled(true);
 			loginButton.setEnabled(false);
 
-			((JTextField)commonComponents[0][0][1]).setText("");
-			((JPasswordField)commonComponents[0][1][1]).setText("");
+			((JTextField)commonComponents[LOGIN_PANEL][0][1]).setText("");
+			((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).setText("");
 
 			loginButton.setText("Login");
 
@@ -706,37 +712,37 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 	public void signUp()
 	{
-		if (bugReportSystem.addUser(	((JTextField)commonComponents[3][0][1]).getText(),
-							new String(((JPasswordField)commonComponents[3][4][1]).getPassword()),
-							((JTextField)commonComponents[3][1][1]).getText(),
-							((JTextField)commonComponents[3][2][1]).getText(),
-							((JTextField)commonComponents[3][3][1]).getText()))
+		if (bugReportSystem.addUser(	((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText(),
+							new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][4][1]).getPassword()),
+							((JTextField)commonComponents[SIGN_UP_PANEL][1][1]).getText(),
+							((JTextField)commonComponents[SIGN_UP_PANEL][2][1]).getText(),
+							((JTextField)commonComponents[SIGN_UP_PANEL][3][1]).getText()))
 		{
 			bugReportSystem.writeToDisk();
 			swapComponents(dashboardPanel);
 			System.out.println("Sign Up Successful.");
 
-			commonComponents[0][0][1].setEnabled(false);
-			commonComponents[0][1][1].setEnabled(false);
+			commonComponents[LOGIN_PANEL][0][1].setEnabled(false);
+			commonComponents[LOGIN_PANEL][1][1].setEnabled(false);
 			loginButton.setEnabled(true);
 
-			((JTextField)commonComponents[0][0][1]).setText(((JTextField)commonComponents[3][0][1]).getText());
-			((JPasswordField)commonComponents[0][1][1]).setText(new String(((JPasswordField)commonComponents[3][4][1]).getPassword()));
+			((JTextField)commonComponents[LOGIN_PANEL][0][1]).setText(((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText());
+			((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).setText(new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][4][1]).getPassword()));
 
 			loginButton.setText("Logout");
 			loginStatus.setForeground(backgroundColour);
 
 			previousComponent 		= loginPanel;
 
-			bugReportSystem.login(((JTextField)commonComponents[3][0][1]).getText(), new String(((JPasswordField)commonComponents[3][4][1]).getPassword()));
+			bugReportSystem.login(((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText(), new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][4][1]).getPassword()));
 
-			populateAccountSummaryFields(new String(((JPasswordField)commonComponents[3][4][1]).getPassword()));
+			populateAccountSummaryFields(new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][4][1]).getPassword()));
 		}
 		else
 		{
 			failedSignUpLbl.setText("Sorry, that username has already been taken.");
 			System.out.println("Username already taken. Sign Up Unsuccessful.");
-			commonComponents[3][0][1].setBackground(failureColour);
+			commonComponents[SIGN_UP_PANEL][0][1].setBackground(failureColour);
 		}
 	}
 
@@ -744,17 +750,17 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	{
 		User user = bugReportSystem.getUserAccount(password);
 		
-		((JTextField)commonComponents[4][0][1]).setText(user.getUsername());
-		((JTextField)commonComponents[4][1][1]).setText(user.getFirstName());
-		((JTextField)commonComponents[4][2][1]).setText(user.getLastName());
-		((JTextField)commonComponents[4][3][1]).setText(user.getEmailAddress());
+		((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][0][1]).setText(user.getUsername());
+		((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][1][1]).setText(user.getFirstName());
+		((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][2][1]).setText(user.getLastName());
+		((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][3][1]).setText(user.getEmailAddress());
 	}
 
 	public void resetPassword()
 	{
 		resetPasswordMessageLbl.setForeground(accentColour);
 		if (emailAddressResetButton.isSelected())
-			resetPasswordMessageLbl.setText("An email with a password reset link has been sent to " + ((JTextField)commonComponents[1][1][1]).getText() + ".");
+			resetPasswordMessageLbl.setText("An email with a password reset link has been sent to " + ((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][1][1]).getText() + ".");
 		else
 			resetPasswordMessageLbl.setText("An email with a password reset link has been sent to the email associated it your account.");
 	}
@@ -762,17 +768,17 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	public boolean submitAccountChanges(String password)
 	{
 		User user;
-		if ((user = bugReportSystem.getUserAccount(new String(((JPasswordField)commonComponents[4][4][1]).getPassword()))) == null)
+		if ((user = bugReportSystem.getUserAccount(new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][4][1]).getPassword()))) == null)
 		{
 			accountSummaryMessageLabel.setForeground(Color.RED);
 			accountSummaryMessageLabel.setText("Incorrect password. Please try again.");
-			commonComponents[4][4][1].setBackground(failureColour);
+			commonComponents[ACCOUNT_SUMMARY_PANEL][4][1].setBackground(failureColour);
 		 	return false;
 		}
 
-		user.setfirstName(((JTextField)commonComponents[4][1][1]).getText());
-		user.setlastName(((JTextField)commonComponents[4][2][1]).getText());
-		user.setEmailAddress(((JTextField)commonComponents[4][3][1]).getText());
+		user.setfirstName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][1][1]).getText());
+		user.setlastName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][2][1]).getText());
+		user.setEmailAddress(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][3][1]).getText());
 
 		if (password.length() > 0)
 			user.setPassword(password);
@@ -780,12 +786,40 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		accountSummaryMessageLabel.setForeground(accentColour);
 		accountSummaryMessageLabel.setText("All changes have been sucessfully saved.");
 
-		for (int i = 0; i < commonComponents[4].length; i++)
-			commonComponents[4][i][1].setBackground(Color.WHITE);
+		for (int i = 0; i < commonComponents[ACCOUNT_SUMMARY_PANEL].length; i++)
+			commonComponents[ACCOUNT_SUMMARY_PANEL][i][1].setBackground(Color.WHITE);
 
 		bugReportSystem.writeToDisk();
 
 		return true;
+	}
+
+	public boolean accountSummaryCheck()
+	{
+		return 		isValidName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][1][1]).getText())
+				&&	isValidName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][2][1]).getText())
+				&&	isValidEmailAddress(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][3][1]).getText())
+				&&  (new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][5][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][6][1]).getPassword()))
+					&& ((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][5][1]).getText().length() > 0)
+				&&  ((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][4][1]).getPassword().length > 0;
+	}
+
+	public boolean signUpCheck()
+	{
+		return 		isValidUsername(((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText())
+				&&  ((JPasswordField)commonComponents[SIGN_UP_PANEL][4][1]).getPassword().length > 0
+				&&	new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][5][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][4][1]).getPassword()))
+				&& 	isValidName(((JTextField)commonComponents[SIGN_UP_PANEL][1][1]).getText())
+				&&	isValidName(((JTextField)commonComponents[SIGN_UP_PANEL][2][1]).getText())
+				&&  isValidEmailAddress(((JTextField)commonComponents[SIGN_UP_PANEL][3][1]).getText());
+	}
+
+	public boolean isInPanel(int n, Object obj)
+	{
+		for (int i = 0; i < commonComponents[n].length; i++)
+			if (obj == commonComponents[n][i][1])
+				return true;
+		return false;
 	}
 
 	@Override
@@ -802,11 +836,11 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		else if (e.getSource() == submitButton)
 			resetPassword();
 		else if (e.getSource() == submitButton2)
-			forgotUsernameMessageLbl.setText("An email containing your username has been sent to " + ((JTextField)commonComponents[2][0][1]).getText() + ".");
+			forgotUsernameMessageLbl.setText("An email containing your username has been sent to " + ((JTextField)commonComponents[FORGOT_USERNAME_PANEL][0][1]).getText() + ".");
 		else if (e.getSource() == signUpButton)
 			signUp();
 		else if (e.getSource() == submitSummaryButton)
-			submitAccountChanges(new String(((JPasswordField)commonComponents[4][5][1]).getPassword()));
+			submitAccountChanges(new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][5][1]).getPassword()));
 		else if (e.getSource() == dashboardButton)
 			swapComponents(dashboardPanel);
 	}
@@ -840,134 +874,111 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
-		if (e.getSource() == commonComponents[0][0][1] || e.getSource() == commonComponents[0][1][1])
+		if (e.getSource() == commonComponents[LOGIN_PANEL][0][1] || e.getSource() == commonComponents[LOGIN_PANEL][1][1])
 		{
-			loginButton.setEnabled(isValidUsername(((JTextField)commonComponents[0][0][1]).getText()) 
-				&& ((JPasswordField)commonComponents[0][1][1]).getPassword().length > 0);
+			loginButton.setEnabled(isValidUsername(((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText()) 
+				&& ((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).getPassword().length > 0);
 			loginStatus.setForeground(backgroundColour);
 
-			commonComponents[0][0][1].setBackground(Color.WHITE);
-			commonComponents[0][1][1].setBackground(Color.WHITE);
+			commonComponents[LOGIN_PANEL][0][1].setBackground(Color.WHITE);
+			commonComponents[LOGIN_PANEL][1][1].setBackground(Color.WHITE);
 
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				loginButton.doClick();
 		}
-		else if (	e.getSource() == commonComponents[3][0][1]
-			||  e.getSource() == commonComponents[3][4][1]
-			||	e.getSource() == commonComponents[3][5][1]
-			||  e.getSource() == commonComponents[3][1][1]
-			|| 	e.getSource() == commonComponents[3][2][1]
-			|| 	e.getSource() == commonComponents[3][3][1])
+		else if (isInPanel(3, e.getSource()))
 		{
-				signUpButton.setEnabled(	isValidUsername(((JTextField)commonComponents[3][0][1]).getText())
-										&&  ((JPasswordField)commonComponents[3][4][1]).getPassword().length > 0
-										&&	new String(((JPasswordField)commonComponents[3][5][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[3][4][1]).getPassword()))
-										&& 	isValidName(((JTextField)commonComponents[3][1][1]).getText())
-										&&	isValidName(((JTextField)commonComponents[3][2][1]).getText())
-										&&  isValidEmailAddress(((JTextField)commonComponents[3][3][1]).getText())
-										);
+				signUpButton.setEnabled(signUpCheck());
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				signUpButton.doClick();
-
 						if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitSummaryButton.doClick();
 
-			if (e.getSource() == commonComponents[3][0][1])
-				commonComponents[3][0][1].setBackground(isValidUsername(((JTextField)commonComponents[3][0][1]).getText()) ? successColour : failureColour);
-			else if (e.getSource() == commonComponents[3][1][1])
-					commonComponents[3][1][1].setBackground(isValidName(((JTextField)commonComponents[3][1][1]).getText()) ? successColour : failureColour);
-			else if (e.getSource() == commonComponents[3][2][1])
-					commonComponents[3][2][1].setBackground(isValidName(((JTextField)commonComponents[3][2][1]).getText()) ? successColour : failureColour);
-			else if (e.getSource() == commonComponents[3][3][1])
-					commonComponents[3][3][1].setBackground(isValidEmailAddress(((JTextField)commonComponents[3][3][1]).getText()) ? successColour : failureColour);
-			else if (e.getSource() == commonComponents[3][4][1] || e.getSource() == commonComponents[3][5][1])
+			if (e.getSource() == commonComponents[SIGN_UP_PANEL][0][1])
+				commonComponents[SIGN_UP_PANEL][0][1].setBackground(isValidUsername(((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText()) ? successColour : failureColour);
+			else if (e.getSource() == commonComponents[SIGN_UP_PANEL][1][1])
+					commonComponents[SIGN_UP_PANEL][1][1].setBackground(isValidName(((JTextField)commonComponents[SIGN_UP_PANEL][1][1]).getText()) ? successColour : failureColour);
+			else if (e.getSource() == commonComponents[SIGN_UP_PANEL][2][1])
+					commonComponents[SIGN_UP_PANEL][2][1].setBackground(isValidName(((JTextField)commonComponents[SIGN_UP_PANEL][2][1]).getText()) ? successColour : failureColour);
+			else if (e.getSource() == commonComponents[SIGN_UP_PANEL][3][1])
+					commonComponents[SIGN_UP_PANEL][3][1].setBackground(isValidEmailAddress(((JTextField)commonComponents[SIGN_UP_PANEL][3][1]).getText()) ? successColour : failureColour);
+			else if (e.getSource() == commonComponents[SIGN_UP_PANEL][4][1] || e.getSource() == commonComponents[SIGN_UP_PANEL][5][1])
 			{
-				if (new String(((JPasswordField)commonComponents[3][4][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[3][5][1]).getPassword()))
-								&& ((JTextField)commonComponents[3][4][1]).getText().length() > 0)
+				if (new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][4][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][5][1]).getPassword()))
+								&& ((JTextField)commonComponents[SIGN_UP_PANEL][4][1]).getText().length() > 0)
 				{
-					commonComponents[3][4][1].setBackground(successColour);
-					commonComponents[3][5][1].setBackground(successColour);
+					commonComponents[SIGN_UP_PANEL][4][1].setBackground(successColour);
+					commonComponents[SIGN_UP_PANEL][5][1].setBackground(successColour);
 				}
-				else if (((JTextField)commonComponents[3][5][1]).getText().length() > 0)
+				else if (((JTextField)commonComponents[SIGN_UP_PANEL][5][1]).getText().length() > 0)
 				{
-					commonComponents[3][4][1].setBackground(failureColour);
-					commonComponents[3][5][1].setBackground(failureColour);
+					commonComponents[SIGN_UP_PANEL][4][1].setBackground(failureColour);
+					commonComponents[SIGN_UP_PANEL][5][1].setBackground(failureColour);
 				}
 			}
 		}
-		else if (e.getSource() == commonComponents[1][0][1])
+		else if (e.getSource() == commonComponents[FORGOT_PASSWORD_PANEL][0][1])
 		{
-			submitButton.setEnabled(isValidUsername(((JTextField)commonComponents[1][0][1]).getText()));
+			submitButton.setEnabled(isValidUsername(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][0][1]).getText()));
 			resetPasswordMessageLbl.setForeground(backgroundColour);
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitButton.doClick();
 
-			if (((JTextField)commonComponents[1][0][1]).getText().length() == 0)
-				commonComponents[1][0][1].setBackground(Color.WHITE);
+			if (((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][0][1]).getText().length() == 0)
+				commonComponents[FORGOT_PASSWORD_PANEL][0][1].setBackground(Color.WHITE);
 			else
-				commonComponents[1][0][1].setBackground(isValidUsername(((JTextField)commonComponents[1][0][1]).getText()) ? successColour : failureColour);
+				commonComponents[FORGOT_PASSWORD_PANEL][0][1].setBackground(isValidUsername(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][0][1]).getText()) ? successColour : failureColour);
 		}
-		else if (e.getSource() == commonComponents[1][1][1])
+		else if (e.getSource() == commonComponents[FORGOT_PASSWORD_PANEL][1][1])
 		{
-			submitButton.setEnabled(isValidEmailAddress(((JTextField)commonComponents[1][1][1]).getText()));
+			submitButton.setEnabled(isValidEmailAddress(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][1][1]).getText()));
 			resetPasswordMessageLbl.setForeground(backgroundColour);
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitButton.doClick();
-			if (((JTextField)commonComponents[1][1][1]).getText().length() == 0)
-				commonComponents[1][1][1].setBackground(Color.WHITE);
+			if (((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][1][1]).getText().length() == 0)
+				commonComponents[FORGOT_PASSWORD_PANEL][1][1].setBackground(Color.WHITE);
 			else
-				commonComponents[1][1][1].setBackground(isValidEmailAddress(((JTextField)commonComponents[1][1][1]).getText()) ? successColour : failureColour);
+				commonComponents[FORGOT_PASSWORD_PANEL][1][1].setBackground(isValidEmailAddress(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][1][1]).getText()) ? successColour : failureColour);
 		}
-		else if (e.getSource() == commonComponents[2][0][1])
+		else if (e.getSource() == commonComponents[FORGOT_USERNAME_PANEL][0][1])
 		{
-			submitButton2.setEnabled(isValidEmailAddress(((JTextField)commonComponents[2][0][1]).getText()));
+			submitButton2.setEnabled(isValidEmailAddress(((JTextField)commonComponents[FORGOT_USERNAME_PANEL][0][1]).getText()));
 			forgotUsernameMessageLbl.setForeground(backgroundColour);
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitButton2.doClick();
-			if (((JTextField)commonComponents[2][0][1]).getText().length() == 0)
-				commonComponents[2][0][1].setBackground(Color.WHITE);
+			if (((JTextField)commonComponents[FORGOT_USERNAME_PANEL][0][1]).getText().length() == 0)
+				commonComponents[FORGOT_USERNAME_PANEL][0][1].setBackground(Color.WHITE);
 			else
-				commonComponents[2][0][1].setBackground(isValidEmailAddress(((JTextField)commonComponents[2][0][1]).getText()) ? successColour : failureColour);
+				commonComponents[FORGOT_USERNAME_PANEL][0][1].setBackground(isValidEmailAddress(((JTextField)commonComponents[FORGOT_USERNAME_PANEL][0][1]).getText()) ? successColour : failureColour);
 		}
-		else if(	e.getSource() == commonComponents[4][1][1]
-				||  e.getSource() == commonComponents[4][2][1]
-				|| 	e.getSource() == commonComponents[4][3][1]
-				|| 	e.getSource() == commonComponents[4][5][1]
-				|| 	e.getSource() == commonComponents[4][6][1]
-				|| 	e.getSource() == commonComponents[4][4][1])
+		else if(isInPanel(4, e.getSource()))
 		{
-			submitSummaryButton.setEnabled(	isValidName(((JTextField)commonComponents[4][1][1]).getText())
-										&&	isValidName(((JTextField)commonComponents[4][2][1]).getText())
-										&&	isValidEmailAddress(((JTextField)commonComponents[4][3][1]).getText())
-										&&  (new String(((JPasswordField)commonComponents[4][5][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[4][6][1]).getPassword()))
-																		&& ((JTextField)commonComponents[4][5][1]).getText().length() > 0)
-										&&  ((JPasswordField)commonComponents[4][4][1]).getPassword().length > 0
-				);
+			submitSummaryButton.setEnabled(accountSummaryCheck());
 
 			accountSummaryMessageLabel.setForeground(backgroundColour);
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitSummaryButton.doClick();
 
-			if (e.getSource() == commonComponents[4][1][1])
-					commonComponents[4][1][1].setBackground(isValidName(((JTextField)commonComponents[4][1][1]).getText()) ? successColour : failureColour);
-			if (e.getSource() == commonComponents[4][2][1])
-					commonComponents[4][2][1].setBackground(isValidName(((JTextField)commonComponents[4][2][1]).getText()) ? successColour : failureColour);
-			if (e.getSource() == commonComponents[4][3][1])
-					commonComponents[4][3][1].setBackground(isValidEmailAddress(((JTextField)commonComponents[4][3][1]).getText()) ? successColour : failureColour);
-			if (e.getSource() == commonComponents[4][5][1] 
-				|| e.getSource() == commonComponents[4][6][1]
+			if (e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][1][1])
+					commonComponents[ACCOUNT_SUMMARY_PANEL][1][1].setBackground(isValidName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][1][1]).getText()) ? successColour : failureColour);
+			if (e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][2][1])
+					commonComponents[ACCOUNT_SUMMARY_PANEL][2][1].setBackground(isValidName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][2][1]).getText()) ? successColour : failureColour);
+			if (e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][3][1])
+					commonComponents[ACCOUNT_SUMMARY_PANEL][3][1].setBackground(isValidEmailAddress(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][3][1]).getText()) ? successColour : failureColour);
+			if (e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][5][1] 
+				|| e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][6][1]
 				&& e.getKeyChar() != KeyEvent.VK_ENTER)
 			{
-				if (new String(((JPasswordField)commonComponents[4][5][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[4][6][1]).getPassword()))
-								&& ((JTextField)commonComponents[4][5][1]).getText().length() > 0)
+				if (new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][5][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][6][1]).getPassword()))
+								&& ((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][5][1]).getText().length() > 0)
 				{
-					commonComponents[4][5][1].setBackground(successColour);
-					commonComponents[4][6][1].setBackground(successColour);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][5][1].setBackground(successColour);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][6][1].setBackground(successColour);
 				}
-				else if (((JTextField)commonComponents[4][6][1]).getText().length() > 0)
+				else if (((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][6][1]).getText().length() > 0)
 				{
-					commonComponents[4][5][1].setBackground(failureColour);
-					commonComponents[4][6][1].setBackground(failureColour);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][5][1].setBackground(failureColour);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][6][1].setBackground(failureColour);
 				}
 			}
 		}
