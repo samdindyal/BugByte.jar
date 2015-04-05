@@ -779,12 +779,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		accountSummaryMessageLabel.setForeground(accentColour);
 		accountSummaryMessageLabel.setText("All changes have been sucessfully saved.");
 
-		commonComponents[4][1][1].setBackground(Color.WHITE);
-		commonComponents[4][2][1].setBackground(Color.WHITE);
-		commonComponents[4][3][1].setBackground(Color.WHITE);
-		commonComponents[4][5][1].setBackground(Color.WHITE);
-		commonComponents[4][4][1].setBackground(Color.WHITE);
-		commonComponents[4][6][1].setBackground(Color.WHITE);
+		for (int i = 0; i < commonComponents[4].length; i++)
+			commonComponents[4][i][1].setBackground(Color.WHITE);
 
 		bugReportSystem.writeToDisk();
 
@@ -954,7 +950,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 					commonComponents[4][2][1].setBackground(isValidName(((JTextField)commonComponents[4][2][1]).getText()) ? successColour : failureColour);
 			if (e.getSource() == commonComponents[4][3][1])
 					commonComponents[4][3][1].setBackground(isValidEmailAddress(((JTextField)commonComponents[4][3][1]).getText()) ? successColour : failureColour);
-			if (e.getSource() == commonComponents[4][5][1] || e.getSource() == commonComponents[4][6][1])
+			if (e.getSource() == commonComponents[4][5][1] 
+				|| e.getSource() == commonComponents[4][6][1]
+				&& e.getKeyChar() != KeyEvent.VK_ENTER)
 			{
 				if (new String(((JPasswordField)commonComponents[4][5][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[4][6][1]).getPassword()))
 								&& ((JTextField)commonComponents[4][5][1]).getText().length() > 0)
