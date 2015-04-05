@@ -107,7 +107,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		bugReportSystem = new BugReportSystem("res/bugreportsystem.bb");
 		
 		initializeFrame();
-
 		frame.setVisible(true);
 	}
 
@@ -152,7 +151,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	public void initializeSubmitBugPanel()
 	{
 		submitBugPanel = new JPanel();
-
 		submitBugPanel.setBackground(Color.GREEN);
 	}
 
@@ -214,10 +212,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		for (int i = 0; i < commonComponents[0].length; i++)
 		{
 			c.gridx = 0;
-
 			for (int j = 0; j < commonComponents[0][i].length; j++)
 			{
-				
 				loginPanel.add(commonComponents[0][i][j], c);
 
 				if (i == 0 && j == 1)
@@ -232,10 +228,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 				c.gridy++;
 			}			
-
 			c.gridy++;
 		}
-
 	
 		navigationPanel.add(loginButton);
 
@@ -247,7 +241,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		c.gridy++;
 		c.insets = new Insets(0,0,0,0);
 		
-
 		loginPanel.add(forgotPassword, c);
 
 		c.gridy++;
@@ -505,12 +498,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 		if (NOT_OSX)
 			accountSummaryPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(accentColour), "", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour));
-
-
-		accountSummaryMessageLabel 	= new JLabel(""); 
+		accountSummaryMessageLabel 	= new JLabel("All changes have been sucessfully saved."); 
 
 		submitSummaryButton = new JButton("Submit changes");
-		accountSummaryMessageLabel.setForeground(Color.GREEN.darker());
+		accountSummaryMessageLabel.setForeground(backgroundColour);
 
 		c = new GridBagConstraints();
 
@@ -562,7 +553,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		dashboardPanel.setForeground(accentColour);
 
 		dashboardPanelBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(mainColour) : null, "Dashboard", TitledBorder.CENTER, TitledBorder.TOP, subtitle, mainColour);
-
 		dashboardPanel.setBorder(dashboardPanelBorder);
 	}
 
@@ -706,7 +696,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 			dashboardButton.setEnabled(false);
 
-			loginStatus.setForeground(Color.GREEN.darker());
+			loginStatus.setForeground(accentColour);
 			loginStatus.setText("You have successfully logged out.");
 
 			System.out.println("Logout successful.");
@@ -743,7 +733,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		}
 		else
 		{
-			failedSignUpLbl.setText("User already exists.");
+			failedSignUpLbl.setText("Sorry, that username has already been taken.");
+			System.out.println("Username already taken. Sign Up Unsuccessful.");
 			commonComponents[3][0][1].setBackground(failureColour);
 		}
 	}
@@ -760,7 +751,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 	public void resetPassword()
 	{
-		resetPasswordMessageLbl.setForeground(Color.GREEN.darker());
+		resetPasswordMessageLbl.setForeground(accentColour);
 		if (emailAddressResetButton.isSelected())
 			resetPasswordMessageLbl.setText("An email with a password reset link has been sent to " + ((JTextField)commonComponents[1][1][1]).getText() + ".");
 		else
@@ -785,7 +776,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		if (password.length() > 0)
 			user.setPassword(password);
 
-		accountSummaryMessageLabel.setForeground(Color.GREEN.darker());
+		accountSummaryMessageLabel.setForeground(accentColour);
 		accountSummaryMessageLabel.setText("All changes have been sucessfully saved.");
 
 		commonComponents[4][1][1].setBackground(Color.WHITE);
@@ -953,7 +944,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 										&&  ((JPasswordField)commonComponents[4][4][1]).getPassword().length > 0
 				);
 
-			accountSummaryMessageLabel.setText("");
+			accountSummaryMessageLabel.setForeground(backgroundColour);
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitSummaryButton.doClick();
 
