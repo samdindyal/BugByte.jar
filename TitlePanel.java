@@ -12,64 +12,37 @@ import java.io.File;
 
 public class TitlePanel extends JPanel
 {
-	private JLabel 	title, panelText, panelImage;
-	private JPanel 	textPanel;
-	private String 	currentPanel;
+	private JLabel 	title, panelImage;
 	private Color 	accentColour;
 
-	private Font titleFont, bodyTextFont;
+	private Font titleFont;
 
-	public TitlePanel(String currentPanel)
+	public TitlePanel()
 	{
 		setBackground(Color.DARK_GRAY);
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 
 
 		try{
-			titleFont 		= Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(72f);
-			bodyTextFont 	= Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(28f);
+			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(72f);
 		}catch(Exception e)
 		{
-			titleFont 		= new Font ("Arial", Font.BOLD, 36);
-			bodyTextFont 	= new Font("Arial", Font.PLAIN, 14);
+			titleFont = new Font ("Arial", Font.BOLD, 36);
 		}	
 
 		panelImage = new JLabel(new ImageIcon("res/logo.png"));
-		panelImage.setBorder(new EmptyBorder(0, 10, 25, 10));
+		panelImage.setBorder(new EmptyBorder(0, 10, 0, 10));
 		accentColour = new Color(72, 157, 2);
 
 		
 
-		title 		= new JLabel("BugByte", SwingConstants.LEFT);
-		panelText 	= new JLabel(currentPanel, SwingConstants.LEFT);
+		title = new JLabel("BugByte", SwingConstants.LEFT);
 
-		panelText.setForeground(accentColour.brighter());
 		title.setForeground(accentColour);
 
-		textPanel = new JPanel();
-		textPanel.setBackground(Color.DARK_GRAY);
-		textPanel.setLayout(new BorderLayout());
-
 		title.setFont(titleFont);
-		panelText.setFont(bodyTextFont);
-
-		textPanel.add(title, BorderLayout.CENTER);
-		textPanel.add(panelText, BorderLayout.AFTER_LAST_LINE);
-
-		add(panelImage);
-		add(textPanel);
 		
-
-	}
-
-	public void setCurrentPanel(String newPanelText)
-	{
-		currentPanel = newPanelText;
-		panelText.setText(currentPanel);
-	}
-
-	public String getCurrentPanel()
-	{
-		return currentPanel;
+		add(panelImage);
+		add(title);
 	}
 }
