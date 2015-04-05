@@ -566,9 +566,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		regex 				= "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+";
 		usernamePattern 	= Pattern.compile(regex);
 
-		regex 			= "^[a-zA-Z0-9]+";
+		regex 			= "^[a-zA-Z]+";
 		namePattern 	= Pattern.compile(regex);
 
+		regex 			= "^[a-zA-Z0-9]+";
 		passwordPattern = Pattern.compile(regex);
 	}
 
