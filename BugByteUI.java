@@ -543,7 +543,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	public void initializeDashboardPanel()
 	{
 
-		initializeNavigationPanel();
 		initializeAccountSummaryPanel();
 
 		dashboardPanel.addTab("Account Summary", accountSummaryPanel);
