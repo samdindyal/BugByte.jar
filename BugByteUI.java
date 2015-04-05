@@ -123,6 +123,12 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 		//Initialize the frame's components
 		titlePanel = new TitlePanel();
+		prepareDashBoardPanel();
+
+		try{
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}catch(Exception e){}
+
 		initializeNavigationPanel();
 		initializeLoginPanel();
 		initializeSignUpPanel();
@@ -536,25 +542,11 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 	public void initializeDashboardPanel()
 	{
-		UIManager.put("TabbedPane.contentAreaColor ",Color.DARK_GRAY);
-		UIManager.put("TabbedPane.selected", Color.DARK_GRAY);
-  		UIManager.put("TabbedPane.background",Color.DARK_GRAY);
-  		UIManager.put("TabbedPane.HightLight", accentColour);
-  		UIManager.put("TabbedPane.borderHightlightColor", accentColour);
-  		UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
 
-		dashboardPanel = new JTabbedPane();
-		dashboardPanel.setForeground(accentColour);
-
-		dashboardPanelBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(mainColour) : null, "Dashboard", TitledBorder.CENTER, TitledBorder.TOP, subtitle, mainColour);
-
-		dashboardPanel.setBorder(dashboardPanelBorder);
-
+		initializeNavigationPanel();
 		initializeAccountSummaryPanel();
 
 		dashboardPanel.addTab("Account Summary", accountSummaryPanel);
-
-		dashboardPanel.setBackgroundAt(0, Color.DARK_GRAY);
 	}
 
 	public void initializeAccountSummaryPanel()
@@ -682,6 +674,23 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		oldPasswordSummaryField.addKeyListener(this);
 
 		submitSummaryButton.addActionListener(this);
+	}
+
+	public void prepareDashBoardPanel()
+	{
+		UIManager.put("TabbedPane.contentAreaColor ",Color.DARK_GRAY);
+		UIManager.put("TabbedPane.selected", Color.DARK_GRAY);
+  		UIManager.put("TabbedPane.background",Color.DARK_GRAY);
+  		UIManager.put("TabbedPane.HightLight", accentColour);
+  		UIManager.put("TabbedPane.borderHightlightColor", accentColour);
+  		UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
+
+		dashboardPanel = new JTabbedPane();
+		dashboardPanel.setForeground(accentColour);
+
+		dashboardPanelBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(mainColour) : null, "Dashboard", TitledBorder.CENTER, TitledBorder.TOP, subtitle, mainColour);
+
+		dashboardPanel.setBorder(dashboardPanelBorder);
 	}
 
 	public void initializePatterns()
