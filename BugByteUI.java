@@ -979,26 +979,11 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 				submitSummaryButton.doClick();
 
 			if (e.getSource() == firstNameSummaryField)
-			{
-				if (isValidName(firstNameSummaryField.getText()))
-					firstNameSummaryField.setBackground(successColour);
-				else
-					firstNameSummaryField.setBackground(failureColour);
-			}
+					firstNameSummaryField.setBackground(isValidName(firstNameSummaryField.getText()) ? successColour : failureColour);
 			if (e.getSource() == lastNameSummaryField)
-			{
-				if (isValidName(lastNameSummaryField.getText()))
-					lastNameSummaryField.setBackground(successColour);
-				else
-					lastNameSummaryField.setBackground(failureColour);
-			}
+					lastNameSummaryField.setBackground(isValidName(lastNameSummaryField.getText()) ? successColour : failureColour);
 			if (e.getSource() == emailAddressSummaryField)
-			{
-				if (isValidEmailAddress(emailAddressSummaryField.getText()))
-					emailAddressSummaryField.setBackground(successColour);
-				else
-					emailAddressSummaryField.setBackground(failureColour);
-			}
+					emailAddressSummaryField.setBackground(isValidEmailAddress(emailAddressSummaryField.getText()) ? successColour : failureColour);
 			if (e.getSource() == passwordSummaryField || e.getSource() == confirmPasswordSummaryField)
 			{
 				if (new String(((JPasswordField)passwordSummaryField).getPassword()).equals(new String(((JPasswordField)confirmPasswordSummaryField).getPassword()))
