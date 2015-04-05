@@ -35,7 +35,6 @@ import java.util.regex.Matcher;
 
 import java.io.File;
 
-
 public class BugByteUI implements ActionListener, MouseListener, KeyListener
 {
 	private 				BugReportSystem 		bugReportSystem;
@@ -215,17 +214,12 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 			for (int j = 0; j < commonComponents[0][i].length; j++)
 			{
 				loginPanel.add(commonComponents[0][i][j], c);
-
-				if (i == 0 && j == 1)
-					c.insets = new Insets(10, 0, 0, 0);
-				else
-					c.insets = new Insets(0, 0, 0, 0);
+				c.insets = new Insets((i == 0 && j == 1) ? 10 : 0, 0, 0, 0);
 
 				if (j == 1)
 					commonComponents[0][i][j].addKeyListener(this);
 				else
 					commonComponents[0][i][j].setForeground(accentColour);
-
 				c.gridy++;
 			}			
 			c.gridy++;
@@ -894,7 +888,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 					commonComponents[3][4][1].setBackground(successColour);
 					commonComponents[3][5][1].setBackground(successColour);
 				}
-				else if (((JTextField)commonComponents[4][6][1]).getText().length() > 0)
+				else if (((JTextField)commonComponents[3][5][1]).getText().length() > 0)
 				{
 					commonComponents[3][4][1].setBackground(failureColour);
 					commonComponents[3][5][1].setBackground(failureColour);
