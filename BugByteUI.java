@@ -832,7 +832,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 			dashboardButton.setEnabled(false);
 
 			loginStatus.setForeground(Color.GREEN.darker());
-			loginStatus.setText("You have successfully been logged out.");
+			loginStatus.setText("You have successfully logged out.");
 
 			System.out.println("Logout successful.");
 		}
@@ -886,9 +886,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	public void resetPassword()
 	{
 		if (emailAddressResetButton.isSelected())
-			resetPasswordMessageLbl.setText("An email with a password reset link has been send to " + emailAddressFld2.getText() + ".");
+			resetPasswordMessageLbl.setText("An email with a password reset link has been sent to " + emailAddressFld2.getText() + ".");
 		else
-			resetPasswordMessageLbl.setText("An email with a password reset link has been send to the email associated it your account.");
+			resetPasswordMessageLbl.setText("An email with a password reset link has been sent to the email associated it your account.");
 	}
 
 	public boolean submitAccountChanges(String password)
