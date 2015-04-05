@@ -38,7 +38,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	private String	  			currentComponentName, previousComponentName;
 	private Pattern 			emailAddressPattern, usernamePattern, namePattern;
 	private Matcher 			matcher;
-	private Color 				mainColour, accentColour;
+	private Color 				mainColour, accentColour, successColour, failureColour;
 
 	//Components for the frame
 	private JFrame 		frame;
@@ -53,7 +53,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	
 	//Components for the sign up panel
 	private JLabel		usernameLbl, passwordLbl, confirmPasswordLbl, firstNameLbl, lastNameLbl, emailAddressLbl, failedSignUpLbl;
-	private JLabel		usernameMessageLbl, passwordMessageLbl, firstNameMessageLbl, lastNameMessageLbl, emailAddressMessageLbl;
 	private JTextField	usernameFld, passwordFld, confirmPasswordFld, firstNameFld, lastNameFld, emailAddressFld;
 	private JButton 	signUpButton;
 
@@ -76,7 +75,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 	//Components for account summary panel
 	private JLabel 		firstNameSummaryLabel, lastNameSummaryLabel, usernameSummaryLabel, emailAddressSummaryLabel, passwordSummaryLabel, confirmPasswordSummaryLabel, oldPasswordSummaryLabel, accountSummaryMessageLabel;
-	private JLabel		firstNameSummaryMessageLabel, lastNameSummaryMessageLabel, emailAddressMessageSummaryLabel, passwordMessageSummaryLabel;
 	private JTextField	firstNameSummaryField, lastNameSummaryField, usernameSummaryField, emailAddressSummaryField, passwordSummaryField, confirmPasswordSummaryField, oldPasswordSummaryField;
 	private JButton     submitSummaryButton;
 
@@ -538,16 +536,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		confirmPasswordSummaryLabel = new JLabel("Confirm Password:");
 		accountSummaryMessageLabel 	= new JLabel(""); 
 
-		firstNameSummaryMessageLabel 	= new JLabel("");
-		lastNameSummaryMessageLabel		= new JLabel("");
-		emailAddressMessageSummaryLabel = new JLabel("");
-		passwordMessageSummaryLabel 	= new JLabel("");
-
-		firstNameSummaryMessageLabel.setForeground(Color.GREEN.darker());
-		lastNameSummaryMessageLabel.setForeground(Color.GREEN.darker());
-		emailAddressMessageSummaryLabel.setForeground(Color.GREEN.darker());
-		passwordMessageSummaryLabel.setForeground(Color.GREEN.darker());
-
 		firstNameSummaryLabel.setForeground(accentColour);
 		lastNameSummaryLabel.setForeground(accentColour);
 		usernameSummaryLabel.setForeground(accentColour);
@@ -589,10 +577,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 		accountSummaryPanel.add(firstNameSummaryField, c);
 
-		c.gridx++;
-
-		accountSummaryPanel.add(firstNameSummaryMessageLabel, c);
-
 		c.gridx = 0;
 		c.gridy++;
 
@@ -602,10 +586,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 		accountSummaryPanel.add(lastNameSummaryField, c);
 
-		c.gridx++;
-
-		accountSummaryPanel.add(lastNameSummaryMessageLabel, c);
-
 		c.gridx = 0;
 		c.gridy++;
 
@@ -614,10 +594,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		c.gridx++;
 
 		accountSummaryPanel.add(emailAddressSummaryField, c);
-
-		c.gridx++;
-
-		accountSummaryPanel.add(emailAddressMessageSummaryLabel, c);
 
 		c.gridy++;
 		c.gridx = 0;
@@ -645,10 +621,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		c.gridx++;
 
 		accountSummaryPanel.add(confirmPasswordSummaryField, c);
-
-		c.gridx++;
-
-		accountSummaryPanel.add(passwordMessageSummaryLabel, c);
 
 		c.gridx = 0;
 		c.gridy++;
@@ -690,6 +662,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	{
 		mainColour = new Color(72, 157, 2);
 		accentColour = mainColour.brighter().brighter();
+
+		successColour = new Color(152, 255, 152);
+		failureColour = new Color(255, 152, 152);
 	}
 
 	public void swapComponents(JComponent component, String componentName)
@@ -861,6 +836,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		{
 			accountSummaryMessageLabel.setForeground(Color.RED);
 			accountSummaryMessageLabel.setText("Incorrect password. Please try again.");
+			oldPasswordSummaryField.setBackground(failureColour);
 		 	return false;
 		}
 
@@ -868,16 +844,18 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		user.setlastName(lastNameSummaryField.getText());
 		user.setEmailAddress(emailAddressSummaryField.getText());
 
-		if (!passwordMessageSummaryLabel.equals(""))
+		if (password.length() > 0)
 			user.setPassword(password);
 
 		accountSummaryMessageLabel.setForeground(Color.GREEN.darker());
 		accountSummaryMessageLabel.setText("All changes have been sucessfully saved.");
 
-		firstNameSummaryMessageLabel.setText("");
-		lastNameSummaryMessageLabel.setText("");
-		emailAddressMessageSummaryLabel.setText("");
-		passwordMessageSummaryLabel.setText("");
+		firstNameSummaryField.setBackground(Color.WHITE);
+		lastNameSummaryField.setBackground(Color.WHITE);
+		emailAddressSummaryField.setBackground(Color.WHITE);
+		passwordSummaryField.setBackground(Color.WHITE);
+		oldPasswordSummaryField.setBackground(Color.WHITE);
+		confirmPasswordSummaryField.setBackground(Color.WHITE);
 
 		bugReportSystem.writeToDisk();
 
@@ -1003,54 +981,36 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 			if (e.getSource() == firstNameSummaryField)
 			{
 				if (isValidName(firstNameSummaryField.getText()))
-				{
-					firstNameSummaryMessageLabel.setText("Looks good!");
-					firstNameSummaryMessageLabel.setForeground(Color.GREEN.darker());
-				}
+					firstNameSummaryField.setBackground(successColour);
 				else
-				{
-					firstNameSummaryMessageLabel.setText("That's a funny name...");
-					firstNameSummaryMessageLabel.setForeground(Color.RED);
-				}
+					firstNameSummaryField.setBackground(failureColour);
 			}
 			if (e.getSource() == lastNameSummaryField)
 			{
 				if (isValidName(lastNameSummaryField.getText()))
-				{
-					lastNameSummaryMessageLabel.setText("Looks good!");
-					lastNameSummaryMessageLabel.setForeground(Color.GREEN.darker());
-				}
+					lastNameSummaryField.setBackground(successColour);
 				else
-				{
-					lastNameSummaryMessageLabel.setText("That's a funny name...");
-					lastNameSummaryMessageLabel.setForeground(Color.RED);
-				}
+					lastNameSummaryField.setBackground(failureColour);
 			}
 			if (e.getSource() == emailAddressSummaryField)
 			{
 				if (isValidEmailAddress(emailAddressSummaryField.getText()))
-				{
-					emailAddressMessageSummaryLabel.setText("Looks good!");
-					emailAddressMessageSummaryLabel.setForeground(Color.GREEN.darker());
-				}
+					emailAddressSummaryField.setBackground(successColour);
 				else
-				{
-					emailAddressMessageSummaryLabel.setText("That's not an email address!");
-					emailAddressMessageSummaryLabel.setForeground(Color.RED);
-				}
+					emailAddressSummaryField.setBackground(failureColour);
 			}
 			if (e.getSource() == passwordSummaryField || e.getSource() == confirmPasswordSummaryField)
 			{
 				if (new String(((JPasswordField)passwordSummaryField).getPassword()).equals(new String(((JPasswordField)confirmPasswordSummaryField).getPassword()))
 								&& passwordSummaryField.getText().length() > 0)
 				{
-					passwordMessageSummaryLabel.setText("Passwords match.");
-					passwordMessageSummaryLabel.setForeground(Color.GREEN.darker());
+					passwordSummaryField.setBackground(successColour);
+					confirmPasswordSummaryField.setBackground(successColour);
 				}
-				else
+				else if (confirmPasswordSummaryField.getText().length() > 0)
 				{
-					passwordMessageSummaryLabel.setText(((JPasswordField)passwordSummaryField).getPassword().length > 0 ? "Passwords do not match." : "");
-					passwordMessageSummaryLabel.setForeground(Color.RED);
+					passwordSummaryField.setBackground(failureColour);
+					confirmPasswordSummaryField.setBackground(failureColour);
 				}
 			}
 		}
