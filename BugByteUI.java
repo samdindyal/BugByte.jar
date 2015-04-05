@@ -11,6 +11,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JComponent;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.Color;
 import java.awt.BorderLayout;
@@ -31,7 +32,7 @@ import java.util.regex.Matcher;
 
 public class BugByteUI implements ActionListener, MouseListener, KeyListener
 {
-	private BugReportSystem 			bugReportSystem;
+	private BugReportSystem 	bugReportSystem;
 	private	GridBagConstraints 	c;
 	private JComponent  		currentComponent, previousComponent;
 	private String	  			currentComponentName, previousComponentName;
@@ -52,6 +53,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	
 	//Components for the sign up panel
 	private JLabel		usernameLbl, passwordLbl, confirmPasswordLbl, firstNameLbl, lastNameLbl, emailAddressLbl, failedSignUpLbl;
+	private JLabel		usernameMessageLbl, passwordMessageLbl, firstNameMessageLbl, lastNameMessageLbl, emailAddressMessageLbl;
 	private JTextField	usernameFld, passwordFld, confirmPasswordFld, firstNameFld, lastNameFld, emailAddressFld;
 	private JButton 	signUpButton;
 
@@ -86,11 +88,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		initializeColours();
 		initializePatterns();
 		bugReportSystem = new BugReportSystem("res/bugreportsystem.bb");
-
-		try{
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}catch(Exception e){}
-
 		
 		initializeFrame();
 
@@ -510,12 +507,20 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 	public void initializeDashboardPanel()
 	{
+		UIManager.put("TabbedPane.contentAreaColor ",Color.DARK_GRAY);
+		UIManager.put("TabbedPane.selected", Color.DARK_GRAY);
+  		UIManager.put("TabbedPane.background",Color.DARK_GRAY);
+  		UIManager.put("TabbedPane.shadow",Color.DARK_GRAY);
+  		UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
+
 		dashboardPanel = new JTabbedPane();
 		dashboardPanel.setForeground(accentColour);
 
 		initializeAccountSummaryPanel();
 
-		dashboardPanel.addTab("Account Summary", null, accountSummaryPanel, "Account Summary");
+		dashboardPanel.addTab("Account Summary", accountSummaryPanel);
+
+		dashboardPanel.setBackgroundAt(0, Color.DARK_GRAY);
 	}
 
 	public void initializeAccountSummaryPanel()
