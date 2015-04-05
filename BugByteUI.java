@@ -64,7 +64,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 	//Components for the frame
 	private JFrame 		frame;
-	private JPanel		titlePanel, loginPanel, signUpPanel, navigationPanel, forgotPasswordPanel, forgotUsernamePanel, submitBugPanel, accountSummaryPanel;
+	private JPanel		titlePanel, loginPanel, signUpPanel, navigationPanel, forgotPasswordPanel, forgotUsernamePanel, bugsPanel, accountSummaryPanel;
 	private JTabbedPane dashboardPanel;		
 
 	//Components for the login panel
@@ -153,10 +153,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		currentComponent 	= loginPanel;
 	}
 
-	public void initializeSubmitBugPanel()
+	public void initializeBugsPanel()
 	{
-		submitBugPanel = new JPanel();
-		submitBugPanel.setBackground(Color.GREEN);
+		bugsPanel = new JPanel();
+		bugsPanel.setBackground(backgroundColour);
 	}
 
 	public void initializeCommonComponents()
@@ -197,7 +197,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		signUp					= new JLabel("Sign Up");
 		loginStatus				= new JLabel("Incorrect login information. Please try again.", SwingConstants.CENTER);
 
-		loginButton 	= new JButton("Log In");
+		loginButton = new JButton("Log In");
 		
 		//Set text colour for some components
 		forgotPassword.setForeground(Color.LIGHT_GRAY);
@@ -486,7 +486,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	{
 
 		initializeAccountSummaryPanel();
+		initializeBugsPanel();
 
+		dashboardPanel.addTab("Bugs", bugsPanel);
 		dashboardPanel.addTab("Account Summary", accountSummaryPanel);
 	}
 
