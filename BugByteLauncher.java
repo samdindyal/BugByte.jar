@@ -2,6 +2,13 @@ public class BugByteLauncher
 {
 	public static void main(String[] args)
 	{
-		BugByteUI bugByteUI = new BugByteUI();
+
+			javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      		@Override
+      		public void run()
+      		{
+     			BugByteUI bugByteUI = new BugByteUI();   	
+      		}
+    	});
 	}
 }
