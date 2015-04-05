@@ -172,6 +172,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				commonComponents[i][j][0] = new JLabel(commonComponentText[i][j], SwingConstants.RIGHT);
 				commonComponents[i][j][1] = commonComponentText[i][j].contains("Password") ? 
 											new JPasswordField("", NOT_OSX ? 20 : 15) : new JTextField("", NOT_OSX ? 20 : 15);
+				commonComponents[i][j][0].setForeground(accentColour);
+				commonComponents[i][j][1].addKeyListener(this);
 			}
 		}
 	}
@@ -218,18 +220,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 		for (int i = 0; i < commonComponents[LOGIN_PANEL].length; i++)
 		{
-			c.gridx = 0;
 			for (int j = 0; j < commonComponents[LOGIN_PANEL][i].length; j++)
 			{
 				loginPanel.add(commonComponents[LOGIN_PANEL][i][j], c);
 				c.insets = new Insets((i == 0 && j == 1) ? 10 : 0, 0, 0, 0);
-
-				if (j == 1)
-					commonComponents[LOGIN_PANEL][i][j].addKeyListener(this);
-				else
-					commonComponents[LOGIN_PANEL][i][j].setForeground(accentColour);
 				c.gridy++;
-			}			
+			}		
+			c.gridx = 0;	
 			c.gridy++;
 		}
 	
@@ -286,10 +283,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		{
 			for (int j = 0; j < commonComponents[SIGN_UP_PANEL][i].length; j++)
 			{
-				if (j == 0)
-					commonComponents[SIGN_UP_PANEL][i][j].setForeground(accentColour);
-				else
-					commonComponents[SIGN_UP_PANEL][i][j].addKeyListener(this);
 				signUpPanel.add(commonComponents[SIGN_UP_PANEL][i][j], c);
 				c.gridx++;
 			}
@@ -432,29 +425,16 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		usernameResetPanel.setBackground(backgroundColour);
 
 		for (int i = 0; i < commonComponents[FORGOT_PASSWORD_PANEL][0].length; i++)
-		{
-			if (i == 0)
-				commonComponents[FORGOT_PASSWORD_PANEL][0][i].setForeground(accentColour);				
-			else
-				commonComponents[FORGOT_PASSWORD_PANEL][0][i].addKeyListener(this);
 			usernameResetPanel.add(commonComponents[FORGOT_PASSWORD_PANEL][0][i]);
-		}
 	}
 
 	public void initializeEmailAddressResetPanel()
 	{
 		emailAddressResetPanel = new JPanel();
-
 		emailAddressResetPanel.setBackground(backgroundColour);
 
 		for (int i = 0; i < commonComponents[FORGOT_PASSWORD_PANEL][1].length; i++)
-		{
-			if (i == 0)
-				commonComponents[FORGOT_PASSWORD_PANEL][1][i].setForeground(accentColour);				
-			else
-				commonComponents[FORGOT_PASSWORD_PANEL][1][i].addKeyListener(this);
 			emailAddressResetPanel.add(commonComponents[FORGOT_PASSWORD_PANEL][1][i]);
-		}
 	}
 
 	public void initializeTogglePanel()
@@ -518,19 +498,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		{
 			for (int j = 0; j < commonComponents[ACCOUNT_SUMMARY_PANEL][i].length; j++)
 			{
-				if (j == 0)
-					commonComponents[ACCOUNT_SUMMARY_PANEL][i][j].setForeground(accentColour);
-				else
-					commonComponents[ACCOUNT_SUMMARY_PANEL][i][j].addKeyListener(this);
 				accountSummaryPanel.add(commonComponents[ACCOUNT_SUMMARY_PANEL][i][j], c);
 				c.gridx++;
 			}
-			c.gridy++;
 			c.gridx = 0;
+			c.gridy++;
 		}
 
-		c.gridx = 0;
-		c.gridy++;
 		c.gridwidth = 3;
 		c.insets = new Insets(15, 0, 0, 0);
 
