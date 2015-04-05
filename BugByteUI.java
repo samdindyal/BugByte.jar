@@ -434,6 +434,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 		forgotPasswordBorder = BorderFactory.createTitledBorder(null, "Forgot Password", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
 
+		forgotPasswordPanel.setBorder(forgotPasswordBorder);
+
 		submitButton = new JButton("Submit");
 		submitButton.setEnabled(false);
 
@@ -514,6 +516,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 		usernameResetButton.setForeground(accentColour);
 		emailAddressResetButton.setForeground(accentColour);
+
+		emailAddressResetButton.setOpaque(false);
+		usernameResetButton.setOpaque(false);
 
 		usernameResetButton.setSelected(true);
 
