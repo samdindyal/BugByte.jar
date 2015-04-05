@@ -22,7 +22,6 @@ public class BugReportSystem implements Serializable
 		users 			= new HashMap<String,User>();
 		bugs 			= new HashMap<String,Bug>();
 		currentUserID 	= "";
-
 	}
 
 	public BugReportSystem(String directory)
@@ -37,7 +36,6 @@ public class BugReportSystem implements Serializable
 	{
 		if(users.containsKey(username))
 			return false;
-
 		users.put(username, new User(username, password, firstName, lastName, emailAddress));
 		return true;
 	}
@@ -80,7 +78,6 @@ public class BugReportSystem implements Serializable
 
 			currentUserID = "";
 			System.out.println("Successfully loaded \"" + file.getPath() + "\"");
-
 			return true;
 		}
 		catch(Exception e)
@@ -108,7 +105,6 @@ public class BugReportSystem implements Serializable
 	{	
 		if (currentUserID.equals(""))
 			return false;
-		
 		currentUserID = "";
 		return true;
 	}
@@ -121,5 +117,4 @@ public class BugReportSystem implements Serializable
 			return users.get(currentUserID);
 		return null;
 	}
-	
 }
