@@ -15,6 +15,8 @@ import javax.swing.BorderFactory;
 import javax.swing.border.LineBorder;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import java.awt.Color;
 import java.awt.BorderLayout;
@@ -35,7 +37,7 @@ import java.util.regex.Matcher;
 
 import java.io.File;
 
-public class BugByteUI implements ActionListener, MouseListener, KeyListener
+public class BugByteUI implements ActionListener, MouseListener, KeyListener, ChangeListener
 {
 	private 				BugReportSystem 		bugReportSystem;
 	private					GridBagConstraints 		c;
@@ -50,8 +52,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 													FORGOT_USERNAME_PANEL 	= 2,
 													SIGN_UP_PANEL 			= 3,
 													ACCOUNT_SUMMARY_PANEL 	= 4;
-
-
 	//Common Components
 	private					JComponent commonComponents[][][];
 	private static final 	String commonComponentText[][] = {
@@ -157,6 +157,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	{
 		bugsPanel = new JPanel();
 		bugsPanel.setBackground(backgroundColour);
+		if (NOT_OSX)
+			bugsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(accentColour), "", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour));
 	}
 
 	public void initializeCommonComponents()
@@ -545,7 +547,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	public void prepareDashBoardPanel()
 	{
 		UIManager.put("TabbedPane.contentAreaColor ",backgroundColour);
-		UIManager.put("TabbedPane.selected", backgroundColour);
+		UIManager.put("TabbedPane.selected", accentColour);
+		UIManager.put("TabbedPane.unselected", backgroundColour);
+		UIManager.put("TabbedPane.tabAreaForeground", backgroundColour);
   		UIManager.put("TabbedPane.background",backgroundColour);
   		UIManager.put("TabbedPane.HightLight", accentColour);
   		UIManager.put("TabbedPane.borderHightlightColor", accentColour);
@@ -556,6 +560,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 		dashboardPanelBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(mainColour) : null, "Dashboard", TitledBorder.CENTER, TitledBorder.TOP, subtitle, mainColour);
 		dashboardPanel.setBorder(dashboardPanelBorder);
+		for (int i = 0; i < dashboardPanel.getTabCount(); i++)
+		{
+			dashboardPanel.setForegroundAt(i, accentColour);
+			dashboardPanel.setBackgroundAt(i, NOT_OSX ? backgroundColour : Color.BLACK);
+		}
+
+		dashboardPanel.addChangeListener(this);
 	}
 
 	public void initializePatterns()
@@ -1004,4 +1015,18 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 	@Override
 	public void keyTyped(KeyEvent e){}
+
+	@Override
+	public void stateChanged(ChangeEvent e)
+	{
+		if (e.getSource() == dashboardPanel)
+		{
+			for (int i = 0; i < dashboardPanel.getTabCount(); i++)
+			{
+				dashboardPanel.setForegroundAt(i, accentColour);
+				dashboardPanel.setBackgroundAt(i, NOT_OSX ? backgroundColour : Color.BLACK);
+			}
+			dashboardPanel.setForegroundAt(dashboardPanel.getSelectedIndex(), NOT_OSX ? backgroundColour : accentColour);
+		}
+	}
 }
