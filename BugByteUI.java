@@ -808,7 +808,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 			populateAccountSummaryFields(new String(((JPasswordField)passwordFld).getPassword()));
 		}
 		else
+		{
 			failedSignUpLbl.setText("User already exists.");
+			usernameFld.setBackground(failureColour);
+		}
 	}
 
 	public void populateAccountSummaryFields(String password)
@@ -937,6 +940,32 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 										);
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				signUpButton.doClick();
+
+						if (e.getKeyChar() == KeyEvent.VK_ENTER)
+				submitSummaryButton.doClick();
+
+			if (e.getSource() == usernameFld)
+				usernameFld.setBackground(isValidUsername(usernameFld.getText()) ? successColour : failureColour);
+			else if (e.getSource() == firstNameFld)
+					firstNameFld.setBackground(isValidName(firstNameFld.getText()) ? successColour : failureColour);
+			else if (e.getSource() == lastNameFld)
+					lastNameFld.setBackground(isValidName(lastNameFld.getText()) ? successColour : failureColour);
+			else if (e.getSource() == emailAddressFld)
+					emailAddressFld.setBackground(isValidEmailAddress(emailAddressFld.getText()) ? successColour : failureColour);
+			else if (e.getSource() == passwordFld || e.getSource() == confirmPasswordFld)
+			{
+				if (new String(((JPasswordField)passwordFld).getPassword()).equals(new String(((JPasswordField)confirmPasswordFld).getPassword()))
+								&& passwordFld.getText().length() > 0)
+				{
+					passwordFld.setBackground(successColour);
+					confirmPasswordFld.setBackground(successColour);
+				}
+				else if (confirmPasswordSummaryField.getText().length() > 0)
+				{
+					passwordFld.setBackground(failureColour);
+					confirmPasswordFld.setBackground(failureColour);
+				}
+			}
 		}
 		else if (e.getSource() == usernameFld2)
 		{
@@ -944,6 +973,11 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 			resetPasswordMessageLbl.setText("");
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitButton.doClick();
+
+			if (usernameFld2.getText().length() == 0)
+				usernameFld2.setBackground(Color.WHITE);
+			else
+				usernameFld2.setBackground(isValidUsername(usernameFld2.getText()) ? successColour : failureColour);
 		}
 		else if (e.getSource() == emailAddressFld2)
 		{
@@ -951,6 +985,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 			resetPasswordMessageLbl.setText("");
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitButton.doClick();
+			if (emailAddressFld2.getText().length() == 0)
+				emailAddressFld2.setBackground(Color.WHITE);
+			else
+				emailAddressFld2.setBackground(isValidEmailAddress(emailAddressFld2.getText()) ? successColour : failureColour);
 		}
 		else if (e.getSource() == emailAddressFld3)
 		{
@@ -958,6 +996,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 			forgotUsernameMessageLbl.setText("");
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitButton2.doClick();
+			if (emailAddressFld3.getText().length() == 0)
+				emailAddressFld3.setBackground(Color.WHITE);
+			else
+				emailAddressFld3.setBackground(isValidEmailAddress(emailAddressFld3.getText()) ? successColour : failureColour);
 		}
 		else if(	e.getSource() == firstNameSummaryField
 				||  e.getSource() == lastNameSummaryField
