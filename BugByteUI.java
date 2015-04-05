@@ -11,13 +11,17 @@ import javax.swing.JTabbedPane;
 import javax.swing.JComponent;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
-import javax.swing.plaf.ColorUIResource;
+import javax.swing.BorderFactory;
+import javax.swing.border.LineBorder;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,16 +33,18 @@ import java.awt.event.KeyListener;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import java.io.File;
+
 
 public class BugByteUI implements ActionListener, MouseListener, KeyListener
 {
 	private BugReportSystem 	bugReportSystem;
 	private	GridBagConstraints 	c;
 	private JComponent  		currentComponent, previousComponent;
-	private String	  			currentComponentName, previousComponentName;
 	private Pattern 			emailAddressPattern, usernamePattern, namePattern;
 	private Matcher 			matcher;
 	private Color 				mainColour, accentColour, successColour, failureColour;
+	private Font 				subtitle;
 
 	//Components for the frame
 	private JFrame 		frame;
@@ -50,11 +56,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	private JPanel		 buttonPanel;
 	private JTextField 	 usernameField, passwordField;
 	private JButton		 loginButton;
+	private TitledBorder loginBorder;
 	
 	//Components for the sign up panel
-	private JLabel		usernameLbl, passwordLbl, confirmPasswordLbl, firstNameLbl, lastNameLbl, emailAddressLbl, failedSignUpLbl;
-	private JTextField	usernameFld, passwordFld, confirmPasswordFld, firstNameFld, lastNameFld, emailAddressFld;
-	private JButton 	signUpButton;
+	private JLabel			usernameLbl, passwordLbl, confirmPasswordLbl, firstNameLbl, lastNameLbl, emailAddressLbl, failedSignUpLbl;
+	private JTextField		usernameFld, passwordFld, confirmPasswordFld, firstNameFld, lastNameFld, emailAddressFld;
+	private JButton 		signUpButton;
+	private TitledBorder 	signUpBorder;
 
 	//Components for the navigation panel
 	private JButton	backButton, dashboardButton;
@@ -66,17 +74,20 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	private JRadioButton	usernameResetButton, emailAddressResetButton;
 	private	ButtonGroup		buttonGroup;
 	private JButton 		submitButton;
+	private TitledBorder 	forgotPasswordBorder;
 
-	//Components for forgot username panel
-	private JLabel		emailAddressLbl3, forgotUsernameMessageLbl;
-	private JTextField	emailAddressFld3;
-	private JButton 	submitButton2;
-	private JPanel		inputLinePanel;
+	//Components for the forgot username panel
+	private JLabel			emailAddressLbl3, forgotUsernameMessageLbl;
+	private JTextField		emailAddressFld3;
+	private JButton 		submitButton2;
+	private JPanel			inputLinePanel;
+	private TitledBorder 	forgotUsernameBorder;
 
-	//Components for account summary panel
-	private JLabel 		firstNameSummaryLabel, lastNameSummaryLabel, usernameSummaryLabel, emailAddressSummaryLabel, passwordSummaryLabel, confirmPasswordSummaryLabel, oldPasswordSummaryLabel, accountSummaryMessageLabel;
-	private JTextField	firstNameSummaryField, lastNameSummaryField, usernameSummaryField, emailAddressSummaryField, passwordSummaryField, confirmPasswordSummaryField, oldPasswordSummaryField;
-	private JButton     submitSummaryButton;
+	//Components for the dashboard panel
+	private JLabel 			firstNameSummaryLabel, lastNameSummaryLabel, usernameSummaryLabel, emailAddressSummaryLabel, passwordSummaryLabel, confirmPasswordSummaryLabel, oldPasswordSummaryLabel, accountSummaryMessageLabel;
+	private JTextField		firstNameSummaryField, lastNameSummaryField, usernameSummaryField, emailAddressSummaryField, passwordSummaryField, confirmPasswordSummaryField, oldPasswordSummaryField;
+	private JButton     	submitSummaryButton;
+	private TitledBorder 	dashboardPanelBorder;
 
 /**
 	Creates a new BugByteUI object
@@ -85,6 +96,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	{
 		initializeColours();
 		initializePatterns();
+		initializeFonts();
 		bugReportSystem = new BugReportSystem("res/bugreportsystem.bb");
 		
 		initializeFrame();
@@ -108,7 +120,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		frame.setLayout(new BorderLayout());
 
 		//Initialize the frame's components
-		titlePanel = new TitlePanel("Login");
+		titlePanel = new TitlePanel();
 		initializeNavigationPanel();
 		initializeLoginPanel();
 		initializeSignUpPanel();
@@ -121,7 +133,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		frame.add(loginPanel, BorderLayout.CENTER);
 		frame.add(navigationPanel, BorderLayout.SOUTH);
 		currentComponent 	= loginPanel;
-		currentComponentName 	= "Login";
 	}
 
 	public void initializeSubmitBugPanel()
@@ -141,6 +152,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 		loginPanel.setLayout(new GridBagLayout());
 		loginPanel.setBackground(Color.DARK_GRAY);
+
+		loginBorder = BorderFactory.createTitledBorder(null, "Login", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
+
+		loginPanel.setBorder(loginBorder);
 
 		c = new GridBagConstraints();
 
@@ -235,6 +250,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		signUpPanel = new JPanel();
 		signUpPanel.setLayout(new GridBagLayout());
 		signUpPanel.setBackground(Color.DARK_GRAY);
+
+		signUpBorder = BorderFactory.createTitledBorder(null, "Sign Up", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
+		signUpPanel.setBorder(signUpBorder);
 
 		c = new GridBagConstraints();
 
@@ -368,6 +386,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		forgotUsernamePanel.setLayout(new GridBagLayout());
 		forgotUsernamePanel.setBackground(Color.DARK_GRAY);
 
+		forgotUsernameBorder = BorderFactory.createTitledBorder(null, "Forgot Username", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
+
+		forgotUsernamePanel.setBorder(forgotUsernameBorder);
+
 		emailAddressLbl3 			= new JLabel("Email Address:");
 		emailAddressFld3 			= new JTextField("", 15);
 		submitButton2 	 			= new JButton("Submit");
@@ -409,6 +431,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		forgotPasswordPanel = new JPanel();
 		forgotPasswordPanel.setLayout(new GridBagLayout());
 		forgotPasswordPanel.setBackground(Color.DARK_GRAY);
+
+		forgotPasswordBorder = BorderFactory.createTitledBorder(null, "Forgot Password", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
 
 		submitButton = new JButton("Submit");
 		submitButton.setEnabled(false);
@@ -513,6 +537,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 		dashboardPanel = new JTabbedPane();
 		dashboardPanel.setForeground(accentColour);
+
+		dashboardPanelBorder = BorderFactory.createTitledBorder(null, "Dashboard", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
+
+		dashboardPanel.setBorder(dashboardPanelBorder);
 
 		initializeAccountSummaryPanel();
 
@@ -667,7 +695,19 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		failureColour = new Color(255, 152, 152);
 	}
 
-	public void swapComponents(JComponent component, String componentName)
+	public void initializeFonts()
+	{
+		try
+		{
+			subtitle = Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(28f);
+		}
+		catch(Exception e)
+		{
+			subtitle = new Font("Arial", Font.BOLD, 14);
+		}
+	}
+
+	public void swapComponents(JComponent component)
 	{
 		frame.remove(currentComponent);
 		frame.add(component, BorderLayout.CENTER);
@@ -680,12 +720,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		signUpButton.setVisible(component == signUpPanel);
 		dashboardButton.setEnabled(component != dashboardPanel && bugReportSystem.isLoggedIn());
 		
-		previousComponentName 	= currentComponentName;
-		currentComponentName 	= componentName;
 		previousComponent 		= currentComponent;
 		currentComponent 		= component;
-
-		((TitlePanel)titlePanel).setCurrentPanel(componentName);
 	}
 
 	public void swapPasswordResetPanels(JPanel panel)
@@ -735,7 +771,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 			if (bugReportSystem.login(usernameField.getText(), String.valueOf(((JPasswordField)passwordField).getPassword())))
 			{
 				loginStatus.setText("");
-				swapComponents(dashboardPanel, "Dashboard");
+				swapComponents(dashboardPanel);
 				System.out.println("Login successful.");
 
 				usernameField.setEnabled(false);
@@ -743,7 +779,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 				loginButton.setText("Logout");
 
-				previousComponentName = "Logged in as " + usernameField.getText();
+				loginBorder.setTitle("Logged in as " + usernameField.getText());
 
 				populateAccountSummaryFields(new String(((JPasswordField)passwordField).getPassword()));
 
@@ -761,7 +797,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		}
 		else if (bugReportSystem.logout())
 		{
-			swapComponents(loginPanel, "Login");
+			loginBorder.setTitle("Login");
+			swapComponents(loginPanel);
 
 			usernameField.setEnabled(true);
 			passwordField.setEnabled(true);
@@ -790,7 +827,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 							emailAddressFld.getText()))
 		{
 			bugReportSystem.writeToDisk();
-			swapComponents(dashboardPanel, "Dashboard");
+			swapComponents(dashboardPanel);
 			System.out.println("Sign Up Successful.");
 
 			usernameField.setEnabled(false);
@@ -804,7 +841,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 			loginStatus.setText("");
 
 			previousComponent 		= loginPanel;
-			previousComponentName	= "Login";
 
 			bugReportSystem.login(usernameFld.getText(), new String(((JPasswordField)passwordFld).getPassword()));
 
@@ -872,7 +908,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == backButton && previousComponent != null)
-			swapComponents(previousComponent, previousComponentName);
+			swapComponents(previousComponent);
 		if (e.getSource() == loginButton)
 			toggleLogin();
 		else if (e.getSource() == usernameResetButton)
@@ -888,18 +924,18 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		else if (e.getSource() == submitSummaryButton)
 			submitAccountChanges(new String(((JPasswordField)passwordSummaryField).getPassword()));
 		else if (e.getSource() == dashboardButton)
-			swapComponents(dashboardPanel, "Dashboard");
+			swapComponents(dashboardPanel);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
 		if (e.getSource() == signUp)
-			swapComponents(signUpPanel, "Sign Up");
+			swapComponents(signUpPanel);
 		else if (e.getSource() == forgotPassword)
-			swapComponents(forgotPasswordPanel, "Forgot Password");
+			swapComponents(forgotPasswordPanel);
 		else if (e.getSource() == forgotUsername)
-			swapComponents(forgotUsernamePanel, "Forgot Username");
+			swapComponents(forgotUsernamePanel);
 	}
 
 	@Override
