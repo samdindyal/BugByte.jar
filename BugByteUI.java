@@ -98,6 +98,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		initializeColours();
 		initializePatterns();
 		initializeFonts();
+
 		bugReportSystem = new BugReportSystem("res/bugreportsystem.bb");
 		
 		initializeFrame();
@@ -538,7 +539,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		UIManager.put("TabbedPane.contentAreaColor ",Color.DARK_GRAY);
 		UIManager.put("TabbedPane.selected", Color.DARK_GRAY);
   		UIManager.put("TabbedPane.background",Color.DARK_GRAY);
-  		UIManager.put("TabbedPane.shadow",Color.DARK_GRAY);
+  		UIManager.put("TabbedPane.HightLight", accentColour);
+  		UIManager.put("TabbedPane.borderHightlightColor", accentColour);
   		UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
 
 		dashboardPanel = new JTabbedPane();
@@ -560,6 +562,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		accountSummaryPanel = new JPanel();
 		accountSummaryPanel.setLayout(new GridBagLayout());
 		accountSummaryPanel.setBackground(Color.DARK_GRAY);
+
+		if (NOT_OSX)
+			accountSummaryPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(accentColour), "", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour));
+
 
 		firstNameSummaryLabel 		= new JLabel("First Name:");
 		lastNameSummaryLabel 		= new JLabel("Last Name:");
