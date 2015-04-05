@@ -754,6 +754,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 				loginStatus.setForeground(Color.RED);
 				loginStatus.setText("Incorrect login information. Please try again.");
 				System.out.println("Login failed. Incorrect credentials.");
+
+				usernameField.setBackground(failureColour);
+				passwordField.setBackground(failureColour);
 			}
 		}
 		else if (bugReportSystem.logout())
@@ -920,8 +923,12 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 				&& ((JPasswordField)passwordField).getPassword().length > 0);
 			loginStatus.setText("");
 
+			usernameField.setBackground(Color.WHITE);
+			passwordField.setBackground(Color.WHITE);
+
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				loginButton.doClick();
+
 		}
 
 		else if (	e.getSource() == usernameFld
