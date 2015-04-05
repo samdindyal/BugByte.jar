@@ -40,7 +40,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	private 				BugReportSystem 		bugReportSystem;
 	private					GridBagConstraints 		c;
 	private 				JComponent  			currentComponent, previousComponent;
-	private 				Pattern 				emailAddressPattern, usernamePattern, namePattern;
+	private 				Pattern 				emailAddressPattern, usernamePattern, namePattern, passwordPattern;
 	private 				Matcher 				matcher;
 	private 				Color 					mainColour, accentColour, successColour, failureColour, backgroundColour;
 	private 				Font 					subtitle;
@@ -50,7 +50,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 													FORGOT_USERNAME_PANEL 	= 2,
 													SIGN_UP_PANEL 			= 3,
 													ACCOUNT_SUMMARY_PANEL 	= 4;
-													
+
 
 	//Common Components
 	private					JComponent commonComponents[][][];
@@ -568,6 +568,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 		regex 			= "^[a-zA-Z0-9]+";
 		namePattern 	= Pattern.compile(regex);
+
+		passwordPattern = Pattern.compile(regex);
 	}
 
 	public void initializeColours()
@@ -647,6 +649,18 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	{
 		matcher = namePattern.matcher(name);
 		return matcher.matches();
+	}
+
+	public boolean isValidPassword(String password)
+	{
+		matcher = passwordPattern.matcher(password);
+		return password.length() >= 6 && matcher.matches();
+	}
+
+	public boolean passwordFieldCheck(int panelIdentifier, int fieldNumber)
+	{
+		return		new String(((JPasswordField)commonComponents[panelIdentifier][fieldNumber][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[panelIdentifier][fieldNumber+1][1]).getPassword()))
+				&& isValidPassword(new String(((JPasswordField)commonComponents[panelIdentifier][fieldNumber][1]).getPassword()));
 	}
 
 	public void toggleLogin()
@@ -904,8 +918,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 					commonComponents[SIGN_UP_PANEL][3][1].setBackground(isValidEmailAddress(((JTextField)commonComponents[SIGN_UP_PANEL][3][1]).getText()) ? successColour : failureColour);
 			else if (e.getSource() == commonComponents[SIGN_UP_PANEL][4][1] || e.getSource() == commonComponents[SIGN_UP_PANEL][5][1])
 			{
-				if (new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][4][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][5][1]).getPassword()))
-								&& ((JTextField)commonComponents[SIGN_UP_PANEL][4][1]).getText().length() > 0)
+				if (passwordFieldCheck(SIGN_UP_PANEL, 4))
 				{
 					commonComponents[SIGN_UP_PANEL][4][1].setBackground(successColour);
 					commonComponents[SIGN_UP_PANEL][5][1].setBackground(successColour);
@@ -969,8 +982,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 				|| e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][6][1]
 				&& e.getKeyChar() != KeyEvent.VK_ENTER)
 			{
-				if (new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][5][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][6][1]).getPassword()))
-								&& ((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][5][1]).getText().length() > 0)
+				if (passwordFieldCheck(ACCOUNT_SUMMARY_PANEL, 5))
 				{
 					commonComponents[ACCOUNT_SUMMARY_PANEL][5][1].setBackground(successColour);
 					commonComponents[ACCOUNT_SUMMARY_PANEL][6][1].setBackground(successColour);
