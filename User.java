@@ -39,5 +39,10 @@ public class User implements Serializable
 	public void setlastName(String lastName){this.lastName = lastName;}
 	public void setEmailAddress(String emailAddress){this.emailAddress = emailAddress;}
 
-	public boolean authenticate(String password){return this.password.equals(password);}		
+	public boolean authenticate(String password){return this.password.equals(password);}
+
+	public HashSet<String> getKeys(String password)
+	{
+		return authenticate(password) ? keys : null;
+	}		
 }
