@@ -668,6 +668,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 
 				populateAccountSummaryFields(new String(((JPasswordField)commonComponents[0][1][1]).getPassword()));
 
+				forgotUsername.setForeground(backgroundColour.brighter());
+				forgotPassword.setForeground(backgroundColour.brighter());
+				signUp.setForeground(backgroundColour.brighter());
+
 				submitSummaryButton.setVisible(true);
 			}
 			else
@@ -695,6 +699,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 			loginButton.setText("Login");
 
 			dashboardButton.setEnabled(false);
+			forgotUsername.setForeground(accentColour);
+			forgotPassword.setForeground(accentColour);
+			signUp.setForeground(accentColour);
 
 			loginStatus.setForeground(accentColour);
 			loginStatus.setText("You have successfully logged out.");
@@ -813,12 +820,15 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		if (e.getSource() == signUp)
-			swapComponents(signUpPanel);
-		else if (e.getSource() == forgotPassword)
-			swapComponents(forgotPasswordPanel);
-		else if (e.getSource() == forgotUsername)
-			swapComponents(forgotUsernamePanel);
+		if (!bugReportSystem.isLoggedIn())
+		{
+			if (e.getSource() == signUp)
+				swapComponents(signUpPanel);
+			else if (e.getSource() == forgotPassword)
+				swapComponents(forgotPasswordPanel);
+			else if (e.getSource() == forgotUsername)
+				swapComponents(forgotUsernamePanel);
+		}
 	}
 
 	@Override
