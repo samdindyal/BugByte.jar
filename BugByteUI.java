@@ -38,13 +38,14 @@ import java.io.File;
 
 public class BugByteUI implements ActionListener, MouseListener, KeyListener
 {
-	private BugReportSystem 	bugReportSystem;
-	private	GridBagConstraints 	c;
-	private JComponent  		currentComponent, previousComponent;
-	private Pattern 			emailAddressPattern, usernamePattern, namePattern;
-	private Matcher 			matcher;
-	private Color 				mainColour, accentColour, successColour, failureColour;
-	private Font 				subtitle;
+	private BugReportSystem 		bugReportSystem;
+	private	GridBagConstraints 		c;
+	private JComponent  			currentComponent, previousComponent;
+	private Pattern 				emailAddressPattern, usernamePattern, namePattern;
+	private Matcher 				matcher;
+	private Color 					mainColour, accentColour, successColour, failureColour;
+	private Font 					subtitle;
+	private static final boolean	NOT_OSX = !System.getProperty("os.name").startsWith("Mac OS X");
 
 	//Components for the frame
 	private JFrame 		frame;
@@ -153,7 +154,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		loginPanel.setLayout(new GridBagLayout());
 		loginPanel.setBackground(Color.DARK_GRAY);
 
-		loginBorder = BorderFactory.createTitledBorder(null, "Login", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
+		loginBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(accentColour) : null, "Login", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
 
 		loginPanel.setBorder(loginBorder);
 
@@ -251,7 +252,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		signUpPanel.setLayout(new GridBagLayout());
 		signUpPanel.setBackground(Color.DARK_GRAY);
 
-		signUpBorder = BorderFactory.createTitledBorder(null, "Sign Up", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
+		signUpBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(accentColour) : null, "Sign Up", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
 		signUpPanel.setBorder(signUpBorder);
 
 		c = new GridBagConstraints();
@@ -386,7 +387,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		forgotUsernamePanel.setLayout(new GridBagLayout());
 		forgotUsernamePanel.setBackground(Color.DARK_GRAY);
 
-		forgotUsernameBorder = BorderFactory.createTitledBorder(null, "Forgot Username", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
+		forgotUsernameBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(accentColour) : null, "Forgot Username", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
 
 		forgotUsernamePanel.setBorder(forgotUsernameBorder);
 
@@ -432,7 +433,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		forgotPasswordPanel.setLayout(new GridBagLayout());
 		forgotPasswordPanel.setBackground(Color.DARK_GRAY);
 
-		forgotPasswordBorder = BorderFactory.createTitledBorder(null, "Forgot Password", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
+		forgotPasswordBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(accentColour) : null, "Forgot Password", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
 
 		forgotPasswordPanel.setBorder(forgotPasswordBorder);
 
@@ -543,7 +544,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 		dashboardPanel = new JTabbedPane();
 		dashboardPanel.setForeground(accentColour);
 
-		dashboardPanelBorder = BorderFactory.createTitledBorder(null, "Dashboard", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
+		dashboardPanelBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(accentColour) : null, "Dashboard", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour);
 
 		dashboardPanel.setBorder(dashboardPanelBorder);
 
