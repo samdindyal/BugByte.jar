@@ -164,7 +164,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener
 			{
 				commonComponents[i][j][0] = new JLabel(commonComponentText[i][j], SwingConstants.RIGHT);
 				commonComponents[i][j][1] = commonComponentText[i][j].contains("Password") ? 
-											new JPasswordField("", 20) : new JTextField("", 20);
+											new JPasswordField("", NOT_OSX ? 20 : 15) : new JTextField("", NOT_OSX ? 20 : 15);
 			}
 		}
 	}
