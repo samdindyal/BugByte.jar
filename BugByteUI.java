@@ -906,7 +906,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 						if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitSummaryButton.doClick();
 
-			if (e.getSource() == commonComponents[SIGN_UP_PANEL][0][1])
+			if (e.getSource() == commonComponents[SIGN_UP_PANEL][0][1] && e.getKeyChar() !=  KeyEvent.VK_ENTER)
 				commonComponents[SIGN_UP_PANEL][0][1].setBackground(isValidUsername(((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText()) ? successColour : failureColour);
 			else if (e.getSource() == commonComponents[SIGN_UP_PANEL][1][1])
 					commonComponents[SIGN_UP_PANEL][1][1].setBackground(isValidName(((JTextField)commonComponents[SIGN_UP_PANEL][1][1]).getText()) ? successColour : failureColour);
