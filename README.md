@@ -3,10 +3,11 @@
 This is an application, written in Java as an assignment for CPS406 (Intro to Software Engineering), which emulates a bug report system. It implements user accounts and a database of bugs of which users can add, remove and edit. Because this is an emulation, information will not be transmitted through the internet and will only be emulated through offline files in which we plan to store the appropriate serializable objects.
 
 
-**Note:** OS X/Linux and Windows users must compile BugByteLauncher differently. 
+<h3>Note</h3>
+<p1>OS X/Linux and Windows users must compile BugByteLauncher differently.<p1>
 
-OS X/Linux
-javac -cp $CLASSPATH:lib/AppleJavaExtensions.jar BugByteLauncher.java
+**OS X/Linux:**
+<p>javac -cp $CLASSPATH:lib/AppleJavaExtensions.jar BugByteLauncher.java</p>
 
-Windows
-javac -cp ".;lib/AppleJavaExtensions.jar" BugByteLauncher.java
+**Windows:**
+<p>javac -cp ".;lib/AppleJavaExtensions.jar" BugByteLauncher.java</p>
