@@ -317,6 +317,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		dashboardButton = new JButton("Dashboard");
 
 		dashboardButton.setEnabled(false);
+		backButton.setEnabled(false);
 
 		navigationPanel.add(backButton);
 		navigationPanel.add(dashboardButton);
@@ -595,7 +596,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		submitButton2.setVisible(component == forgotUsernamePanel);
 		signUpButton.setVisible(component == signUpPanel);
 		dashboardButton.setEnabled(component != dashboardPanel && bugReportSystem.isLoggedIn());
-		
+		backButton.setEnabled(bugReportSystem.isLoggedIn() || component != loginPanel);
+
 		previousComponent 		= currentComponent;
 		currentComponent 		= component;
 	}
