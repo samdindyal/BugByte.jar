@@ -681,6 +681,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 				forgotUsername.setForeground(backgroundColour.brighter());
 				forgotPassword.setForeground(backgroundColour.brighter());
+				commonComponents[LOGIN_PANEL][0][1].setBackground(Color.WHITE);
+				commonComponents[LOGIN_PANEL][1][1].setBackground(Color.WHITE);
 				signUp.setForeground(backgroundColour.brighter());
 
 				submitSummaryButton.setVisible(true);
@@ -744,6 +746,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 			loginButton.setText("Logout");
 			loginStatus.setForeground(backgroundColour);
+			commonComponents[LOGIN_PANEL][0][1].setBackground(Color.WHITE);
+			commonComponents[LOGIN_PANEL][1][1].setBackground(Color.WHITE);
 
 			previousComponent 		= loginPanel;
 
