@@ -570,6 +570,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		successColour 		= new Color(152, 255, 152);
 		failureColour 		= new Color(255, 152, 152);
 		backgroundColour 	= Color.DARK_GRAY.darker();
+
+		UIManager.put("TextField.selectionBackground", accentColour);
+		UIManager.put("PasswordField.selectionBackground", accentColour);
 	}
 
 	public void initializeFonts()
