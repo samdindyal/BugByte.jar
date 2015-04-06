@@ -7,7 +7,7 @@ public class BugByteLauncher
       		@Override
       		public void run()
       		{
-     			BugByteUI bugByteUI = new BugByteUI();   	
+     			    BugByteUI bugByteUI = new BugByteUI();   	
       		}
     	});
 	}
