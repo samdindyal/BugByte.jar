@@ -206,9 +206,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		loginButton = new JButton("Log In");
 		
 		//Set text colour for some components
-		forgotPassword.setForeground(Color.LIGHT_GRAY);
-		forgotUsername.setForeground(Color.LIGHT_GRAY);
-		signUp.setForeground(Color.LIGHT_GRAY);
 
 		forgotPassword.setForeground(accentColour);
 		forgotUsername.setForeground(accentColour);
@@ -681,9 +678,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 				forgotUsername.setForeground(backgroundColour.brighter());
 				forgotPassword.setForeground(backgroundColour.brighter());
+				signUp.setForeground(backgroundColour.brighter());
 				commonComponents[LOGIN_PANEL][0][1].setBackground(Color.WHITE);
 				commonComponents[LOGIN_PANEL][1][1].setBackground(Color.WHITE);
-				signUp.setForeground(backgroundColour.brighter());
 
 				submitSummaryButton.setVisible(true);
 			}
