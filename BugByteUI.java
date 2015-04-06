@@ -586,14 +586,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 	public void initializeFonts()
 	{
-		try
-		{
-			subtitle = Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(28f);
-		}
-		catch(Exception e)
-		{
-			subtitle = new Font("Arial", Font.BOLD, 14);
-		}
+		try{subtitle = Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(28f);}
+		catch(Exception e){subtitle = new Font("Arial", Font.BOLD, 14);}
 	}
 
 	public void swapComponents(JComponent component)
@@ -633,7 +627,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			forgotPasswordPanel.add(panel, c);
 			forgotPasswordPanel.validate();
 			forgotPasswordPanel.repaint();
-
 	}
 
 	public boolean isValidEmailAddress(String emailAddress)
