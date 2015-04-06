@@ -729,6 +729,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 							((JTextField)commonComponents[SIGN_UP_PANEL][2][1]).getText(),
 							((JTextField)commonComponents[SIGN_UP_PANEL][3][1]).getText()))
 		{
+			currentUserID = ((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText();
 			bugReportSystem.writeToDisk();
 			swapComponents(dashboardPanel);
 			System.out.println("Sign Up Successful.");
