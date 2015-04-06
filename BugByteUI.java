@@ -46,6 +46,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	private 				Matcher 				matcher;
 	private 				Color 					mainColour, accentColour, successColour, failureColour, backgroundColour;
 	private 				Font 					subtitle;
+	private					String					currentUserID;
 	private static final 	boolean					NOT_OSX = !System.getProperty("os.name").startsWith("Mac OS X");
 	private static final 	int 					LOGIN_PANEL 			= 0,
 													FORGOT_PASSWORD_PANEL 	= 1,
@@ -598,8 +599,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		submitButton.setVisible(component == forgotPasswordPanel);
 		submitButton2.setVisible(component == forgotUsernamePanel);
 		signUpButton.setVisible(component == signUpPanel);
-		dashboardButton.setEnabled(component != dashboardPanel && bugReportSystem.isLoggedIn());
-		backButton.setEnabled(bugReportSystem.isLoggedIn() || component != loginPanel);
+		dashboardButton.setEnabled(component != dashboardPanel && bugReportSystem.isLoggedIn(currentUserID));
+		backButton.setEnabled(bugReportSystem.isLoggedIn(currentUserID) || component != loginPanel);
 
 		previousComponent 		= currentComponent;
 		currentComponent 		= component;
@@ -659,10 +660,11 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 	public void toggleLogin()
 	{
-		if (!bugReportSystem.isLoggedIn())
+		if (!bugReportSystem.hasActiveUsers())
 		{
 			if (bugReportSystem.login(((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText(), String.valueOf(((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).getPassword())))
 			{
+				currentUserID = ((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText();
 				loginStatus.setForeground(backgroundColour);
 				swapComponents(dashboardPanel);
 				System.out.println("Login successful.");
@@ -692,8 +694,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				commonComponents[LOGIN_PANEL][1][1].setBackground(failureColour);
 			}
 		}
-		else if (bugReportSystem.logout())
+		else if (bugReportSystem.logout(currentUserID))
 		{
+			currentUserID = "";
 			loginBorder.setTitle("Login");
 			swapComponents(loginPanel);
 
@@ -756,7 +759,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 	public void populateAccountSummaryFields(String password)
 	{
-		User user = bugReportSystem.getUserAccount(password);
+		User user = bugReportSystem.getUserAccount(currentUserID, password);
 		
 		((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][0][1]).setText(user.getUsername());
 		((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][1][1]).setText(user.getFirstName());
@@ -776,7 +779,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	public boolean submitAccountChanges(String password)
 	{
 		User user;
-		if ((user = bugReportSystem.getUserAccount(new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][4][1]).getPassword()))) == null)
+		if ((user = bugReportSystem.getUserAccount(currentUserID, new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][4][1]).getPassword()))) == null)
 		{
 			accountSummaryMessageLabel.setForeground(Color.RED);
 			accountSummaryMessageLabel.setText("Incorrect password. Please try again.");
@@ -856,7 +859,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		if (!bugReportSystem.isLoggedIn())
+		if (!bugReportSystem.isLoggedIn(currentUserID))
 		{
 			if (e.getSource() == signUp)
 				swapComponents(signUpPanel);
