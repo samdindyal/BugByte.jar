@@ -94,7 +94,7 @@ public class BugReportSystem implements Serializable
 			return false;
 		else if (currentUserIDs.contains(username))
 		{
-			System.out.println("The user " + username + " is already logged in.");
+			System.out.println("The user \"" + username + "\" is already logged in.");
 			return true;
 		}
 		else if (users.get(username).authenticate(password))
@@ -120,7 +120,7 @@ public class BugReportSystem implements Serializable
 
 	public User getUserAccount(String username, String password)
 	{
-		if (users.get(username).authenticate(password))
+		if (isLoggedIn(username) && users.get(username).authenticate(password))
 			return users.get(username);
 		return null;
 	}
