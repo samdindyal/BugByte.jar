@@ -752,10 +752,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		}
 		else
 		{
+			failedSignUpLbl.setForeground(Color.RED);
 			failedSignUpLbl.setText("Sorry, that username has already been taken.");
 			System.out.println("Username already taken. Sign Up Unsuccessful.");
 			commonComponents[SIGN_UP_PANEL][0][1].setBackground(failureColour);
 		}
+
+		signUpButton.setEnabled(false);
 	}
 
 	public void populateAccountSummaryFields(String password)
