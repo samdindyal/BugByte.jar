@@ -8,20 +8,21 @@ import java.io.ObjectInputStream;
 import java.util.UUID;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.HashSet;
 
 public class BugReportSystem implements Serializable
 {
 	private HashMap<String, User> 		users;
 	private HashMap<String, Bug> 		bugs;
 
-	private transient String 			currentUserID;
+	private transient HashSet<String> 	currentUserIDs;
 	private File 						file;
 
 	public BugReportSystem()
 	{
 		users 			= new HashMap<String,User>();
 		bugs 			= new HashMap<String,Bug>();
-		currentUserID 	= "";
+		currentUserIDs 	= new HashSet<String>();
 	}
 
 	public BugReportSystem(String directory)
@@ -76,7 +77,7 @@ public class BugReportSystem implements Serializable
 			users = objectIn.users;
 			bugs = objectIn.bugs;
 
-			currentUserID = "";
+			currentUserIDs = new HashSet<String>();
 			System.out.println("Successfully loaded \"" + file.getPath() + "\"");
 			return true;
 		}
@@ -91,30 +92,36 @@ public class BugReportSystem implements Serializable
 	{
 		if (!users.containsKey(username))
 			return false;
-
+		else if (currentUserIDs.contains(username))
+		{
+			System.out.println("The user " + username + " is already logged in.");
+			return true;
+		}
 		else if (users.get(username).authenticate(password))
 		{
-			currentUserID = username;
+			currentUserIDs.add(username);
 			return true;
 		}
 		else
 			return false;
 	}
 
-	public boolean logout()
+	public boolean logout(String username)
 	{	
-		if (currentUserID.equals(""))
+		if (!currentUserIDs.contains(username))
 			return false;
-		currentUserID = "";
+		currentUserIDs.remove(username);
 		return true;
 	}
 
-	public boolean isLoggedIn(){return !currentUserID.equals("");}
+	public boolean isLoggedIn(String username){return currentUserIDs.contains(username);}
 
-	public User getUserAccount(String password)
+	public boolean hasActiveUsers(){return currentUserIDs.size() > 0;}
+
+	public User getUserAccount(String username, String password)
 	{
-		if (users.get(currentUserID).authenticate(password))
-			return users.get(currentUserID);
+		if (users.get(username).authenticate(password))
+			return users.get(username);
 		return null;
 	}
 }
