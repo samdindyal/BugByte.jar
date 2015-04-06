@@ -19,10 +19,7 @@ public class TitlePanel extends JPanel
 
 	public TitlePanel()
 	{
-		setBackground(Color.DARK_GRAY);
 		setBorder(new EmptyBorder(10, 10, 10, 10));
-
-
 		try{
 			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(72f);
 		}catch(Exception e)

@@ -132,6 +132,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 		//Initialize the frame's components
 		titlePanel = new TitlePanel();
+		titlePanel.setBackground(backgroundColour);
 		prepareDashBoardPanel();
 
 		try{
@@ -567,7 +568,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 		successColour 		= new Color(152, 255, 152);
 		failureColour 		= new Color(255, 152, 152);
-		backgroundColour 	= Color.DARK_GRAY;
+		backgroundColour 	= Color.DARK_GRAY.darker();
 	}
 
 	public void initializeFonts()
