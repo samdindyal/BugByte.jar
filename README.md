@@ -4,7 +4,7 @@ This is an application, written in Java as an assignment for CPS406 (Intro to So
 
 
 <h3>Note</h3>
-<p1>OS X/Linux and Windows users must compile BugByteLauncher differently.<p1>
+<p>OS X/Linux and Windows users must compile BugByteLauncher differently.
 
 **OS X/Linux:**
 <p>javac -cp $CLASSPATH:lib/AppleJavaExtensions.jar BugByteLauncher.java</p>
