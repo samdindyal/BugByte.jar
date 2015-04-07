@@ -110,7 +110,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		initializePatterns();
 		initializeFonts();
 
-		bugReportSystem = new BugReportSystem("bak/bugreportsystem.bb");
+		bugReportSystem = new BugReportSystem("bugreportsystem.bb");
 		
 		initializeFrame();
 		frame.setVisible(true);

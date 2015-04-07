@@ -51,8 +51,6 @@ public class BugReportSystem implements Serializable
 	{
 		try
 		{
-			if (!new File("bak").isDirectory())
-				new File("bak").mkdir();
 			System.out.println((file.isFile() ? "Overwriting \"" : "Writing to \"" ) + file.getPath() + "\"...");
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 			oos.writeObject(this);
