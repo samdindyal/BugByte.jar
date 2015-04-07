@@ -4,10 +4,14 @@ This is an application, written in Java as an assignment for CPS406 (Intro to So
 
 
 <h3>Note</h3>
-<p>OS X/Linux and Windows users must compile BugByteLauncher differently.</p>
+OS X/Linux and Windows users must compile BugByteLauncher differently.
 
-**OS X/Linux:**
-<p>javac -cp $CLASSPATH:lib/AppleJavaExtensions.jar BugByteLauncher.java</p>
 
-**Windows:**
-<p>javac -cp ".;lib/AppleJavaExtensions.jar" BugByteLauncher.java</p>
+<p>You can build an executable jar file by running the "make_jar.sh" script on OS X and Linux or the "make_jar.bat" batch file on Windows. This will also compile everything in addition to the jar creation.</p>
+
+<h4>OS X/Linux:</h4>
+javac -cp $CLASSPATH:lib/AppleJavaExtensions.jar BugByteLauncher.java
+
+<h4>Windows:</h4>
+javac -cp ".;lib/AppleJavaExtensions.jar" BugByteLauncher.java
+
