@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.BorderLayout;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class TitlePanel extends JPanel
 {
@@ -21,13 +22,14 @@ public class TitlePanel extends JPanel
 	{
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		try{
-			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(72f);
+			InputStream input = getClass().getResourceAsStream("res/FORCED_SQUARE.ttf");
+			titleFont = Font.createFont(Font.TRUETYPE_FONT, input).deriveFont(72f);
 		}catch(Exception e)
 		{
 			titleFont = new Font ("Arial", Font.BOLD, 36);
 		}	
 
-		panelImage = new JLabel(new ImageIcon("res/logo.png"));
+		panelImage = new JLabel(new ImageIcon(TitlePanel.class.getResource("res/logo.png")));
 		panelImage.setBorder(new EmptyBorder(0, 10, 0, 10));
 		accentColour = new Color(72, 157, 2);
 
