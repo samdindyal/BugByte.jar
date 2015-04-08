@@ -1,6 +1,7 @@
 import java.util.Date;
+import java.io.Serializable;
 
-public class Bug
+public class Bug implements Serializable
 {
 	private String			ID, name;
 	private BugStatus 		status;
