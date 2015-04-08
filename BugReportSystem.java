@@ -44,7 +44,7 @@ public class BugReportSystem implements Serializable
 	public void addBug(BugStatus status, BugPriority priority, String description, String name, String id, String userID)
 	{
 		bugs.put(id, new Bug(status, priority, description, id, name));
-		if (isLoggedIn(userID))
+		if (isLoggedIn(userID) && !users.get(userID).hasKey(id))
 			users.get(userID).addKey(id);
 	}
 
