@@ -47,4 +47,5 @@ public class User implements Serializable
 	}		
 	public void addKey(String key){keys.add(key);}
 	public void removeKey(String key){keys.remove(key);}
+	public boolean hasKey(String key){return keys.contains(key);}
 }
