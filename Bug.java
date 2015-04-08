@@ -2,7 +2,7 @@ import java.util.Date;
 
 public class Bug
 {
-	private String			ID;
+	private String			ID, name;
 	private BugStatus 		status;
 	private String 			description;
 	private BugPriority 	priority;
@@ -11,13 +11,14 @@ public class Bug
 	public static final Date DATE_CREATED = new Date();
 
 
-	public Bug(BugStatus status, BugPriority priority, String description, String ID)
+	public Bug(BugStatus status, BugPriority priority, String description, String ID, String name)
 	{
 		this.status 		= status;
 		this.priority 		= priority;
 		this.description 	= description;
 		this.ID 			= ID;
 		dateModified 		= new Date();
+		this.name 			= name;
 	}
 
 	public BugStatus getStatus(){return status;}

@@ -41,10 +41,10 @@ public class BugReportSystem implements Serializable
 		return true;
 	}
 
-	public void addBug(BugStatus status, BugPriority priority, String description)
+	public void addBug(BugStatus status, BugPriority priority, String description, String name)
 	{
 		String id = UUID.randomUUID().toString();
-		bugs.put(id, new Bug(status, priority, description, id));
+		bugs.put(id, new Bug(status, priority, description, id, name));
 	}
 
 	public boolean writeToDisk()
