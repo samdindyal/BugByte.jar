@@ -6,8 +6,8 @@ public enum BugPriority implements Serializable
 	MEDIUM(2,"Medium"),
 	HIGH(3,"High");
 
-	private final int		priority;
-	private final String	description;
+	public final int		priority;
+	public final String	description;
 
 	BugPriority(int priority, String description)
 	{
