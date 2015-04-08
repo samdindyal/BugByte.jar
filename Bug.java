@@ -24,6 +24,7 @@ public class Bug implements Serializable
 
 	public BugStatus getStatus(){return status;}
 	public String getDescription(){return description;}
+	public String getName(){return name;}
 	public BugPriority getPriority(){return priority;}
 	public Date getDateModifed(){return dateModified;}
 	public Date getDateCreated(){return DATE_CREATED;}
