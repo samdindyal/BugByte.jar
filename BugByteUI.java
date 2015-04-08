@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JTabbedPane;
+import javax.swing.JList;
 import javax.swing.JComponent;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
@@ -100,6 +101,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	private JLabel 			accountSummaryMessageLabel;
 	private JButton     	submitSummaryButton;
 	private TitledBorder 	dashboardPanelBorder;
+
+	//Components for the bugs panel
+	private JList list;
 
 /**
 	Creates a new BugByteUI object
@@ -397,7 +401,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 		c = new GridBagConstraints();
 
-
 		c.gridx = 0;
 		c.gridy = 0;
 
@@ -415,7 +418,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		navigationPanel.add(submitButton);
 
 		submitButton.setVisible(false);
-
 		submitButton.addActionListener(this);
 	}
 
@@ -524,7 +526,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	{
 		trendsPanel = new JPanel();
 		trendsPanel.setBackground(backgroundColour);
+		if (NOT_OSX)
+			trendsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(accentColour), "", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour));
 	}
+
 
 	public void prepareDashBoardPanel()
 	{
@@ -692,6 +697,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 				commonComponents[LOGIN_PANEL][0][1].setBackground(failureColour);
 				commonComponents[LOGIN_PANEL][1][1].setBackground(failureColour);
+
+				return;
 			}
 		}
 		else if (bugReportSystem.logout(currentUserID))
@@ -719,6 +726,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 			System.out.println("Logout successful.");
 		}
+
 	}
 
 	public void signUp()
@@ -837,6 +845,24 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			if (obj == commonComponents[n][i][1])
 				return true;
 		return false;
+	}
+
+	public void resetPanel(int identifier)
+	{
+		for (int i = 0; i < commonComponents[identifier].length; i++)
+		{
+			commonComponents[identifier][i][1].setText("");
+			commonComponents[identifier][i][1].setForeground(Color.WHITE);
+		}
+
+		if (identifier == SIGN_UP_PANEL)
+			failedSignUpLbl.setForeground(backgroundColour);
+		else if (identifier == FORGOT_USERNAME_PANEL)
+			forgotUsernameMessageLbl.setForeground(backgroundColour);
+		else if (identifier == FORGOT_PASSWORD_PANEL)
+			resetPasswordMessageLbl.setForeground(backgroundColour);
+		else if (identifier == ACCOUNT_SUMMARY_PANEL)
+
 	}
 
 	@Override
