@@ -1,11 +1,11 @@
 import java.io.Serializable;
 
-import java.util.HashSet;
+import java.util.LinkedList;
 
 public class User implements Serializable
 {
 	private String 				username, password, firstName, lastName, emailAddress;
-	private HashSet<String> 	keys;
+	private LinkedList<String> 	keys;
 
 	public User(String username, String password, String firstName, String lastName, String emailAddress)
 	{
@@ -15,7 +15,7 @@ public class User implements Serializable
 		this.lastName		= lastName;
 		this.emailAddress 	= emailAddress;
 
-		keys = new HashSet<String>();
+		keys = new LinkedList<String>();
 	}
 
 	public User()
@@ -41,7 +41,7 @@ public class User implements Serializable
 
 	public boolean authenticate(String password){return this.password.equals(password);}
 
-	public HashSet<String> getKeys(String password)
+	public LinkedList<String> getKeys(String password)
 	{
 		return authenticate(password) ? keys : null;
 	}		
