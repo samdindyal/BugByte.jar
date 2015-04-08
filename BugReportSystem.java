@@ -139,6 +139,11 @@ public class BugReportSystem implements Serializable
 	public void removeBug(String id)
 	{
 		if (bugs.containsKey(id))
+		{
 			bugs.remove(id);
+			for (String userID : users.keySet())
+				if (users.get(userID).hasKey(id))
+					users.get(userID).removeKey(id);
+		}
 	}
 }
