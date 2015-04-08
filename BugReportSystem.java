@@ -135,4 +135,10 @@ public class BugReportSystem implements Serializable
 			return bugs.get(id);
 		return null;
 	}
+
+	public void removeBug(String id)
+	{
+		if (bugs.containsKey(id))
+			bugs.remove(id);
+	}
 }
