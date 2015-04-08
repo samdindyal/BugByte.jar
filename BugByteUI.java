@@ -22,7 +22,10 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.ListSelectionModel;
+
 
 import java.awt.Color;
 import java.awt.BorderLayout;
@@ -45,7 +48,7 @@ import java.util.UUID;
 
 import java.io.File;
 
-public class BugByteUI implements ActionListener, MouseListener, KeyListener, ChangeListener
+public class BugByteUI implements ActionListener, MouseListener, KeyListener, ChangeListener, ListSelectionListener
 {
 	private 				BugReportSystem 		bugReportSystem;
 	private					GridBagConstraints 		c;
@@ -112,10 +115,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	private TitledBorder 	dashboardPanelBorder;
 
 	//Components for the bugs panel
-	private JList 		list;
+	private JList 		bugList;
 	private JSplitPane 	bugSplitPane;
 	private JPanel		viewBugPanel;
-	private JButton 	saveButton, revertChangesButton;
+	private JButton 	saveButton, revertChangesButton, addButton, removeButton;
 
 /**
 	Creates a new BugByteUI object
@@ -564,10 +567,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		if (NOT_OSX)
 			bugsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(accentColour), "", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour));
 
-		list = new JList();
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane listScrollPane = new JScrollPane(list);
-		JScrollPane viewBugScrollPanel = new JScrollPane(viewBugPanel);
+		bugList = new JList();
+		bugList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane listScrollPane 		= new JScrollPane(bugList);
+		JScrollPane viewBugScrollPanel 	= new JScrollPane(viewBugPanel);
 
 		viewBugScrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		listScrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -578,7 +581,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
         bugSplitPane.setBackground(backgroundColour);
         bugSplitPane.setOneTouchExpandable(true);
 
-        list.setBackground(backgroundColour);
+        bugList.setBackground(backgroundColour);
+        bugList.addListSelectionListener(this);
 
         bugsPanel.add(bugSplitPane, BorderLayout.CENTER);
 	}
@@ -591,15 +595,24 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 		saveButton 			= new JButton("Save Bug");
 		revertChangesButton = new JButton("Revert Changes");
+		addButton 			= new JButton("+");
+		removeButton		= new JButton("–");
 
 		navigationPanel.add(saveButton);
 		navigationPanel.add(revertChangesButton);
+		navigationPanel.add(addButton);
+		navigationPanel.add(removeButton);
 
 		saveButton.addActionListener(this);
 		revertChangesButton.addActionListener(this);
+		viewBugPanel.addKeyListener(this);
+		addButton.addActionListener(this);
+		removeButton.addActionListener(this);
 
 		saveButton.setVisible(false);
 		revertChangesButton.setVisible(false);
+		addButton.setVisible(false);
+		removeButton.setVisible(false);
 
 		commonComponents[VIEW_BUG_PANEL][1][1] = new JTextField("", 25);
 		commonComponents[VIEW_BUG_PANEL][1][1].setEnabled(false);
@@ -700,6 +713,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		backButton.setEnabled(bugReportSystem.isLoggedIn(currentUserID) || component != loginPanel);
 		saveButton.setVisible(component == dashboardPanel && dashboardPanel.getSelectedIndex() == 0);
 		revertChangesButton.setVisible(component == dashboardPanel && dashboardPanel.getSelectedIndex() == 0);
+		addButton.setVisible(component == dashboardPanel && dashboardPanel.getSelectedIndex() == 0);
+		removeButton.setVisible(component == dashboardPanel && dashboardPanel.getSelectedIndex() == 0);
 
 		previousComponent 		= currentComponent;
 		currentComponent 		= component;
@@ -781,15 +796,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				loginBorder.setTitle("Logged in as " + ((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText());
 
 				populateAccountSummaryFields();
-				list.setListData(generateBugList());
+				bugList.setListData(generateBugList());
 
 				forgotUsername.setForeground(backgroundColour.brighter());
 				forgotPassword.setForeground(backgroundColour.brighter());
 				signUp.setForeground(backgroundColour.brighter());
 				commonComponents[LOGIN_PANEL][0][1].setBackground(Color.WHITE);
 				commonComponents[LOGIN_PANEL][1][1].setBackground(Color.WHITE);
-
-				submitSummaryButton.setVisible(true);
 			}
 			else
 			{
@@ -1005,9 +1018,22 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				currentUserID);
 			bugReportSystem.writeToDisk();
 
-			list.setListData(generateBugList());
+			bugList.setListData(generateBugList());
 		}
 
+	}
+
+	public void loadBug()
+	{
+		java.util.LinkedList<String> keys = bugReportSystem.getUserAccount(currentUserID, password).getKeys(password);
+		Bug bug = bugReportSystem.getBug(keys.get(bugList.getSelectedIndex()));
+
+		((JTextField)commonComponents[VIEW_BUG_PANEL][0][1]).setText(bug.getName());
+		((JTextField)commonComponents[VIEW_BUG_PANEL][1][1]).setText(bug.getID());
+		((JTextArea)commonComponents[VIEW_BUG_PANEL][2][1]).setText(bug.getDescription());
+
+		((JComboBox)commonComponents[VIEW_BUG_PANEL][3][1]).setSelectedIndex(bug.getPriority().priority-1);
+		((JComboBox)commonComponents[VIEW_BUG_PANEL][4][1]).setSelectedIndex(bug.getStatus().status);
 	}
 
 	public String[] generateBugList()
@@ -1186,7 +1212,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e){}
+	public void keyPressed(KeyEvent e)
+	{
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e){}
@@ -1202,10 +1230,15 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				dashboardPanel.setBackgroundAt(i, NOT_OSX ? backgroundColour : Color.BLACK);
 			}
 			dashboardPanel.setForegroundAt(dashboardPanel.getSelectedIndex(), NOT_OSX ? backgroundColour : accentColour);
-			submitSummaryButton.setVisible(dashboardPanel.getSelectedIndex() == 1);
+			submitSummaryButton.setVisible(dashboardPanel.getSelectedIndex() == 1 && currentComponent == dashboardPanel);
 			saveButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
 			revertChangesButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
-
 		}
+	}
+	@Override
+	public void valueChanged(ListSelectionEvent e)
+	{
+		if (e.getSource() == bugList)
+			loadBug();
 	}
 }
