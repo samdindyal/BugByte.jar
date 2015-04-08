@@ -13,6 +13,8 @@ public class BugByteLauncher
                     macApp.setDockIconImage (new javax.swing.ImageIcon (getClass().getResource ("res/logo.png")).getImage ());
               }
      			    BugByteUI bugByteUI = new BugByteUI();   	
+
+              bugByteUI.show();
       		}
     	});
 	}

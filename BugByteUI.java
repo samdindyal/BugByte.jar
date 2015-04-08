@@ -135,7 +135,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		bugReportSystem = new BugReportSystem("bugreportsystem.bb");
 		
 		initializeFrame();
-		frame.setVisible(true);
 	}
 
 /**
@@ -1280,5 +1279,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	{
 		if (e.getSource() == bugList)
 			loadBug();
+	}
+
+	public void show()
+	{
+		frame.setVisible(true);
 	}
 }
