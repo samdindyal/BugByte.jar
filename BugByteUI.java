@@ -555,9 +555,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		if (NOT_OSX)
 			trendsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(accentColour), "", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour));
 
-
-
-		grapher = new Grapher(accentColour, backgroundColour, 75, bugReportSystem.getStatistics());
+		grapher = new Grapher(accentColour, backgroundColour, 60, bugReportSystem.getStatistics());
 		trendsPanel.add(grapher, BorderLayout.CENTER);
 	}
 
