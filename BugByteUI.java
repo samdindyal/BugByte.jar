@@ -120,6 +120,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	private JPanel		viewBugPanel;
 	private JButton 	saveButton, revertChangesButton, addButton, removeButton;
 
+	//Components for trends panel
+	private Grapher grapher;
+
 /**
 	Creates a new BugByteUI object
 */
@@ -547,9 +550,15 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	public void initializeTrendsPanel()
 	{
 		trendsPanel = new JPanel();
+		trendsPanel.setLayout(new BorderLayout());
 		trendsPanel.setBackground(backgroundColour);
 		if (NOT_OSX)
 			trendsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(accentColour), "", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour));
+
+
+
+		grapher = new Grapher(accentColour, backgroundColour, 75, bugReportSystem.getStatistics());
+		trendsPanel.add(grapher, BorderLayout.CENTER);
 	}
 
 	public void initializeBugsPanel()
@@ -1263,6 +1272,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			revertChangesButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
 			addButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
 			removeButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
+
+			if (dashboardPanel.getSelectedIndex ()== 2)
+					grapher.recalculate();
 		}
 	}
 	@Override

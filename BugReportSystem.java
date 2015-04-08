@@ -9,6 +9,9 @@ import java.util.UUID;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BugReportSystem implements Serializable
 {
@@ -145,5 +148,24 @@ public class BugReportSystem implements Serializable
 				if (users.get(userID).hasKey(id))
 					users.get(userID).removeKey(id);
 		}
+	}
+
+	public ArrayList<Double> getStatistics()
+	{
+		double sts[] = new double[5];
+		Date date = new Date();
+
+		for (String key : bugs.keySet())
+		{
+			if (date.getDay() - bugs.get(key).getDateCreated().getDay() >=5)
+				sts[date.getDay() - bugs.get(key).getDateCreated().getDay()]++;
+		}
+
+		ArrayList<Double> list = new ArrayList<Double>();
+
+		for (Double s : sts)
+			list.add(s);
+
+		return list;
 	}
 }
