@@ -1060,7 +1060,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	public String[] generateBugList()
 	{
 		java.util.LinkedList<String> keys = bugReportSystem.getUserAccount(currentUserID, password).getKeys(password);
-		System.out.println("KEYSIZE: " + keys.size());
 
 		String array[] = new String[keys.size()];
 
@@ -1097,6 +1096,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			removeBug();
 		else if (e.getSource() == saveButton)
 			submitBug();
+		else if (e.getSource() == revertChangesButton)
+			loadBug();
 	}
 
 	@Override
