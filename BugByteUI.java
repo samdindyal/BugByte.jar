@@ -601,7 +601,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		saveButton 			= new JButton("Save Bug");
 		revertChangesButton = new JButton("Revert Changes");
 		addButton 			= new JButton("+");
-		removeButton		= new JButton("–");
+		removeButton		= new JButton("-");
 
 		navigationPanel.add(saveButton);
 		navigationPanel.add(revertChangesButton);
