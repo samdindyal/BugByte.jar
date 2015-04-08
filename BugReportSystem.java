@@ -41,10 +41,11 @@ public class BugReportSystem implements Serializable
 		return true;
 	}
 
-	public void addBug(BugStatus status, BugPriority priority, String description, String name)
+	public void addBug(BugStatus status, BugPriority priority, String description, String name, String id, String userID)
 	{
-		String id = UUID.randomUUID().toString();
 		bugs.put(id, new Bug(status, priority, description, id, name));
+		if (isLoggedIn(userID))
+			users.get(userID).addKey(id);
 	}
 
 	public boolean writeToDisk()
@@ -55,11 +56,13 @@ public class BugReportSystem implements Serializable
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 			oos.writeObject(this);
 			System.out.println("Successfully wrote to \"" + file.getPath() + "\"");
+			oos.close();
 			return true;
 		}
 		catch(Exception e)
 		{
 			System.err.println("Failed to write to \"" + file.getPath() + "\"");
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -72,6 +75,9 @@ public class BugReportSystem implements Serializable
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 
 			BugReportSystem objectIn = (BugReportSystem)ois.readObject();
+
+			ois.close();
+
 			users = objectIn.users;
 			bugs = objectIn.bugs;
 
@@ -120,6 +126,13 @@ public class BugReportSystem implements Serializable
 	{
 		if (isLoggedIn(username) && users.get(username).authenticate(password))
 			return users.get(username);
+		return null;
+	}
+
+	public Bug getBug(String id)
+	{
+		if (bugs.containsKey(id))
+			return bugs.get(id);
 		return null;
 	}
 }
