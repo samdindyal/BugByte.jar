@@ -45,10 +45,11 @@ public class Trend
 
 		for (int i = 0; i < yCoordinates.size() - 1; i++)
 		{
-			line = new Line2D.Double(margin + (spacing * i), verticalLimit - margin - (yCoordinates.get(i)*scale),
-										margin + (spacing * (i+1)), (verticalLimit - margin -(yCoordinates.get(i+1))*scale));
-			g2.fill(new Ellipse2D.Double(margin + (spacing * i)-5, (verticalLimit - margin - (yCoordinates.get(i))*scale)-5, 10, 10));
-			g2.fill(new Ellipse2D.Double(margin + (spacing * (i+1))-5, verticalLimit - margin - (yCoordinates.get(i+1)*scale)-5,10, 10));
+
+			line = new Line2D.Double(margin + (spacing * i), (verticalLimit - margin - (yCoordinates.get(i))*scale),
+										margin + (spacing * (i+1)), ((verticalLimit - margin -(yCoordinates.get(i+1)))*scale));
+			g2.fill(new Ellipse2D.Double(margin + (spacing * i)-5, ((verticalLimit - margin - (yCoordinates.get(i)))*scale)-5, 10, 10));
+			g2.fill(new Ellipse2D.Double(margin + (spacing * (i+1))-5, (verticalLimit - margin - (yCoordinates.get(i+1))*scale)-5,10, 10));
 			g2.draw(line);
 		}
 
