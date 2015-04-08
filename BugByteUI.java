@@ -616,6 +616,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 		commonComponents[VIEW_BUG_PANEL][1][1] = new JTextField("", 25);
 		commonComponents[VIEW_BUG_PANEL][1][1].setEnabled(false);
+		((JTextArea)commonComponents[VIEW_BUG_PANEL][2][1]).setLineWrap(true);
+		((JTextArea)commonComponents[VIEW_BUG_PANEL][2][1]).setWrapStyleWord(true);
 
 		c = new GridBagConstraints();
 
@@ -782,10 +784,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				resetComponent(FORGOT_USERNAME_PANEL);
 
 				password = new String(((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).getPassword());
+
+								createNewBug();
 				
 				currentUserID = ((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText();
 				loginStatus.setForeground(backgroundColour);
 				swapComponents(dashboardPanel);
+
 				System.out.println("Login successful.");
 
 				commonComponents[LOGIN_PANEL][0][1].setEnabled(false);
@@ -858,6 +863,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			currentUserID 	= ((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText();
 			password 		= new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][4][1]).getPassword());
 			bugReportSystem.writeToDisk();
+			createNewBug();
 			swapComponents(dashboardPanel);
 			System.out.println("Sign Up Successful.");
 
@@ -1007,14 +1013,12 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				default: priority = BugPriority.LOW;
 						 break;
 			}
-			String id = UUID.randomUUID().toString();
-			((JTextField)commonComponents[VIEW_BUG_PANEL][1][1]).setText(id);
 
 			bugReportSystem.addBug(((JComboBox)commonComponents[VIEW_BUG_PANEL][4][1]).getSelectedIndex() == 0 ? BugStatus.NOT_FIXED : BugStatus.FIXED, 
 				priority, 
 				((JTextArea)commonComponents[VIEW_BUG_PANEL][2][1]).getText(),
 				((JTextField)commonComponents[VIEW_BUG_PANEL][0][1]).getText(), 
-				id,
+				((JTextField)commonComponents[VIEW_BUG_PANEL][1][1]).getText(),
 				currentUserID);
 			bugReportSystem.writeToDisk();
 
@@ -1023,26 +1027,45 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 	}
 
+	public void createNewBug()
+	{
+		((JTextArea)commonComponents[VIEW_BUG_PANEL][2][1]).setText("");
+		((JTextField)commonComponents[VIEW_BUG_PANEL][0][1]).setText("");
+		String id = UUID.randomUUID().toString();
+		((JTextField)commonComponents[VIEW_BUG_PANEL][1][1]).setText(id);
+	}
+
+	public void removeBug()
+	{
+		String id = ((JTextField)commonComponents[VIEW_BUG_PANEL][1][1]).getText();
+		bugReportSystem.removeBug(id);
+		bugReportSystem.writeToDisk();
+		bugList.setListData(generateBugList());
+	}
+
 	public void loadBug()
 	{
+		if (bugList.getSelectedIndex() < 0)
+			return;
 		java.util.LinkedList<String> keys = bugReportSystem.getUserAccount(currentUserID, password).getKeys(password);
 		Bug bug = bugReportSystem.getBug(keys.get(bugList.getSelectedIndex()));
-
 		((JTextField)commonComponents[VIEW_BUG_PANEL][0][1]).setText(bug.getName());
 		((JTextField)commonComponents[VIEW_BUG_PANEL][1][1]).setText(bug.getID());
 		((JTextArea)commonComponents[VIEW_BUG_PANEL][2][1]).setText(bug.getDescription());
 
-		((JComboBox)commonComponents[VIEW_BUG_PANEL][3][1]).setSelectedIndex(bug.getPriority().priority-1);
+		((JComboBox)commonComponents[VIEW_BUG_PANEL][3][1]).setSelectedIndex(bug.getPriority().priority);
 		((JComboBox)commonComponents[VIEW_BUG_PANEL][4][1]).setSelectedIndex(bug.getStatus().status);
 	}
 
 	public String[] generateBugList()
 	{
 		java.util.LinkedList<String> keys = bugReportSystem.getUserAccount(currentUserID, password).getKeys(password);
+		System.out.println("KEYSIZE: " + keys.size());
+
 		String array[] = new String[keys.size()];
 
 		for (int i = 0; i < keys.size(); i++)
-			array[i] = bugReportSystem.getBug(keys.get(i)).getName() + " (" + keys.get(i) + ")";
+				array[i] = bugReportSystem.getBug(keys.get(i)).getName() + " (" + keys.get(i) + ")";
 		return array;
 
 	}
@@ -1068,6 +1091,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			submitAccountChanges(new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][5][1]).getPassword()));
 		else if (e.getSource() == dashboardButton)
 			swapComponents(dashboardPanel);
+		else if (e.getSource() == addButton)
+			createNewBug();
+		else if (e.getSource() == removeButton)
+			removeBug();
 		else if (e.getSource() == saveButton)
 			submitBug();
 	}
