@@ -157,7 +157,7 @@ public class BugReportSystem implements Serializable
 
 		for (String key : bugs.keySet())
 		{
-			if (date.getDay() - bugs.get(key).getDateCreated().getDay() >=5)
+			if (date.getDay() - bugs.get(key).getDateCreated().getDay() <=5)
 				sts[date.getDay() - bugs.get(key).getDateCreated().getDay()]++;
 		}
 
