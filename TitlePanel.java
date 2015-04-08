@@ -44,4 +44,11 @@ public class TitlePanel extends JPanel
 		add(panelImage);
 		add(title);
 	}
+
+	//Self-testing main
+	public static void main(String[] args)
+	{
+		ComponentViewer viewer = new ComponentViewer(new TitlePanel());
+		viewer.pack();
+	}
 }
