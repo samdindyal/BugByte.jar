@@ -667,6 +667,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		{
 			if (bugReportSystem.login(((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText(), String.valueOf(((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).getPassword())))
 			{
+				resetComponent(SIGN_UP_PANEL);
+				resetComponent(FORGOT_PASSWORD_PANEL);
+				resetComponent(FORGOT_USERNAME_PANEL);
+				
 				currentUserID = ((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText();
 				loginStatus.setForeground(backgroundColour);
 				swapComponents(dashboardPanel);
@@ -703,6 +707,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		}
 		else if (bugReportSystem.logout(currentUserID))
 		{
+			resetComponent(ACCOUNT_SUMMARY_PANEL);
+
 			currentUserID = "";
 			loginBorder.setTitle("Login");
 			swapComponents(loginPanel);
@@ -847,12 +853,12 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		return false;
 	}
 
-	public void resetPanel(int identifier)
+	public void resetComponent(int identifier)
 	{
 		for (int i = 0; i < commonComponents[identifier].length; i++)
 		{
-			commonComponents[identifier][i][1].setText("");
-			commonComponents[identifier][i][1].setForeground(Color.WHITE);
+			((JTextField)commonComponents[identifier][i][1]).setText("");
+			commonComponents[identifier][i][1].setBackground(Color.WHITE);
 		}
 
 		if (identifier == SIGN_UP_PANEL)
@@ -862,7 +868,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		else if (identifier == FORGOT_PASSWORD_PANEL)
 			resetPasswordMessageLbl.setForeground(backgroundColour);
 		else if (identifier == ACCOUNT_SUMMARY_PANEL)
+			accountSummaryMessageLabel.setForeground(backgroundColour);
+	}
 
+	public void resetAllComponents()
+	{
+		for (int i = 0; i < commonComponents.length; i++)
+			resetComponent(i);
 	}
 
 	@Override
