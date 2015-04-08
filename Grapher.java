@@ -48,6 +48,10 @@ public class Grapher extends JPanel
 		calculateVerticalSpacing();
 		calculateNumericalVerticalSpacing();
 		trend = new Trend(Color.GREEN, list, margin, 500, 500);
+
+		x_axis = new Line2D.Double(margin, getHeight()-margin, getWidth(), getHeight()-margin);
+		y_axis = new Line2D.Double(margin, 0, margin, getHeight()-margin);
+		
 		repaint();
 	}
 
