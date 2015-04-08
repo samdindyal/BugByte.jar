@@ -29,7 +29,7 @@ public class Trend
 
 	public void calculateScale()
 	{
-		scale = (verticalLimit - margin)/Collections.max(yCoordinates);
+		scale = ((verticalLimit - margin)/Collections.max(yCoordinates))*1.75;
 	}
 	public void calculateSpacing()
 	{

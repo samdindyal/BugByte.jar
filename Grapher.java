@@ -23,7 +23,6 @@ public class Grapher extends JPanel
 
 	public Grapher(Color foreground, Color background, int margin, ArrayList<Double> list)
 	{
-		super.setSize(500, 500);
 		this.background = background;
 		this.foreground = foreground;
 		this.margin 	= margin;
@@ -41,14 +40,15 @@ public class Grapher extends JPanel
 		y_axis = new Line2D.Double(margin, 0, margin, getHeight()-margin);
 	}
 
-	@Override
-	public void setSize(int x, int y)
+	public void recalculate()
 	{
-		super.setSize(x,y);
 		calculateXAxis();
 		calculateYAxis();
 		calculateHorizontalSpacing();
 		calculateVerticalSpacing();
+		calculateNumericalVerticalSpacing();
+		trend = new Trend(Color.GREEN, list, margin, 500, 500);
+		repaint();
 	}
 
 	public void paintComponent(Graphics g)
@@ -87,6 +87,7 @@ public class Grapher extends JPanel
 	public void calculateHorizontalSpacing(){horizontalSpacing = (getWidth() - margin)/list.size();}
 	public void calculateVerticalSpacing(){verticalSpacing = (getHeight()-margin)/5;}
 	public void calculateNumericalVerticalSpacing(){numericalVerticalSpacing = ((Collections.max(list) - Collections.min(list))/list.size());}
+	public void changeList(ArrayList<Double> list){this.list = list;}
 
 	//Self-testing main
 	public static void main (String[] args)
