@@ -1260,6 +1260,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			submitSummaryButton.setVisible(dashboardPanel.getSelectedIndex() == 1 && currentComponent == dashboardPanel);
 			saveButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
 			revertChangesButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
+			addButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
+			removeButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
 		}
 	}
 	@Override
