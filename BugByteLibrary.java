@@ -1,8 +1,23 @@
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import java.awt.Color;
+import java.awt.Font;
+
+import java.io.File;
+
 public class BugByteLibrary
 {
+
+	public static final	Color	MAIN_COLOUR 		= new Color(72, 157, 2),
+								ACCENT_COLOUR 		= MAIN_COLOUR.brighter().brighter(),
+								SUCCESS_COLOUR 		= new Color(152, 255, 152),
+								FAILURE_COLOUR 		= new Color(255, 152, 152),
+								BACKGROUND_COLOUR 	= Color.DARK_GRAY.darker();
+
+	public static final Font SUBTITLE_FONT = compileSubtitleFont();
+
+	
 
 	public static boolean isValidEmailAddress(String emailAddress)
 	{
@@ -38,5 +53,11 @@ public class BugByteLibrary
 		Matcher matcher 		= passwordPattern.matcher(password);
 
 		return password.length() >= 6 && matcher.matches();
+	}
+
+	private static Font compileSubtitleFont()
+	{
+		try{return Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(28f);}
+		catch(Exception e){return  new Font("Arial", Font.BOLD, 14);}
 	}
 }

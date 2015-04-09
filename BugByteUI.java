@@ -31,8 +31,6 @@ import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,16 +42,12 @@ import java.awt.event.KeyListener;
 
 import java.util.UUID;
 
-import java.io.File;
-
 public class BugByteUI implements ActionListener, MouseListener, KeyListener, ChangeListener, ListSelectionListener
 {
 	private 				BugReportSystem 		bugReportSystem;
 	private					GridBagConstraints 		c;
 	private 				JComponent  			currentComponent, previousComponent;
 	
-	private 				Color 					mainColour, accentColour, successColour, failureColour, backgroundColour;
-	private 				Font 					subtitle;
 	private					String					currentUserID, password;
 	private static final 	boolean					NOT_OSX = !System.getProperty("os.name").startsWith("Mac OS X");
 	private static final 	int 					LOGIN_PANEL 			= 0,
@@ -125,11 +119,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 */
 	public BugByteUI()
 	{
-		initializeColours();
-		initializeFonts();
 
 		bugReportSystem = new BugReportSystem("bugreportsystem.bb");
-		
 		initializeFrame();
 	}
 
@@ -144,13 +135,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setBackground(backgroundColour);
+		frame.getContentPane().setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 		frame.setIconImage(new ImageIcon("res/logo.png").getImage());
 		frame.setLayout(new BorderLayout());
 
 		//Initialize the frame's components
 		titlePanel = new TitlePanel();
-		titlePanel.setBackground(backgroundColour);
+		titlePanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 		prepareDashBoardPanel();
 
 		try{
@@ -183,7 +174,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				commonComponents[i][j][0] = new JLabel(commonComponentText[i][j], SwingConstants.RIGHT);
 				commonComponents[i][j][1] = commonComponentText[i][j].contains("Password") ? 
 											new JPasswordField("", NOT_OSX ? 20 : 15) : new JTextField("", NOT_OSX ? 20 : 15);
-				commonComponents[i][j][0].setForeground(accentColour);
+				commonComponents[i][j][0].setForeground(BugByteLibrary.ACCENT_COLOUR);
 				commonComponents[i][j][1].addKeyListener(this);
 
 				if (i == VIEW_BUG_PANEL)
@@ -213,9 +204,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		loginPanel = new JPanel();
 
 		loginPanel.setLayout(new GridBagLayout());
-		loginPanel.setBackground(backgroundColour);
+		loginPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
-		loginBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(mainColour) : null, "Login", TitledBorder.CENTER, TitledBorder.TOP, subtitle, mainColour);
+		loginBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(BugByteLibrary.MAIN_COLOUR) : null, "Login", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.MAIN_COLOUR);
 
 		loginPanel.setBorder(loginBorder);
 
@@ -231,10 +222,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		
 		//Set text colour for some components
 
-		forgotPassword.setForeground(accentColour);
-		forgotUsername.setForeground(accentColour);
-		signUp.setForeground(accentColour);
-		loginStatus.setForeground(backgroundColour);
+		forgotPassword.setForeground(BugByteLibrary.ACCENT_COLOUR);
+		forgotUsername.setForeground(BugByteLibrary.ACCENT_COLOUR);
+		signUp.setForeground(BugByteLibrary.ACCENT_COLOUR);
+		loginStatus.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 
 		loginButton.setEnabled(false);
 
@@ -287,9 +278,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	{
 		signUpPanel = new JPanel();
 		signUpPanel.setLayout(new GridBagLayout());
-		signUpPanel.setBackground(backgroundColour);
+		signUpPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
-		signUpBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(mainColour) : null, "Sign Up", TitledBorder.CENTER, TitledBorder.TOP, subtitle, mainColour);
+		signUpBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(BugByteLibrary.MAIN_COLOUR) : null, "Sign Up", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.MAIN_COLOUR);
 		signUpPanel.setBorder(signUpBorder);
 
 		c = new GridBagConstraints();
@@ -313,7 +304,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			c.gridx = 0;
 		}
 
-		failedSignUpLbl.setForeground(accentColour);
+		failedSignUpLbl.setForeground(BugByteLibrary.ACCENT_COLOUR);
 
 		c.gridwidth = 2;
 		c.insets 	= new Insets(25,0,25,0);
@@ -333,7 +324,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	public void initializeNavigationPanel()
 	{
 		navigationPanel = new JPanel();
-		navigationPanel.setBackground(backgroundColour);
+		navigationPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
 		backButton 		= new JButton("Go Back");
 		dashboardButton = new JButton("Dashboard");
@@ -353,9 +344,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	{
 		forgotUsernamePanel = new JPanel();
 		forgotUsernamePanel.setLayout(new GridBagLayout());
-		forgotUsernamePanel.setBackground(backgroundColour);
+		forgotUsernamePanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
-		forgotUsernameBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(mainColour) : null, "Forgot Username", TitledBorder.CENTER, TitledBorder.TOP, subtitle, mainColour);
+		forgotUsernameBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(BugByteLibrary.MAIN_COLOUR) : null, "Forgot Username", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.MAIN_COLOUR);
 
 		forgotUsernamePanel.setBorder(forgotUsernameBorder);
 
@@ -364,7 +355,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		inputLinePanel 				= new JPanel();
 
 		submitButton2.setEnabled(false);
-		forgotUsernameMessageLbl.setForeground(backgroundColour);
+		forgotUsernameMessageLbl.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 		inputLinePanel.setOpaque(false);
 
 		c = new GridBagConstraints();
@@ -375,7 +366,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		for (int i = 0; i < commonComponents[FORGOT_USERNAME_PANEL][0].length; i++)
 		{
 			if (i == 0)
-				commonComponents[FORGOT_USERNAME_PANEL][0][i].setForeground(accentColour);
+				commonComponents[FORGOT_USERNAME_PANEL][0][i].setForeground(BugByteLibrary.ACCENT_COLOUR);
 			else
 				commonComponents[FORGOT_USERNAME_PANEL][0][1].addKeyListener(this);	
 			inputLinePanel.add(commonComponents[FORGOT_USERNAME_PANEL][0][i]);	
@@ -401,9 +392,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	{
 		forgotPasswordPanel = new JPanel();
 		forgotPasswordPanel.setLayout(new GridBagLayout());
-		forgotPasswordPanel.setBackground(backgroundColour);
+		forgotPasswordPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
-		forgotPasswordBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(mainColour) : null, "Forgot Password", TitledBorder.CENTER, TitledBorder.TOP, subtitle, mainColour);
+		forgotPasswordBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(BugByteLibrary.MAIN_COLOUR) : null, "Forgot Password", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.MAIN_COLOUR);
 
 		forgotPasswordPanel.setBorder(forgotPasswordBorder);
 
@@ -412,7 +403,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 		resetPasswordMessageLbl = new JLabel("An email with a password reset link has been sent to the email associated it your account.", SwingConstants.CENTER);
 
-		resetPasswordMessageLbl.setForeground(backgroundColour);
+		resetPasswordMessageLbl.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 
 
 		initializeUsernameResetPanel();
@@ -444,7 +435,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	public void initializeUsernameResetPanel()
 	{
 		usernameResetPanel = new JPanel();
-		usernameResetPanel.setBackground(backgroundColour);
+		usernameResetPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
 		for (int i = 0; i < commonComponents[FORGOT_PASSWORD_PANEL][0].length; i++)
 			usernameResetPanel.add(commonComponents[FORGOT_PASSWORD_PANEL][0][i]);
@@ -453,7 +444,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	public void initializeEmailAddressResetPanel()
 	{
 		emailAddressResetPanel = new JPanel();
-		emailAddressResetPanel.setBackground(backgroundColour);
+		emailAddressResetPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
 		for (int i = 0; i < commonComponents[FORGOT_PASSWORD_PANEL][1].length; i++)
 			emailAddressResetPanel.add(commonComponents[FORGOT_PASSWORD_PANEL][1][i]);
@@ -462,14 +453,14 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	public void initializeTogglePanel()
 	{
 		togglePanel = new JPanel();
-		togglePanel.setBackground(backgroundColour);
+		togglePanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
 		usernameResetButton 	= new JRadioButton("Reset with username");
 		emailAddressResetButton = new JRadioButton("Reset with email address");
 		buttonGroup 			= new ButtonGroup();
 
-		usernameResetButton.setForeground(accentColour);
-		emailAddressResetButton.setForeground(accentColour);
+		usernameResetButton.setForeground(BugByteLibrary.ACCENT_COLOUR);
+		emailAddressResetButton.setForeground(BugByteLibrary.ACCENT_COLOUR);
 
 		emailAddressResetButton.setOpaque(false);
 		usernameResetButton.setOpaque(false);
@@ -502,14 +493,14 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	{
 		accountSummaryPanel = new JPanel();
 		accountSummaryPanel.setLayout(new GridBagLayout());
-		accountSummaryPanel.setBackground(backgroundColour);
+		accountSummaryPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
 		if (NOT_OSX)
-			accountSummaryPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(accentColour), "", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour));
+			accountSummaryPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(BugByteLibrary.ACCENT_COLOUR), "", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.ACCENT_COLOUR));
 		accountSummaryMessageLabel 	= new JLabel("All changes have been sucessfully saved."); 
 
 		submitSummaryButton = new JButton("Submit changes");
-		accountSummaryMessageLabel.setForeground(backgroundColour);
+		accountSummaryMessageLabel.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 
 		c = new GridBagConstraints();
 
@@ -546,28 +537,28 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	{
 		trendsPanel = new JPanel();
 		trendsPanel.setLayout(new BorderLayout());
-		trendsPanel.setBackground(backgroundColour);
+		trendsPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 		if (NOT_OSX)
-			trendsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(accentColour), "", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour));
+			trendsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(BugByteLibrary.ACCENT_COLOUR), "", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.ACCENT_COLOUR));
 
-		grapher = new Grapher(accentColour, backgroundColour, 60, bugReportSystem.getStatistics());
+		grapher = new Grapher(BugByteLibrary.ACCENT_COLOUR, BugByteLibrary.BACKGROUND_COLOUR, 60, bugReportSystem.getStatistics());
 		trendsPanel.add(grapher, BorderLayout.CENTER);
 	}
 
 	public void initializeBugsPanel()
 	{
-		UIManager.put("List.background", backgroundColour);
-		UIManager.put("List.foreground", accentColour);
-		UIManager.put("List.selectionBackground", accentColour);
-		UIManager.put("List.selectionForeground", backgroundColour);
+		UIManager.put("List.background", BugByteLibrary.BACKGROUND_COLOUR);
+		UIManager.put("List.foreground", BugByteLibrary.ACCENT_COLOUR);
+		UIManager.put("List.selectionBackground", BugByteLibrary.ACCENT_COLOUR);
+		UIManager.put("List.selectionForeground", BugByteLibrary.BACKGROUND_COLOUR);
 
 		initializeViewBugPanel();
 
 		bugsPanel = new JPanel();
 		bugsPanel.setLayout(new BorderLayout());
-		bugsPanel.setBackground(backgroundColour);
+		bugsPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 		if (NOT_OSX)
-			bugsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(accentColour), "", TitledBorder.CENTER, TitledBorder.TOP, subtitle, accentColour));
+			bugsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(BugByteLibrary.ACCENT_COLOUR), "", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.ACCENT_COLOUR));
 
 		bugList = new JList();
 		bugList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -580,10 +571,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		bugSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, listScrollPane, viewBugScrollPanel);
         bugSplitPane.setOneTouchExpandable(false);
         bugSplitPane.setDividerLocation(150);
-        bugSplitPane.setBackground(backgroundColour);
+        bugSplitPane.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
         bugSplitPane.setOneTouchExpandable(true);
 
-        bugList.setBackground(backgroundColour);
+        bugList.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
         bugList.addListSelectionListener(this);
 
         bugsPanel.add(bugSplitPane, BorderLayout.CENTER);
@@ -592,7 +583,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	public void initializeViewBugPanel()
 	{
 		viewBugPanel = new JPanel();
-		viewBugPanel.setBackground(backgroundColour);
+		viewBugPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 		viewBugPanel.setLayout(new GridBagLayout());
 
 		saveButton 			= new JButton("Save Bug");
@@ -642,47 +633,27 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 	public void prepareDashBoardPanel()
 	{
-		UIManager.put("TabbedPane.contentAreaColor ",backgroundColour);
-		UIManager.put("TabbedPane.selected", accentColour);
-		UIManager.put("TabbedPane.unselected", backgroundColour);
-		UIManager.put("TabbedPane.tabAreaForeground", backgroundColour);
-  		UIManager.put("TabbedPane.background",backgroundColour);
-  		UIManager.put("TabbedPane.HightLight", accentColour);
-  		UIManager.put("TabbedPane.borderHightlightColor", accentColour);
+		UIManager.put("TabbedPane.contentAreaColor ",BugByteLibrary.BACKGROUND_COLOUR);
+		UIManager.put("TabbedPane.selected", BugByteLibrary.ACCENT_COLOUR);
+		UIManager.put("TabbedPane.unselected", BugByteLibrary.BACKGROUND_COLOUR);
+		UIManager.put("TabbedPane.tabAreaForeground", BugByteLibrary.BACKGROUND_COLOUR);
+  		UIManager.put("TabbedPane.background",BugByteLibrary.BACKGROUND_COLOUR);
+  		UIManager.put("TabbedPane.HightLight", BugByteLibrary.ACCENT_COLOUR);
+  		UIManager.put("TabbedPane.borderHightlightColor", BugByteLibrary.ACCENT_COLOUR);
   		UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
 
 		dashboardPanel = new JTabbedPane();
-		dashboardPanel.setForeground(accentColour);
+		dashboardPanel.setForeground(BugByteLibrary.ACCENT_COLOUR);
 
-		dashboardPanelBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(mainColour) : null, "Dashboard", TitledBorder.CENTER, TitledBorder.TOP, subtitle, mainColour);
+		dashboardPanelBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(BugByteLibrary.MAIN_COLOUR) : null, "Dashboard", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.MAIN_COLOUR);
 		dashboardPanel.setBorder(dashboardPanelBorder);
 		for (int i = 0; i < dashboardPanel.getTabCount(); i++)
 		{
-			dashboardPanel.setForegroundAt(i, accentColour);
-			dashboardPanel.setBackgroundAt(i, NOT_OSX ? backgroundColour : Color.BLACK);
+			dashboardPanel.setForegroundAt(i, BugByteLibrary.ACCENT_COLOUR);
+			dashboardPanel.setBackgroundAt(i, NOT_OSX ? BugByteLibrary.BACKGROUND_COLOUR : Color.BLACK);
 		}
 
 		dashboardPanel.addChangeListener(this);
-	}
-
-	public void initializeColours()
-	{
-		mainColour = new Color(72, 157, 2);
-		accentColour = mainColour.brighter().brighter();
-
-		successColour 		= new Color(152, 255, 152);
-		failureColour 		= new Color(255, 152, 152);
-		backgroundColour 	= Color.DARK_GRAY.darker();
-
-		UIManager.put("TextField.selectionBackground", accentColour);
-		UIManager.put("TextArea.selectionBackground", accentColour);
-		UIManager.put("PasswordField.selectionBackground", accentColour);
-	}
-
-	public void initializeFonts()
-	{
-		try{subtitle = Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(28f);}
-		catch(Exception e){subtitle = new Font("Arial", Font.BOLD, 14);}
 	}
 
 	public void swapComponents(JComponent component)
@@ -751,7 +722,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 								createNewBug();
 				
 				currentUserID = ((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText();
-				loginStatus.setForeground(backgroundColour);
+				loginStatus.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 				swapComponents(dashboardPanel);
 
 				System.out.println("Login successful.");
@@ -766,9 +737,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				populateAccountSummaryFields();
 				bugList.setListData(generateBugList());
 
-				forgotUsername.setForeground(backgroundColour.brighter());
-				forgotPassword.setForeground(backgroundColour.brighter());
-				signUp.setForeground(backgroundColour.brighter());
+				forgotUsername.setForeground(BugByteLibrary.BACKGROUND_COLOUR.brighter());
+				forgotPassword.setForeground(BugByteLibrary.BACKGROUND_COLOUR.brighter());
+				signUp.setForeground(BugByteLibrary.BACKGROUND_COLOUR.brighter());
 				commonComponents[LOGIN_PANEL][0][1].setBackground(Color.WHITE);
 				commonComponents[LOGIN_PANEL][1][1].setBackground(Color.WHITE);
 			}
@@ -778,8 +749,8 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				loginStatus.setText("Incorrect login information. Please try again.");
 				System.out.println("Login failed. Incorrect credentials.");
 
-				commonComponents[LOGIN_PANEL][0][1].setBackground(failureColour);
-				commonComponents[LOGIN_PANEL][1][1].setBackground(failureColour);
+				commonComponents[LOGIN_PANEL][0][1].setBackground(BugByteLibrary.FAILURE_COLOUR);
+				commonComponents[LOGIN_PANEL][1][1].setBackground(BugByteLibrary.FAILURE_COLOUR);
 
 				return;
 			}
@@ -803,11 +774,11 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			loginButton.setText("Login");
 
 			dashboardButton.setEnabled(false);
-			forgotUsername.setForeground(accentColour);
-			forgotPassword.setForeground(accentColour);
-			signUp.setForeground(accentColour);
+			forgotUsername.setForeground(BugByteLibrary.ACCENT_COLOUR);
+			forgotPassword.setForeground(BugByteLibrary.ACCENT_COLOUR);
+			signUp.setForeground(BugByteLibrary.ACCENT_COLOUR);
 
-			loginStatus.setForeground(accentColour);
+			loginStatus.setForeground(BugByteLibrary.ACCENT_COLOUR);
 			loginStatus.setText("You have successfully logged out.");
 
 			System.out.println("Logout successful.");
@@ -838,7 +809,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).setText(new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][4][1]).getPassword()));
 
 			loginButton.setText("Logout");
-			loginStatus.setForeground(backgroundColour);
+			loginStatus.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 			commonComponents[LOGIN_PANEL][0][1].setBackground(Color.WHITE);
 			commonComponents[LOGIN_PANEL][1][1].setBackground(Color.WHITE);
 
@@ -853,7 +824,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			failedSignUpLbl.setForeground(Color.RED);
 			failedSignUpLbl.setText("Sorry, that username has already been taken.");
 			System.out.println("Username already taken. Sign Up Unsuccessful.");
-			commonComponents[SIGN_UP_PANEL][0][1].setBackground(failureColour);
+			commonComponents[SIGN_UP_PANEL][0][1].setBackground(BugByteLibrary.FAILURE_COLOUR);
 		}
 
 		signUpButton.setEnabled(false);
@@ -871,7 +842,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 	public void resetPassword()
 	{
-		resetPasswordMessageLbl.setForeground(accentColour);
+		resetPasswordMessageLbl.setForeground(BugByteLibrary.ACCENT_COLOUR);
 		if (emailAddressResetButton.isSelected())
 			resetPasswordMessageLbl.setText("An email with a password reset link has been sent to " + ((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][1][1]).getText() + ".");
 		else
@@ -885,7 +856,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		{
 			accountSummaryMessageLabel.setForeground(Color.RED);
 			accountSummaryMessageLabel.setText("Incorrect password. Please try again.");
-			commonComponents[ACCOUNT_SUMMARY_PANEL][4][1].setBackground(failureColour);
+			commonComponents[ACCOUNT_SUMMARY_PANEL][4][1].setBackground(BugByteLibrary.FAILURE_COLOUR);
 		 	return false;
 		}
 
@@ -896,7 +867,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		if (password.length() > 0)
 			user.setPassword(password);
 
-		accountSummaryMessageLabel.setForeground(accentColour);
+		accountSummaryMessageLabel.setForeground(BugByteLibrary.ACCENT_COLOUR);
 		accountSummaryMessageLabel.setText("All changes have been sucessfully saved.");
 
 		for (int i = 0; i < commonComponents[ACCOUNT_SUMMARY_PANEL].length; i++)
@@ -944,13 +915,13 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		}
 
 		if (identifier == SIGN_UP_PANEL)
-			failedSignUpLbl.setForeground(backgroundColour);
+			failedSignUpLbl.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 		else if (identifier == FORGOT_USERNAME_PANEL)
-			forgotUsernameMessageLbl.setForeground(backgroundColour);
+			forgotUsernameMessageLbl.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 		else if (identifier == FORGOT_PASSWORD_PANEL)
-			resetPasswordMessageLbl.setForeground(backgroundColour);
+			resetPasswordMessageLbl.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 		else if (identifier == ACCOUNT_SUMMARY_PANEL)
-			accountSummaryMessageLabel.setForeground(backgroundColour);
+			accountSummaryMessageLabel.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 	}
 
 	public void resetAllComponents()
@@ -1096,7 +1067,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		{
 			loginButton.setEnabled(BugByteLibrary.isValidUsername(((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText()) 
 				&& ((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).getPassword().length > 0);
-			loginStatus.setForeground(backgroundColour);
+			loginStatus.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 
 			commonComponents[LOGIN_PANEL][0][1].setBackground(Color.WHITE);
 			commonComponents[LOGIN_PANEL][1][1].setBackground(Color.WHITE);
@@ -1113,24 +1084,24 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				submitSummaryButton.doClick();
 
 			if (e.getSource() == commonComponents[SIGN_UP_PANEL][0][1] && e.getKeyChar() !=  KeyEvent.VK_ENTER)
-				commonComponents[SIGN_UP_PANEL][0][1].setBackground(BugByteLibrary.isValidUsername(((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText()) ? successColour : failureColour);
+				commonComponents[SIGN_UP_PANEL][0][1].setBackground(BugByteLibrary.isValidUsername(((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText()) ? BugByteLibrary.SUCCESS_COLOUR : BugByteLibrary.FAILURE_COLOUR);
 			else if (e.getSource() == commonComponents[SIGN_UP_PANEL][1][1])
-					commonComponents[SIGN_UP_PANEL][1][1].setBackground(BugByteLibrary.isValidName(((JTextField)commonComponents[SIGN_UP_PANEL][1][1]).getText()) ? successColour : failureColour);
+					commonComponents[SIGN_UP_PANEL][1][1].setBackground(BugByteLibrary.isValidName(((JTextField)commonComponents[SIGN_UP_PANEL][1][1]).getText()) ? BugByteLibrary.SUCCESS_COLOUR : BugByteLibrary.FAILURE_COLOUR);
 			else if (e.getSource() == commonComponents[SIGN_UP_PANEL][2][1])
-					commonComponents[SIGN_UP_PANEL][2][1].setBackground(BugByteLibrary.isValidName(((JTextField)commonComponents[SIGN_UP_PANEL][2][1]).getText()) ? successColour : failureColour);
+					commonComponents[SIGN_UP_PANEL][2][1].setBackground(BugByteLibrary.isValidName(((JTextField)commonComponents[SIGN_UP_PANEL][2][1]).getText()) ? BugByteLibrary.SUCCESS_COLOUR : BugByteLibrary.FAILURE_COLOUR);
 			else if (e.getSource() == commonComponents[SIGN_UP_PANEL][3][1])
-					commonComponents[SIGN_UP_PANEL][3][1].setBackground(BugByteLibrary.isValidEmailAddress(((JTextField)commonComponents[SIGN_UP_PANEL][3][1]).getText()) ? successColour : failureColour);
+					commonComponents[SIGN_UP_PANEL][3][1].setBackground(BugByteLibrary.isValidEmailAddress(((JTextField)commonComponents[SIGN_UP_PANEL][3][1]).getText()) ? BugByteLibrary.SUCCESS_COLOUR : BugByteLibrary.FAILURE_COLOUR);
 			else if (e.getSource() == commonComponents[SIGN_UP_PANEL][4][1] || e.getSource() == commonComponents[SIGN_UP_PANEL][5][1])
 			{
 				if (passwordFieldCheck(SIGN_UP_PANEL, 4))
 				{
-					commonComponents[SIGN_UP_PANEL][4][1].setBackground(successColour);
-					commonComponents[SIGN_UP_PANEL][5][1].setBackground(successColour);
+					commonComponents[SIGN_UP_PANEL][4][1].setBackground(BugByteLibrary.SUCCESS_COLOUR);
+					commonComponents[SIGN_UP_PANEL][5][1].setBackground(BugByteLibrary.SUCCESS_COLOUR);
 				}
 				else if (((JTextField)commonComponents[SIGN_UP_PANEL][5][1]).getText().length() > 0)
 				{
-					commonComponents[SIGN_UP_PANEL][4][1].setBackground(failureColour);
-					commonComponents[SIGN_UP_PANEL][5][1].setBackground(failureColour);
+					commonComponents[SIGN_UP_PANEL][4][1].setBackground(BugByteLibrary.FAILURE_COLOUR);
+					commonComponents[SIGN_UP_PANEL][5][1].setBackground(BugByteLibrary.FAILURE_COLOUR);
 				}
 			}
 			else if (e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][4][1])
@@ -1139,64 +1110,64 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		else if (e.getSource() == commonComponents[FORGOT_PASSWORD_PANEL][0][1])
 		{
 			submitButton.setEnabled(BugByteLibrary.isValidUsername(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][0][1]).getText()));
-			resetPasswordMessageLbl.setForeground(backgroundColour);
+			resetPasswordMessageLbl.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitButton.doClick();
 
 			if (((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][0][1]).getText().length() == 0)
 				commonComponents[FORGOT_PASSWORD_PANEL][0][1].setBackground(Color.WHITE);
 			else
-				commonComponents[FORGOT_PASSWORD_PANEL][0][1].setBackground(BugByteLibrary.isValidUsername(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][0][1]).getText()) ? successColour : failureColour);
+				commonComponents[FORGOT_PASSWORD_PANEL][0][1].setBackground(BugByteLibrary.isValidUsername(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][0][1]).getText()) ? BugByteLibrary.SUCCESS_COLOUR : BugByteLibrary.FAILURE_COLOUR);
 		}
 		else if (e.getSource() == commonComponents[FORGOT_PASSWORD_PANEL][1][1])
 		{
 			submitButton.setEnabled(BugByteLibrary.isValidEmailAddress(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][1][1]).getText()));
-			resetPasswordMessageLbl.setForeground(backgroundColour);
+			resetPasswordMessageLbl.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitButton.doClick();
 			if (((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][1][1]).getText().length() == 0)
 				commonComponents[FORGOT_PASSWORD_PANEL][1][1].setBackground(Color.WHITE);
 			else
-				commonComponents[FORGOT_PASSWORD_PANEL][1][1].setBackground(BugByteLibrary.isValidEmailAddress(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][1][1]).getText()) ? successColour : failureColour);
+				commonComponents[FORGOT_PASSWORD_PANEL][1][1].setBackground(BugByteLibrary.isValidEmailAddress(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][1][1]).getText()) ? BugByteLibrary.SUCCESS_COLOUR : BugByteLibrary.FAILURE_COLOUR);
 		}
 		else if (e.getSource() == commonComponents[FORGOT_USERNAME_PANEL][0][1])
 		{
 			submitButton2.setEnabled(BugByteLibrary.isValidEmailAddress(((JTextField)commonComponents[FORGOT_USERNAME_PANEL][0][1]).getText()));
-			forgotUsernameMessageLbl.setForeground(backgroundColour);
+			forgotUsernameMessageLbl.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitButton2.doClick();
 			if (((JTextField)commonComponents[FORGOT_USERNAME_PANEL][0][1]).getText().length() == 0)
 				commonComponents[FORGOT_USERNAME_PANEL][0][1].setBackground(Color.WHITE);
 			else
-				commonComponents[FORGOT_USERNAME_PANEL][0][1].setBackground(BugByteLibrary.isValidEmailAddress(((JTextField)commonComponents[FORGOT_USERNAME_PANEL][0][1]).getText()) ? successColour : failureColour);
+				commonComponents[FORGOT_USERNAME_PANEL][0][1].setBackground(BugByteLibrary.isValidEmailAddress(((JTextField)commonComponents[FORGOT_USERNAME_PANEL][0][1]).getText()) ? BugByteLibrary.SUCCESS_COLOUR : BugByteLibrary.FAILURE_COLOUR);
 		}
 		else if(isInPanel(4, e.getSource()))
 		{
 			submitSummaryButton.setEnabled(accountSummaryCheck());
 
-			accountSummaryMessageLabel.setForeground(backgroundColour);
+			accountSummaryMessageLabel.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 			if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				submitSummaryButton.doClick();
 
 			if (e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][1][1])
-					commonComponents[ACCOUNT_SUMMARY_PANEL][1][1].setBackground(BugByteLibrary.isValidName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][1][1]).getText()) ? successColour : failureColour);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][1][1].setBackground(BugByteLibrary.isValidName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][1][1]).getText()) ? BugByteLibrary.SUCCESS_COLOUR : BugByteLibrary.FAILURE_COLOUR);
 			if (e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][2][1])
-					commonComponents[ACCOUNT_SUMMARY_PANEL][2][1].setBackground(BugByteLibrary.isValidName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][2][1]).getText()) ? successColour : failureColour);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][2][1].setBackground(BugByteLibrary.isValidName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][2][1]).getText()) ? BugByteLibrary.SUCCESS_COLOUR : BugByteLibrary.FAILURE_COLOUR);
 			if (e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][3][1])
-					commonComponents[ACCOUNT_SUMMARY_PANEL][3][1].setBackground(BugByteLibrary.isValidEmailAddress(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][3][1]).getText()) ? successColour : failureColour);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][3][1].setBackground(BugByteLibrary.isValidEmailAddress(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][3][1]).getText()) ? BugByteLibrary.SUCCESS_COLOUR : BugByteLibrary.FAILURE_COLOUR);
 			if (e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][5][1] 
 				|| e.getSource() == commonComponents[ACCOUNT_SUMMARY_PANEL][6][1]
 				&& e.getKeyChar() != KeyEvent.VK_ENTER)
 			{
 				if (passwordFieldCheck(ACCOUNT_SUMMARY_PANEL, 5))
 				{
-					commonComponents[ACCOUNT_SUMMARY_PANEL][5][1].setBackground(successColour);
-					commonComponents[ACCOUNT_SUMMARY_PANEL][6][1].setBackground(successColour);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][5][1].setBackground(BugByteLibrary.SUCCESS_COLOUR);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][6][1].setBackground(BugByteLibrary.SUCCESS_COLOUR);
 				}
 				else if (((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][6][1]).getText().length() > 0)
 				{
-					commonComponents[ACCOUNT_SUMMARY_PANEL][5][1].setBackground(failureColour);
-					commonComponents[ACCOUNT_SUMMARY_PANEL][6][1].setBackground(failureColour);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][5][1].setBackground(BugByteLibrary.FAILURE_COLOUR);
+					commonComponents[ACCOUNT_SUMMARY_PANEL][6][1].setBackground(BugByteLibrary.FAILURE_COLOUR);
 				}
 			}
 		}
@@ -1217,10 +1188,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		{
 			for (int i = 0; i < dashboardPanel.getTabCount(); i++)
 			{
-				dashboardPanel.setForegroundAt(i, accentColour);
-				dashboardPanel.setBackgroundAt(i, NOT_OSX ? backgroundColour : Color.BLACK);
+				dashboardPanel.setForegroundAt(i, BugByteLibrary.ACCENT_COLOUR);
+				dashboardPanel.setBackgroundAt(i, NOT_OSX ? BugByteLibrary.BACKGROUND_COLOUR : Color.BLACK);
 			}
-			dashboardPanel.setForegroundAt(dashboardPanel.getSelectedIndex(), NOT_OSX ? backgroundColour : accentColour);
+			dashboardPanel.setForegroundAt(dashboardPanel.getSelectedIndex(), NOT_OSX ? BugByteLibrary.BACKGROUND_COLOUR : BugByteLibrary.ACCENT_COLOUR);
 			submitSummaryButton.setVisible(dashboardPanel.getSelectedIndex() == 1 && currentComponent == dashboardPanel);
 			saveButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
 			revertChangesButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
