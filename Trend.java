@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.geom.Line2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 
 public class Trend
 {
@@ -46,11 +47,18 @@ public class Trend
 		for (int i = 0; i < yCoordinates.size() - 1; i++)
 		{
 
-			line = new Line2D.Double(margin + (spacing * i), (verticalLimit - margin - (yCoordinates.get(i))*scale),
-										margin + (spacing * (i+1)), ((verticalLimit - margin -(yCoordinates.get(i+1)))*scale));
-			g2.fill(new Ellipse2D.Double(margin + (spacing * i)-5, ((verticalLimit - margin - (yCoordinates.get(i)))*scale)-5, 10, 10));
-			g2.fill(new Ellipse2D.Double(margin + (spacing * (i+1))-5, (verticalLimit - margin - (yCoordinates.get(i+1))*scale)-5,10, 10));
+			Point2D.Double p0, p1;
+
+			p0 = new Point2D.Double(margin + (spacing * i), verticalLimit - margin - 22 - yCoordinates.get(i)*scale);
+			p1 = new Point2D.Double(margin + (spacing * (i+1)), verticalLimit- margin-22 - yCoordinates.get(i+1)*scale);
+
+			line = new Line2D.Double(p0, p1);
+
 			g2.draw(line);
+
+
+			g2.fill(new Ellipse2D.Double(p0.getX()-5, p0.getY()-5, 10, 10));
+			g2.fill(new Ellipse2D.Double(p1.getX()-5, p1.getY()-5, 10, 10));
 		}
 
 	}
