@@ -1,8 +1,8 @@
 /**
- 	Title: The "Bug" class
-	Date Written: March 2015 - April 2015
-	Author: Samuel Dindyal
-	Description: A serializable "Bug" object of which its name, ID, status, priority and description customizable.
+ 	Title: 			The "Bug" class
+	Date Written: 	March 2015 - April 2015
+	Author: 		Samuel Dindyal
+	Description: 	A serializable "Bug" object of which its name, ID, status, priority and description customizable.
 */
 
 import java.util.Date;
