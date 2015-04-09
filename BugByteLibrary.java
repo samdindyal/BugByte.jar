@@ -1,7 +1,7 @@
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class BugByteUtilities
+public class BugByteLibrary
 {
 
 	public static boolean isValidEmailAddress(String emailAddress)
