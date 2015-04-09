@@ -44,11 +44,14 @@ public class BugReportSystem implements Serializable
 		return true;
 	}
 
-	public void addBug(BugStatus status, BugPriority priority, String description, String name, String id, String userID)
+	public boolean addBug(BugStatus status, BugPriority priority, String description, String name, String id, String userID)
 	{
 		bugs.put(id, new Bug(status, priority, description, id, name));
-		if (isLoggedIn(userID) && !users.get(userID).hasKey(id))
-			users.get(userID).addKey(id);
+		if (!isLoggedIn(userID) || users.get(userID).hasKey(id))
+			return false;
+
+		users.get(userID).addKey(id);
+		return true;
 	}
 
 	public boolean writeToDisk()
@@ -139,15 +142,16 @@ public class BugReportSystem implements Serializable
 		return null;
 	}
 
-	public void removeBug(String id)
+	public boolean removeBug(String id)
 	{
-		if (bugs.containsKey(id))
-		{
-			bugs.remove(id);
-			for (String userID : users.keySet())
-				if (users.get(userID).hasKey(id))
-					users.get(userID).removeKey(id);
-		}
+		if (!bugs.containsKey(id))
+			return false;
+
+		bugs.remove(id);
+		for (String userID : users.keySet())
+			if (users.get(userID).hasKey(id))
+				users.get(userID).removeKey(id);
+		return true;
 	}
 
 	public ArrayList<Double> getStatistics()
