@@ -46,10 +46,9 @@ public class BugReportSystem implements Serializable
 
 	public boolean addBug(BugStatus status, BugPriority priority, String description, String name, String id, String userID)
 	{
-		bugs.put(id, new Bug(status, priority, description, id, name));
-		if (!isLoggedIn(userID) || users.get(userID).hasKey(id))
+		if (!isLoggedIn(userID))
 			return false;
-
+		bugs.put(id, new Bug(status, priority, description, id, name));
 		users.get(userID).addKey(id);
 		return true;
 	}
