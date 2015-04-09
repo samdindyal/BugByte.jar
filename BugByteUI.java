@@ -1,3 +1,10 @@
+/**
+ 	Title: 			The "BugByteUI" class
+	Date Written: 	March 2015 - April 2015
+	Author: 		Samuel Dindyal
+	Description: 	The graphical user interface for BugByte. It implements swing and a variety of listeners with a colour scheme featuring a dark gray and bright green.
+*/
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -39,7 +46,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-
 import java.util.UUID;
 
 public class BugByteUI implements ActionListener, MouseListener, KeyListener, ChangeListener, ListSelectionListener
@@ -56,7 +62,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 													SIGN_UP_PANEL 			= 3,
 													ACCOUNT_SUMMARY_PANEL 	= 4,
 													VIEW_BUG_PANEL 			= 5;
-	//Common Components
+	//Common Components between panels
 	private					JComponent commonComponents[][][];
 	private static final 	String commonComponentText[][] = {
 		{"Username:", "Password:"},	//Login Panel Text
@@ -142,6 +148,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		//Initialize the frame's components
 		titlePanel = new TitlePanel();
 		titlePanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
+		setColours();
 		prepareDashBoardPanel();
 
 		try{
@@ -547,11 +554,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 	public void initializeBugsPanel()
 	{
-		UIManager.put("List.background", BugByteLibrary.BACKGROUND_COLOUR);
-		UIManager.put("List.foreground", BugByteLibrary.ACCENT_COLOUR);
-		UIManager.put("List.selectionBackground", BugByteLibrary.ACCENT_COLOUR);
-		UIManager.put("List.selectionForeground", BugByteLibrary.BACKGROUND_COLOUR);
-
 		initializeViewBugPanel();
 
 		bugsPanel = new JPanel();
@@ -633,14 +635,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 	public void prepareDashBoardPanel()
 	{
-		UIManager.put("TabbedPane.contentAreaColor ",BugByteLibrary.BACKGROUND_COLOUR);
-		UIManager.put("TabbedPane.selected", BugByteLibrary.ACCENT_COLOUR);
-		UIManager.put("TabbedPane.unselected", BugByteLibrary.BACKGROUND_COLOUR);
-		UIManager.put("TabbedPane.tabAreaForeground", BugByteLibrary.BACKGROUND_COLOUR);
-  		UIManager.put("TabbedPane.background",BugByteLibrary.BACKGROUND_COLOUR);
-  		UIManager.put("TabbedPane.HightLight", BugByteLibrary.ACCENT_COLOUR);
-  		UIManager.put("TabbedPane.borderHightlightColor", BugByteLibrary.ACCENT_COLOUR);
-  		UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
+
 
 		dashboardPanel = new JTabbedPane();
 		dashboardPanel.setForeground(BugByteLibrary.ACCENT_COLOUR);
@@ -654,6 +649,30 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		}
 
 		dashboardPanel.addChangeListener(this);
+	}
+
+	public void setColours()
+	{
+		UIManager.put("TextField.selectionBackground", BugByteLibrary.ACCENT_COLOUR);
+		UIManager.put("TextField.selectionForeground", BugByteLibrary.BACKGROUND_COLOUR);
+		UIManager.put("PasswordField.selectionBackground", BugByteLibrary.ACCENT_COLOUR);
+		UIManager.put("PasswordField.selectionForeground", BugByteLibrary.BACKGROUND_COLOUR);
+		UIManager.put("TextArea.selectionBackground", BugByteLibrary.ACCENT_COLOUR);
+		UIManager.put("TextArea.selectionForeground", BugByteLibrary.BACKGROUND_COLOUR);
+		UIManager.put("TabbedPane.contentAreaColor ",BugByteLibrary.BACKGROUND_COLOUR);
+		UIManager.put("TabbedPane.selected", BugByteLibrary.ACCENT_COLOUR);
+		UIManager.put("TabbedPane.unselected", BugByteLibrary.BACKGROUND_COLOUR);
+		UIManager.put("TabbedPane.tabAreaForeground", BugByteLibrary.BACKGROUND_COLOUR);
+  		UIManager.put("TabbedPane.background",BugByteLibrary.BACKGROUND_COLOUR);
+  		UIManager.put("TabbedPane.HightLight", BugByteLibrary.ACCENT_COLOUR);
+  		UIManager.put("TabbedPane.borderHightlightColor", BugByteLibrary.ACCENT_COLOUR);
+  		UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));	
+  		UIManager.put("List.background", BugByteLibrary.BACKGROUND_COLOUR);
+		UIManager.put("List.foreground", BugByteLibrary.ACCENT_COLOUR);
+		UIManager.put("List.selectionBackground", BugByteLibrary.ACCENT_COLOUR);
+		UIManager.put("List.selectionForeground", BugByteLibrary.BACKGROUND_COLOUR);
+		UIManager.put("ComboBox.selectionBackground", BugByteLibrary.ACCENT_COLOUR);
+		UIManager.put("ComboBox.selectionForeground", BugByteLibrary.BACKGROUND_COLOUR);
 	}
 
 	public void swapComponents(JComponent component)
