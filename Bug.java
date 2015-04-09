@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 public class Bug implements Serializable
 {
+	//Instance variables and a constant
 	private String			ID, name;
 	private BugStatus 		status;
 	private String 			description;
