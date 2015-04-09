@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class BugByteLibrary
 {
@@ -15,7 +16,8 @@ public class BugByteLibrary
 								FAILURE_COLOUR 		= new Color(255, 152, 152),
 								BACKGROUND_COLOUR 	= Color.DARK_GRAY.darker();
 
-	public static final Font SUBTITLE_FONT = compileSubtitleFont();
+	public static final Font 	SUBTITLE_FONT 	= compileSubtitleFont(),
+								TITLE_FONT 		= compileTitleFont();
 
 	
 
@@ -57,7 +59,17 @@ public class BugByteLibrary
 
 	private static Font compileSubtitleFont()
 	{
-		try{return Font.createFont(Font.TRUETYPE_FONT, new File("res/FORCED_SQUARE.ttf")).deriveFont(28f);}
-		catch(Exception e){return  new Font("Arial", Font.BOLD, 14);}
+		try{
+			InputStream input = BugByteLibrary.class.getResourceAsStream("res/FORCED_SQUARE.ttf");
+			return Font.createFont(Font.TRUETYPE_FONT, input).deriveFont(28f);
+		}catch(Exception e){return new Font ("Arial", Font.BOLD, 14);}
+	}
+
+	private static Font compileTitleFont()
+	{
+		try{
+			InputStream input = BugByteLibrary.class.getResourceAsStream("res/FORCED_SQUARE.ttf");
+			return Font.createFont(Font.TRUETYPE_FONT, input).deriveFont(72f);
+		}catch(Exception e){return new Font ("Arial", Font.BOLD, 36);}
 	}
 }
