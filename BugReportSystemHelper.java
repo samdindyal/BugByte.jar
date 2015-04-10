@@ -3,6 +3,13 @@ import java.lang.Math;
 
 import java.util.ArrayList;
 
+/**
+ * This class acts as a helper for the tester, containing the various cases that
+ * will be tested including logging-in, seeing what users are logged in, adding
+ * users, adding bugs, changing bugs, removing bugs, and logging out.
+ *
+ * @author Rishabh Kalra
+ */
 public class BugReportSystemHelper {
 
 	private ArrayList<String> usrnmList, pwdList, bidList;
@@ -15,6 +22,12 @@ public class BugReportSystemHelper {
 	private BugPriority bp = BugPriority.LOW;
 	private String des, name, id, usrid;
 
+	/*
+	 * Constructor
+	 * initializes all instance variables
+	 *
+	 * @param	none
+	 */
 	public BugReportSystemHelper() {
 		bsr = new BugReportSystem();
 		usrnmList = new ArrayList<String>();
@@ -32,6 +45,11 @@ public class BugReportSystemHelper {
 		usrid = "";
 	}
 
+	/*
+	 * Adds dummy users to test addUser method
+	 *
+	 * @param	none
+	 */
 	public void testAddUser() {
 		boolean b = true;
 		int failCount = 0;
@@ -62,6 +80,11 @@ public class BugReportSystemHelper {
 		}
 	}
 
+	/*
+	 * Adds dummy bugs to test addBug method
+	 *
+	 * @param	none
+	 */
 	public void testAddBug() {
 		boolean b = true;
 		int failCount = 0;
@@ -90,6 +113,11 @@ public class BugReportSystemHelper {
 		}
 	}
 
+	/*
+	 * Logs dummy users in to test login method
+	 *
+	 * @param	none
+	 */
 	public void testLogin() {
 		String temp_u = "", temp_p = "";
 		boolean b = false;
@@ -120,6 +148,11 @@ public class BugReportSystemHelper {
 		}
 	}
 
+	/*
+	 * Checks which dummy users logged in to test isLoggedIn method
+	 *
+	 * @param	none
+	 */
 	public void testLoggedIn() {
 		boolean b = false;
 		int failCount = 0;
@@ -148,6 +181,11 @@ public class BugReportSystemHelper {
 		}
 	}
 
+	/*
+	 * Logs dummy users out to test logout method
+	 *
+	 * @param	none
+	 */
 	public void testLogout() {
 		String temp_u = "";
 		boolean b = false;
@@ -177,6 +215,12 @@ public class BugReportSystemHelper {
 		}
 	}
 
+	/*
+	 * Picks a random dummy bug and changes description to dummy data to test
+	 * changing bug data
+	 *
+	 * @param void
+	 */
 	public void testChangeBug() {
 		Bug bug;
 		boolean b = false;
@@ -208,6 +252,11 @@ public class BugReportSystemHelper {
 		}
 	}
 
+	/*
+	 * Removes a random dummy bug to test removeBug method
+	 *
+	 * @param	none
+	 */
 	public void testRemoveBug() {
 		int bindex = (int) Math.random() * bidList.size();
 		boolean b = false;
@@ -224,6 +273,11 @@ public class BugReportSystemHelper {
 		}
 	}
 
+	/*
+	 * Sets all user data to generated dummy data
+	 *
+	 * @param	none
+	 */
 	public void setUserData() {
 		usr = generateString();
 		pwd = generateString();
@@ -232,12 +286,23 @@ public class BugReportSystemHelper {
 		email = generateString() + "@gmail.com";
 	}
 
+	/*
+	 * Sets all bug data to generated dummy data
+	 *
+	 * @param	none
+	 */
 	public void setBugData() {
 		des = generateString();
 		name = generateString();
 		id = generateInt();
 	}
 
+	/*
+	 * Generates a random string using all letters of the alphabet
+	 *
+	 * @param	none
+	 * @return String 	containing random appended characters
+	 */
 	public String generateString() {
 		StringBuffer b = new StringBuffer();
 		String c = "abcdefghijklmnopqrstuvwxyz";
@@ -250,6 +315,12 @@ public class BugReportSystemHelper {
 		return b.toString();
 	}
 
+	/*
+	 * Generates a random integer string using all numbers
+	 *
+	 * @param	none
+	 * @return String 	containing random appended numbers
+	 */
 	public String generateInt() {
 		StringBuffer b = new StringBuffer();
 		String c = "1234567890";
