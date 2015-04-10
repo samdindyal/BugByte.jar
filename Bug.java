@@ -20,7 +20,7 @@ public class Bug implements Serializable
 	public static final Date DATE_CREATED = new Date();
 
 /**
-	Constructs a "Bug" class based on the given arguments.
+	Construct a "Bug" class based on the given arguments.
 
 	@param 	status			An enumeration type representing the status of the bug.
 	@param 	priority		An enumeration type representing the priority of the bug.
@@ -39,8 +39,7 @@ public class Bug implements Serializable
 	}
 
 /**
-	
-	THw get method for "status" instance variable.
+	The get method for "status" instance variable.
 
 	@return		An enumeration type in correspondance of the current status of the bug (Ex. BugStatus.FIXED).
 */

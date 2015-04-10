@@ -50,6 +50,7 @@ import java.util.UUID;
 
 public class BugByteUI implements ActionListener, MouseListener, KeyListener, ChangeListener, ListSelectionListener
 {
+	//Instance variables
 	private 				BugReportSystem 		bugReportSystem;
 	private					GridBagConstraints 		c;
 	private 				JComponent  			currentComponent, previousComponent;
@@ -170,17 +171,28 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		currentComponent 	= loginPanel;
 	}
 
+/**
+	Initialize components common to all components. 
+	This method uses an algorthm to create a 3 dimension, jagged array based on the amount of elements predefined in the commonComponentText string array. The first index is an identifier for which panel the 2 dimensional array of components it holds belongs to. Each index of that 2 dimensional array contains a pair of a label and another component determined by the algorithm below. It is intended to take on a polymorphic approach.
+*/
 	public void initializeCommonComponents()
 	{
+
+		//Create the first dimension of the array with the size of commonComponentText
 		commonComponents = new JComponent[commonComponentText.length][][];
 		for (int i = 0; i < commonComponents.length; i++)
 		{
+			//Create the second and third dimensions of the array with the sizes being the second dimension of commonComponentText's size and 2, for pairs of a label and another JComponent, respectively
 			commonComponents[i] = new JComponent[commonComponentText[i].length][2];
 			for (int j = 0; j < commonComponents[i].length; j++)
 			{
 				commonComponents[i][j][0] = new JLabel(commonComponentText[i][j], SwingConstants.RIGHT);
+
+				//Creates either a JTextField or JPasswordField depending on the label text
 				commonComponents[i][j][1] = commonComponentText[i][j].contains("Password") ? 
 											new JPasswordField("", NOT_OSX ? 20 : 15) : new JTextField("", NOT_OSX ? 20 : 15);
+
+				//Change the colour of the label to the accent colour
 				commonComponents[i][j][0].setForeground(BugByteLibrary.ACCENT_COLOUR);
 				commonComponents[i][j][1].addKeyListener(this);
 

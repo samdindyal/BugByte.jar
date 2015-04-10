@@ -12,7 +12,7 @@ public class ComponentViewer extends JFrame
 {
 
 /**
-	Constructs a "ComponentViewer" object. The frame is sized according to the panel.
+	Construct a "ComponentViewer" object. The frame is sized according to the panel.
 
 	@param 	component 	Componnet to add and display on the frame.
 */
@@ -25,7 +25,7 @@ public class ComponentViewer extends JFrame
 	}
 
 /**
-	Constructs a "ComponentViewer" object. The frame is sized according to the arguments entered.
+	Construct a "ComponentViewer" object. The frame is sized according to the arguments entered.
 
 	@param 	component 	Componnet to add and display on the frame.
 	@param 	width 		The width of the component to display.

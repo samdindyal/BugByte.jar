@@ -1,3 +1,10 @@
+/**
+ 	Title: 			The "BugByteLibrary" class
+	Date Written: 	March 2015 - April 2015
+	Author: 		Samuel Dindyal
+	Description: 	A library of methods and constants used throughout BugByte.
+*/
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -9,7 +16,7 @@ import java.io.InputStream;
 
 public class BugByteLibrary
 {
-
+	//Constants for use in BugByte classes
 	public static final	Color	MAIN_COLOUR 		= new Color(72, 157, 2),
 								ACCENT_COLOUR 		= MAIN_COLOUR.brighter().brighter(),
 								SUCCESS_COLOUR 		= new Color(152, 255, 152),
@@ -19,8 +26,11 @@ public class BugByteLibrary
 	public static final Font 	SUBTITLE_FONT 	= compileSubtitleFont(),
 								TITLE_FONT 		= compileTitleFont();
 
-	
+/**
+	Check a string if it is in the form of a valid email address.
 
+	@param 	A string representation of an email address.
+*/
 	public static boolean isValidEmailAddress(String emailAddress)
 	{
 		String regex 					= "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
@@ -30,6 +40,11 @@ public class BugByteLibrary
 		return matcher.matches();
 	}
 
+/**
+	Check a string if it is in the form of a username.
+
+	@param 	A string representation of a username.
+*/
 	public static boolean isValidUsername(String username)
 	{
 		String regex 				= "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+";
@@ -39,6 +54,11 @@ public class BugByteLibrary
 		return matcher.matches();
 	}
 
+/**
+	Check a string if it is in the form of a valid name.
+
+	@param 	A string representation of a name.
+*/
 	public static boolean isValidName(String name)
 	{
 		String regex 			= "^[a-zA-Z]+";
@@ -48,6 +68,11 @@ public class BugByteLibrary
 		return matcher.matches();
 	}
 
+/**
+	Check a string if it is in the form of a valid password.
+
+	@param 	A string representation of a password.
+*/
 	public static boolean isValidPassword(String password)
 	{
 		String regex 			= "^[a-zA-Z0-9]+";
@@ -57,6 +82,9 @@ public class BugByteLibrary
 		return password.length() >= 6 && matcher.matches();
 	}
 
+/**
+	Compiles a font from a file for the SUBTITLE_FONT constant.
+*/
 	private static Font compileSubtitleFont()
 	{
 		try{
@@ -65,6 +93,9 @@ public class BugByteLibrary
 		}catch(Exception e){return new Font ("Arial", Font.BOLD, 14);}
 	}
 
+/**
+	Compiles a font from a file for the TITLE_FONT constant.
+*/
 	private static Font compileTitleFont()
 	{
 		try{

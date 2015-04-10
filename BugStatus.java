@@ -19,7 +19,7 @@ public enum BugStatus implements Serializable
 	private final String 	statusDescription;
 
 /**
-	Constructs a "BugStatus" enumeration type.
+	Construct a "BugStatus" enumeration type.
 
 	@param 	status 	An integer representation of the status of a bug.
 	@param  status 	A string representation of the description of the status.

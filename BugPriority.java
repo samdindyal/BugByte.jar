@@ -21,7 +21,7 @@ public enum BugPriority implements Serializable
 	public final String	description;
 
 /**
-	Constructs a "BugPriority" enumeration type.
+	Construct a "BugPriority" enumeration type.
 
 	@param 	priority 		An integer representation of the priority of a bug.
 	@param  description 	A string representation of the description of the priority (Low, Medium, High).
