@@ -1,5 +1,5 @@
 /**
- 	Title: 			The "Grapher" class
+ 	Title: 			The "Graph" class
 	Date Written: 	March 2015 - April 2015
 	Author: 		Samuel Dindyal
 	Description: 	A panel which contains a graph based on given parameters.
@@ -17,7 +17,7 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Grapher extends JPanel
+public class Graph extends JPanel
 {
 
 	//Instance variables
@@ -30,14 +30,14 @@ public class Grapher extends JPanel
 	private int[]				xAxisValues, yAxisValues;
 
 /**
-	Construct a "Grapher" object with foreground and background colours, as well as a margin and list of x and y coordinates.
+	Construct a "Graph" object with foreground and background colours, as well as a margin and list of x and y coordinates.
 
 	@param 	foreground 	The foreground colour of the panel.
 	@param 	background 	The background colour of the panel.
 	@param 	margin	 	The margin of the graph. This is also the x location for the x axis and the y location for the y axis.
 	@param 	list 		An array list containing the y coordinates of a set. 
 */
-	public Grapher(Color foreground, Color background, int margin, ArrayList<Double> list)
+	public Graph(Color foreground, Color background, int margin, ArrayList<Double> list)
 	{
 		//Set instance variables
 		this.background = background;
@@ -149,7 +149,7 @@ public class Grapher extends JPanel
 		list.add(10.0);
 		list.add(40.0);		
 
-		Grapher grapher = new Grapher(Color.WHITE, Color.DARK_GRAY.darker(), 75, list);
+		Graph grapher = new Graph(Color.WHITE, Color.DARK_GRAY.darker(), 75, list);
 		ComponentViewer componentViewer = new ComponentViewer(grapher, 500, 500);
 
 		componentViewer.validate();

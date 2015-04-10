@@ -119,7 +119,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	private JButton 	saveButton, revertChangesButton, addButton, removeButton;
 
 	//Components for trends panel
-	private Grapher grapher;
+	private Graph graph;
 
 /**
 	Creates a new BugByteUI object
@@ -132,7 +132,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	}
 
 /**
-	Intializes the frame and initializes and adds all of the appropriate components to it.
+	Intialize the frame and initialize and add all of the appropriate components to it using a BorderLayout.
 */
 	public void initializeFrame()
 	{
@@ -196,6 +196,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				commonComponents[i][j][0].setForeground(BugByteLibrary.ACCENT_COLOUR);
 				commonComponents[i][j][1].addKeyListener(this);
 
+				//Specific code for the JTextArea and JComboBox on the view bug panel
 				if (i == VIEW_BUG_PANEL)
 				{
 					if (j == 2)
@@ -215,8 +216,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	}
 
 /**
-	Initializes the login panel, along with all of its components, and adds its components to it using a
-	GridBagLayout.
+	Initialize the login panel, along with all of its components, and add its components to it using a GridBagLayout.
 */
 	public void initializeLoginPanel()
 	{
@@ -225,6 +225,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		loginPanel.setLayout(new GridBagLayout());
 		loginPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
+		//Create a platform dependent border
 		loginBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(BugByteLibrary.MAIN_COLOUR) : null, "Login", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.MAIN_COLOUR);
 
 		loginPanel.setBorder(loginBorder);
@@ -240,7 +241,6 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		loginButton = new JButton("Log In");
 		
 		//Set text colour for some components
-
 		forgotPassword.setForeground(BugByteLibrary.ACCENT_COLOUR);
 		forgotUsername.setForeground(BugByteLibrary.ACCENT_COLOUR);
 		signUp.setForeground(BugByteLibrary.ACCENT_COLOUR);
@@ -248,9 +248,11 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 		loginButton.setEnabled(false);
 
+		//Set x and y coordinates for layout to 0
 		c.gridx = 0;
 		c.gridy = 0;
 
+		//Loop through and add all components to the login panel accordingly using a GridBagLayout
 		for (int i = 0; i < commonComponents[LOGIN_PANEL].length; i++)
 		{
 			for (int j = 0; j < commonComponents[LOGIN_PANEL][i].length; j++)
@@ -263,6 +265,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			c.gridy++;
 		}
 	
+		//Add the rest of the compoents to the login panel
 		navigationPanel.add(loginButton);
 
 		c.gridx = 0;
@@ -291,27 +294,26 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	}
 
 /**
-	Initializes the sign up panel and its components. Adds all the components to it using a GridBagLayout.
+	Initialize the sign up panel and its components. Add all the components to it using a GridBagLayout.
 */
 	public void initializeSignUpPanel()
 	{
+		//Initialize the sign up panel and set its layout and background colour
 		signUpPanel = new JPanel();
 		signUpPanel.setLayout(new GridBagLayout());
 		signUpPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
+		//Create and set a platform dependent border
 		signUpBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(BugByteLibrary.MAIN_COLOUR) : null, "Sign Up", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.MAIN_COLOUR);
 		signUpPanel.setBorder(signUpBorder);
 
+		//Create the constraints for the GridBagLayout
 		c = new GridBagConstraints();
 
 		c.gridx = 0;
 		c.gridy = 0;
 
-		failedSignUpLbl		= new JLabel("", SwingConstants.CENTER);
-
-		signUpButton = new JButton("Finish Sign Up");
-		signUpButton.setEnabled(false);
-
+		//Loop through and add all components to the sign up panel accordingly using a GridBagLayout
 		for (int i = 0; i < commonComponents[SIGN_UP_PANEL].length; i++)
 		{
 			for (int j = 0; j < commonComponents[SIGN_UP_PANEL][i].length; j++)
@@ -323,6 +325,10 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			c.gridx = 0;
 		}
 
+		//Prepare the rest of the components and add them to the sign up panel
+		failedSignUpLbl	= new JLabel("", SwingConstants.CENTER);
+		signUpButton = new JButton("Finish Sign Up");
+		signUpButton.setEnabled(false);
 		failedSignUpLbl.setForeground(BugByteLibrary.ACCENT_COLOUR);
 
 		c.gridwidth = 2;
@@ -334,65 +340,78 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		c.gridy++;
 		c.insets 	= new Insets(0,0,0,0);
 
+		//Add the sign up button to the navigation panel
 		navigationPanel.add(signUpButton);
 
+		//Hide the button and set its listener
 		signUpButton.setVisible(false);
 		signUpButton.addActionListener(this);
 	}
 
+/**
+	Initialize the naviagation panel and add its components to it.
+*/
 	public void initializeNavigationPanel()
 	{
+		//Instantiate the navigation panel and set its background colour
 		navigationPanel = new JPanel();
 		navigationPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
+		//Instantiate the components and prepare them
 		backButton 		= new JButton("Go Back");
 		dashboardButton = new JButton("Dashboard");
 
 		dashboardButton.setEnabled(false);
 		backButton.setEnabled(false);
 
+		//Add the components to the navigation panel
 		navigationPanel.add(backButton);
 		navigationPanel.add(dashboardButton);
 
+		//Add the appropriate listeners
 		backButton.addActionListener(this);
 		dashboardButton.addActionListener(this);
 
 	}
 
+/**
+	Initialize the forgot username panel and all all of its components to it using a GridBagLayout.
+*/
 	public void initializeForgotUsernamePanel()
 	{
+		//Initialize the forgot username panel and set its layour and background colour
 		forgotUsernamePanel = new JPanel();
 		forgotUsernamePanel.setLayout(new GridBagLayout());
 		forgotUsernamePanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
+		//Set a platform dependent border
 		forgotUsernameBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(BugByteLibrary.MAIN_COLOUR) : null, "Forgot Username", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.MAIN_COLOUR);
-
 		forgotUsernamePanel.setBorder(forgotUsernameBorder);
 
+		//Initialize some components
 		submitButton2 	 			= new JButton("Submit");
 		forgotUsernameMessageLbl 	= new JLabel("Test", SwingConstants.CENTER);
 		inputLinePanel 				= new JPanel();
 
+		//Prepare components
 		submitButton2.setEnabled(false);
 		forgotUsernameMessageLbl.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 		inputLinePanel.setOpaque(false);
 
+		//Prepare the GridBagConstraints
 		c = new GridBagConstraints();
 
 		c.gridx = 0;
 		c.gridy = 0;
 
+		//Loop through the commonComponents section for the forgot username panel and add them to the inputLinePanel
 		for (int i = 0; i < commonComponents[FORGOT_USERNAME_PANEL][0].length; i++)
-		{
-			if (i == 0)
-				commonComponents[FORGOT_USERNAME_PANEL][0][i].setForeground(BugByteLibrary.ACCENT_COLOUR);
-			else
-				commonComponents[FORGOT_USERNAME_PANEL][0][1].addKeyListener(this);	
 			inputLinePanel.add(commonComponents[FORGOT_USERNAME_PANEL][0][i]);	
-		}
 
+		//Increment the y value for the constraints
 		c.gridy++;
 
+		//Add the remaning components
 		forgotUsernamePanel.add(inputLinePanel, c);
 
 		c.insets = new Insets(25, 0, 25, 0);
@@ -401,29 +420,35 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 		forgotUsernamePanel.add(forgotUsernameMessageLbl, c);
 
+		//Add submit button to the navigation panel
 		navigationPanel.add(submitButton2);
 
+		//HIde the submit button and give it a listener
 		submitButton2.setVisible(false);
 		submitButton2.addActionListener(this);
 	}
 
+/**
+	Initialize the forgot password panel and add all of its components to it using a GridBagLayout.
+*/
 	public void initializeForgotPasswordPanel()
 	{
+		//Initialize the forgot password panel and set its layout and background colour
 		forgotPasswordPanel = new JPanel();
 		forgotPasswordPanel.setLayout(new GridBagLayout());
 		forgotPasswordPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
+		//Create and set a platform dependent border
 		forgotPasswordBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(BugByteLibrary.MAIN_COLOUR) : null, "Forgot Password", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.MAIN_COLOUR);
 
 		forgotPasswordPanel.setBorder(forgotPasswordBorder);
 
+		//Prepare components
 		submitButton = new JButton("Submit");
 		submitButton.setEnabled(false);
 
 		resetPasswordMessageLbl = new JLabel("An email with a password reset link has been sent to the email associated it your account.", SwingConstants.CENTER);
-
 		resetPasswordMessageLbl.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
-
 
 		initializeUsernameResetPanel();
 		initializeEmailAddressResetPanel();
@@ -431,6 +456,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 		c = new GridBagConstraints();
 
+		//Add components to the forgot password panel
 		c.gridx = 0;
 		c.gridy = 0;
 
@@ -445,60 +471,84 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		
 		forgotPasswordPanel.add(resetPasswordMessageLbl, c);
 
+		//Add the submit button to the navigation panel, hide it and give it a listener
 		navigationPanel.add(submitButton);
 
 		submitButton.setVisible(false);
 		submitButton.addActionListener(this);
 	}
 
+/**
+	Initialize the username reset panel and add its components to it using a flow layout.
+*/
 	public void initializeUsernameResetPanel()
 	{
 		usernameResetPanel = new JPanel();
 		usernameResetPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
+		//Loop through the forgot passowrd panel section of the common components and add everything to the username reset panel
 		for (int i = 0; i < commonComponents[FORGOT_PASSWORD_PANEL][0].length; i++)
 			usernameResetPanel.add(commonComponents[FORGOT_PASSWORD_PANEL][0][i]);
 	}
 
+/**
+	Initialize the email address reset panel and add all of its elements to it using a flow layout.
+*/
 	public void initializeEmailAddressResetPanel()
 	{
+		//Initialize the email address reset panel and set its background
 		emailAddressResetPanel = new JPanel();
 		emailAddressResetPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
+		//Loop through a section in commonComponents and add some elements to the forgot password panel
 		for (int i = 0; i < commonComponents[FORGOT_PASSWORD_PANEL][1].length; i++)
 			emailAddressResetPanel.add(commonComponents[FORGOT_PASSWORD_PANEL][1][i]);
 	}
 
+/**
+	Initialize the panel for toggling between resetting a password with a username or email address and its components to it using a flow layout.
+*/
 	public void initializeTogglePanel()
 	{
+		//Initialize the toggle panel and set its background
 		togglePanel = new JPanel();
 		togglePanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
+		//Prepare its components
 		usernameResetButton 	= new JRadioButton("Reset with username");
 		emailAddressResetButton = new JRadioButton("Reset with email address");
 		buttonGroup 			= new ButtonGroup();
 
+		//Set the text of the JRadioButtons to the accent colour
 		usernameResetButton.setForeground(BugByteLibrary.ACCENT_COLOUR);
 		emailAddressResetButton.setForeground(BugByteLibrary.ACCENT_COLOUR);
 
+		//Prevent any backgrounds from showing up from the JRadioButtons
 		emailAddressResetButton.setOpaque(false);
 		usernameResetButton.setOpaque(false);
 
+		//Set the username reset button to selected
 		usernameResetButton.setSelected(true);
 
+		//Add the JRadioButtons to a ButtonGroup
 		buttonGroup.add(usernameResetButton);
 		buttonGroup.add(emailAddressResetButton);
 
+		//Add everything to the toggle panel
 		togglePanel.add(usernameResetButton);
 		togglePanel.add(emailAddressResetButton);
 
+		//Add listeners to components
 		usernameResetButton.addActionListener(this);
 		emailAddressResetButton.addActionListener(this);
 	}
 
+/**
+	Initialize the dashboard panel.
+*/
 	public void initializeDashboardPanel()
 	{
-
+		//Initialize all components and add them to the dashboard panel as tabs
 		initializeAccountSummaryPanel();
 		initializeBugsPanel();
 		initializeTrendsPanel();
@@ -508,24 +558,27 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		dashboardPanel.addTab("Trends", trendsPanel);
 	}
 
+/**
+	Initialize the account summary panel
+*/
 	public void initializeAccountSummaryPanel()
 	{
+		//Initialize the account summary panel and set its layout and background colour
 		accountSummaryPanel = new JPanel();
 		accountSummaryPanel.setLayout(new GridBagLayout());
 		accountSummaryPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 
+		//Add a border if not running on Mac OS X
 		if (NOT_OSX)
 			accountSummaryPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(BugByteLibrary.ACCENT_COLOUR), "", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.ACCENT_COLOUR));
 		accountSummaryMessageLabel 	= new JLabel("All changes have been sucessfully saved."); 
-
-		submitSummaryButton = new JButton("Submit changes");
-		accountSummaryMessageLabel.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 
 		c = new GridBagConstraints();
 
 		c.gridx = 0;
 		c.gridy = 0;
 
+		//Add all components to the account summary panel
 		commonComponents[ACCOUNT_SUMMARY_PANEL][0][1].setEnabled(false);
 
 		for (int i = 0; i < commonComponents[ACCOUNT_SUMMARY_PANEL].length; i++)
@@ -544,36 +597,60 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 		accountSummaryPanel.add(accountSummaryMessageLabel, c);
 
+		//Set the text colour of the accountSummaryMessageLabel
+		accountSummaryMessageLabel.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
+		
+		//Initialize submit button
+		submitSummaryButton = new JButton("Submit changes");
+
+		//Add the submit button to the navigation panel
 		navigationPanel.add(submitSummaryButton);
 
+		//Hide the submit button and disable it
 		submitSummaryButton.setVisible(false);
 		submitSummaryButton.setEnabled(false);
 
+		//Add listener to submit button
 		submitSummaryButton.addActionListener(this);
 	}
 
+/**
+	Initialize the tends panel and add its components to it using a BorderLayout.
+*/
 	public void initializeTrendsPanel()
 	{
+		//Initialize the trends panel and set its layout and background colour
 		trendsPanel = new JPanel();
 		trendsPanel.setLayout(new BorderLayout());
 		trendsPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
+
+		//Add a platform dependent border
 		if (NOT_OSX)
 			trendsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(BugByteLibrary.ACCENT_COLOUR), "", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.ACCENT_COLOUR));
 
-		grapher = new Grapher(BugByteLibrary.ACCENT_COLOUR, BugByteLibrary.BACKGROUND_COLOUR, 60, bugReportSystem.getStatistics());
-		trendsPanel.add(grapher, BorderLayout.CENTER);
+		//Create a new graph and add it to the trends panel
+		graph = new Graph(BugByteLibrary.ACCENT_COLOUR, BugByteLibrary.BACKGROUND_COLOUR, 60, bugReportSystem.getStatistics());
+		trendsPanel.add(graph, BorderLayout.CENTER);
 	}
 
+/**
+	Initialize the bugs panel and add its components to it using a BorderLayout.
+*/
 	public void initializeBugsPanel()
 	{
-		initializeViewBugPanel();
-
+		//Initialize the bugs panel and set its layout and border
 		bugsPanel = new JPanel();
 		bugsPanel.setLayout(new BorderLayout());
 		bugsPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
+
+		//Set a platform dependent border
 		if (NOT_OSX)
 			bugsPanel.setBorder(BorderFactory.createTitledBorder(new LineBorder(BugByteLibrary.ACCENT_COLOUR), "", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.ACCENT_COLOUR));
 
+		//Initialize the view bug panel
+		initializeViewBugPanel();
+
+		//Prepare components
 		bugList = new JList();
 		bugList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane listScrollPane 		= new JScrollPane(bugList);
@@ -591,36 +668,46 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
         bugList.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
         bugList.addListSelectionListener(this);
 
+        //Add components to the bugs panel
         bugsPanel.add(bugSplitPane, BorderLayout.CENTER);
 	}
 
+/**
+	Initialize the view bug panel.
+*/
 	public void initializeViewBugPanel()
 	{
+		//Initialize the view bug panel and set its background colour and layout
 		viewBugPanel = new JPanel();
 		viewBugPanel.setBackground(BugByteLibrary.BACKGROUND_COLOUR);
 		viewBugPanel.setLayout(new GridBagLayout());
 
+		//Prepare components
 		saveButton 			= new JButton("Save Bug");
 		revertChangesButton = new JButton("Revert Changes");
 		addButton 			= new JButton("+");
 		removeButton		= new JButton("-");
 
+		//Add components to the frame
 		navigationPanel.add(saveButton);
 		navigationPanel.add(revertChangesButton);
 		navigationPanel.add(addButton);
 		navigationPanel.add(removeButton);
 
+		//Add listeners to components
 		saveButton.addActionListener(this);
 		revertChangesButton.addActionListener(this);
 		viewBugPanel.addKeyListener(this);
 		addButton.addActionListener(this);
 		removeButton.addActionListener(this);
 
+		//Hide buttons
 		saveButton.setVisible(false);
 		revertChangesButton.setVisible(false);
 		addButton.setVisible(false);
 		removeButton.setVisible(false);
 
+		//Prepare more components
 		commonComponents[VIEW_BUG_PANEL][1][1] = new JTextField("", 25);
 		commonComponents[VIEW_BUG_PANEL][1][1].setEnabled(false);
 		((JTextArea)commonComponents[VIEW_BUG_PANEL][2][1]).setLineWrap(true);
@@ -632,6 +719,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		c.gridx = 0;
 		c.insets = new Insets(10, 0, 10, 0);
 
+		//Add components to the view bug panel
 		for (int i = 0; i < commonComponents[VIEW_BUG_PANEL].length; i++)
 		{
 			for (int j = 0; j < commonComponents[VIEW_BUG_PANEL][i].length; j++)
@@ -645,24 +733,33 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 
 	}
 
+/**
+	Prepare the dashboard panel for adding tabs.
+*/
 	public void prepareDashBoardPanel()
 	{
-
-
+		//Initialize the dashboard panel and set its tab text colour
 		dashboardPanel = new JTabbedPane();
 		dashboardPanel.setForeground(BugByteLibrary.ACCENT_COLOUR);
 
+		//Set a platform dependent border
 		dashboardPanelBorder = BorderFactory.createTitledBorder(NOT_OSX ? new LineBorder(BugByteLibrary.MAIN_COLOUR) : null, "Dashboard", TitledBorder.CENTER, TitledBorder.TOP, BugByteLibrary.SUBTITLE_FONT, BugByteLibrary.MAIN_COLOUR);
 		dashboardPanel.setBorder(dashboardPanelBorder);
+
+		//Set tab text colours and backgrounds
 		for (int i = 0; i < dashboardPanel.getTabCount(); i++)
 		{
 			dashboardPanel.setForegroundAt(i, BugByteLibrary.ACCENT_COLOUR);
 			dashboardPanel.setBackgroundAt(i, NOT_OSX ? BugByteLibrary.BACKGROUND_COLOUR : Color.BLACK);
 		}
 
+		//Add a change listener to the dashboard panel
 		dashboardPanel.addChangeListener(this);
 	}
 
+/**
+	Override the default UI colour scheme.
+*/
 	public void setColours()
 	{
 		UIManager.put("TextField.selectionBackground", BugByteLibrary.ACCENT_COLOUR);
@@ -687,13 +784,22 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		UIManager.put("ComboBox.selectionForeground", BugByteLibrary.BACKGROUND_COLOUR);
 	}
 
+/**
+	Swap the component in the center of the frame.
+
+	@param 	component 	The component to swap in.
+*/
 	public void swapComponents(JComponent component)
 	{
+		//Remove the current component and add the new one to the frame
 		frame.remove(currentComponent);
 		frame.add(component, BorderLayout.CENTER);
+
+		//Refresh the frame
 		frame.validate();
 		frame.repaint();
 
+		//Set the visibilty on all the buttons on the navigation panel accordingly
 		submitSummaryButton.setVisible(component == dashboardPanel && dashboardPanel.getSelectedIndex() == 1);
 		submitButton.setVisible(component == forgotPasswordPanel);
 		submitButton2.setVisible(component == forgotUsernamePanel);
@@ -705,17 +811,26 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		addButton.setVisible(component == dashboardPanel && dashboardPanel.getSelectedIndex() == 0);
 		removeButton.setVisible(component == dashboardPanel && dashboardPanel.getSelectedIndex() == 0);
 
+		//Set the previous component and current component
 		previousComponent 		= currentComponent;
 		currentComponent 		= component;
 	}
 
+/**
+	Swap panels on the password reset panel.
+
+	@param 	panel 	Panel to show on the password reset panel.
+*/
 	public void swapPasswordResetPanels(JPanel panel)
 	{
+		//If the panel to be swapped in is the username reset panel
 		if (panel == usernameResetPanel)
 		{
 			forgotPasswordPanel.remove(emailAddressResetPanel);
 			submitButton.setEnabled(BugByteLibrary.isValidUsername(((JTextField)commonComponents[FORGOT_PASSWORD_PANEL][0][1]).getText()));
 		}
+
+		//If the panel to be swapped in is the email address reset panel
 		else if (panel == emailAddressResetPanel)
 			{
 				forgotPasswordPanel.remove(usernameResetPanel);
@@ -725,33 +840,47 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			c.gridy = 1;
 			c.gridx = 0;
 
+			//Add the panel to the forgot password panel
 			forgotPasswordPanel.add(panel, c);
+
+			//Refresh the forgot password panel
 			forgotPasswordPanel.validate();
 			forgotPasswordPanel.repaint();
 	}
 
-	
+/**
+	Check a password field given the panel and number of the field where the password fields start.
 
+	@param 	panelIdentifier 	The identifier of the panel to check.
+	@param 	fieldNumber 		The index value of the first password field.
+*/
 	public boolean passwordFieldCheck(int panelIdentifier, int fieldNumber)
 	{
 		return		new String(((JPasswordField)commonComponents[panelIdentifier][fieldNumber][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[panelIdentifier][fieldNumber+1][1]).getPassword()))
 				&& BugByteLibrary.isValidPassword(new String(((JPasswordField)commonComponents[panelIdentifier][fieldNumber][1]).getPassword()));
 	}
 
+/**
+	Attempt to log in or logout.
+*/
 	public void toggleLogin()
 	{
+		//If there are no active users in the system
 		if (!bugReportSystem.hasActiveUsers())
 		{
+			//If an attempted login was successful
 			if (bugReportSystem.login(((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText(), String.valueOf(((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).getPassword())))
 			{
+				//Reset the appropriate components
 				resetComponent(SIGN_UP_PANEL);
 				resetComponent(FORGOT_PASSWORD_PANEL);
 				resetComponent(FORGOT_USERNAME_PANEL);
 
+				//Fetch the entered password from the fields and create a new bug for the user to begin
 				password = new String(((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).getPassword());
-
-								createNewBug();
+				createNewBug();
 				
+				//Prepare components
 				currentUserID = ((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText();
 				loginStatus.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 				swapComponents(dashboardPanel);
@@ -776,6 +905,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			}
 			else
 			{
+				//Set components accordingly for a failed login
 				loginStatus.setForeground(Color.RED);
 				loginStatus.setText("Incorrect login information. Please try again.");
 				System.out.println("Login failed. Incorrect credentials.");
@@ -783,27 +913,39 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				commonComponents[LOGIN_PANEL][0][1].setBackground(BugByteLibrary.FAILURE_COLOUR);
 				commonComponents[LOGIN_PANEL][1][1].setBackground(BugByteLibrary.FAILURE_COLOUR);
 
+				//Terminate method
 				return;
 			}
 		}
+		//If a logout was successful
 		else if (bugReportSystem.logout(currentUserID))
 		{
+			//Reset the account summary panel
 			resetComponent(ACCOUNT_SUMMARY_PANEL);
 
+			//Clear the user fields in the UI class and set the border of the login panel accordingly
 			currentUserID = "";
 			password = "";
 			loginBorder.setTitle("Login");
+
+			//Swap to the login panel
 			swapComponents(loginPanel);
 
+			//Enable the login fields again
 			commonComponents[LOGIN_PANEL][0][1].setEnabled(true);
 			commonComponents[LOGIN_PANEL][1][1].setEnabled(true);
+
+			//Disable the login button
 			loginButton.setEnabled(false);
 
+			//Clear the textfields
 			((JTextField)commonComponents[LOGIN_PANEL][0][1]).setText("");
 			((JPasswordField)commonComponents[LOGIN_PANEL][1][1]).setText("");
 
+			//Change the text on the login button
 			loginButton.setText("Login");
 
+			//Set all other components accordingly
 			dashboardButton.setEnabled(false);
 			forgotUsername.setForeground(BugByteLibrary.ACCENT_COLOUR);
 			forgotPassword.setForeground(BugByteLibrary.ACCENT_COLOUR);
@@ -816,22 +958,31 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		}
 
 	}
-
+/**
+	Attempt to sign the user up for an account.
+*/
 	public void signUp()
 	{
+		//If adding a user to the system is successful
 		if (bugReportSystem.addUser(	((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText(),
 							new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][4][1]).getPassword()),
 							((JTextField)commonComponents[SIGN_UP_PANEL][1][1]).getText(),
 							((JTextField)commonComponents[SIGN_UP_PANEL][2][1]).getText(),
 							((JTextField)commonComponents[SIGN_UP_PANEL][3][1]).getText()))
 		{
+			//Set the appropriate values for login
 			currentUserID 	= ((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText();
 			password 		= new String(((JPasswordField)commonComponents[SIGN_UP_PANEL][4][1]).getPassword());
+
+			//Write the bug system to a file
 			bugReportSystem.writeToDisk();
+
+			//Create a new bug and swap to the dashboard panel
 			createNewBug();
 			swapComponents(dashboardPanel);
 			System.out.println("Sign Up Successful.");
 
+			//Set compoenents accordingly
 			commonComponents[LOGIN_PANEL][0][1].setEnabled(false);
 			commonComponents[LOGIN_PANEL][1][1].setEnabled(false);
 			loginButton.setEnabled(true);
@@ -844,14 +995,18 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			commonComponents[LOGIN_PANEL][0][1].setBackground(Color.WHITE);
 			commonComponents[LOGIN_PANEL][1][1].setBackground(Color.WHITE);
 
-			previousComponent 		= loginPanel;
+			//Set the previous component to the loginPanel
+			previousComponent = loginPanel;
 
+			//Log the user in
 			bugReportSystem.login(((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText(), password);
 
+			//Pull the user's information in from the bug report system
 			populateAccountSummaryFields();
 		}
 		else
 		{
+			//Set components accordingly for a failed sign up
 			failedSignUpLbl.setForeground(Color.RED);
 			failedSignUpLbl.setText("Sorry, that username has already been taken.");
 			System.out.println("Username already taken. Sign Up Unsuccessful.");
@@ -861,6 +1016,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		signUpButton.setEnabled(false);
 	}
 
+/**
+	Populate the fields in the account summary panel with information pulled from the bug report system.
+*/
 	public void populateAccountSummaryFields()
 	{
 		User user = bugReportSystem.getUserAccount(currentUserID, password);
@@ -871,6 +1029,9 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][3][1]).setText(user.getEmailAddress());
 	}
 
+/**
+	Action method for the reset password panel.
+*/
 	public void resetPassword()
 	{
 		resetPasswordMessageLbl.setForeground(BugByteLibrary.ACCENT_COLOUR);
@@ -880,45 +1041,65 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			resetPasswordMessageLbl.setText("An email with a password reset link has been sent to the email associated it your account.");
 	}
 
+/**
+	Submit the new account modifications on the account summary panel.
+
+	@param 	password 	The password of the user currently signed in.
+
+	@return 	A flag indicating the success or failure of submitting account changes.
+*/
 	public boolean submitAccountChanges(String password)
 	{
 		User user;
+
+		//If fetching the user's account's object was not a success
 		if ((user = bugReportSystem.getUserAccount(currentUserID, new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][4][1]).getPassword()))) == null)
 		{
+			//Set components accordingly and return false
 			accountSummaryMessageLabel.setForeground(Color.RED);
 			accountSummaryMessageLabel.setText("Incorrect password. Please try again.");
 			commonComponents[ACCOUNT_SUMMARY_PANEL][4][1].setBackground(BugByteLibrary.FAILURE_COLOUR);
 		 	return false;
 		}
 
+		//Set fields accordingly
 		user.setfirstName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][1][1]).getText());
 		user.setlastName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][2][1]).getText());
 		user.setEmailAddress(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][3][1]).getText());
 
-		if (password.length() > 0)
-			user.setPassword(password);
-
 		accountSummaryMessageLabel.setForeground(BugByteLibrary.ACCENT_COLOUR);
 		accountSummaryMessageLabel.setText("All changes have been sucessfully saved.");
 
+		//Set the background of all the other components to white
 		for (int i = 0; i < commonComponents[ACCOUNT_SUMMARY_PANEL].length; i++)
 			commonComponents[ACCOUNT_SUMMARY_PANEL][i][1].setBackground(Color.WHITE);
 
+		//Write the bug report system to a file
 		bugReportSystem.writeToDisk();
 
 		return true;
 	}
 
+/**
+	Check the values in the fields in the account summary panel and validate them accordingly.
+
+	@return 	A flag representing the validity of all text in the fields on the account summary panel.
+*/
 	public boolean accountSummaryCheck()
 	{
 		return 		BugByteLibrary.isValidName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][1][1]).getText())
 				&&	BugByteLibrary.isValidName(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][2][1]).getText())
 				&&	BugByteLibrary.isValidEmailAddress(((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][3][1]).getText())
 				&&  (new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][5][1]).getPassword()).equals(new String(((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][6][1]).getPassword()))
-					&& ((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][5][1]).getText().length() > 0)
-				&&  ((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][4][1]).getPassword().length > 0;
+					&& ((JTextField)commonComponents[ACCOUNT_SUMMARY_PANEL][5][1]).getText().length() >= 6)
+				&&  ((JPasswordField)commonComponents[ACCOUNT_SUMMARY_PANEL][4][1]).getPassword().length >= 6;
 	}
 
+/**
+	Check the values in the fields in the sign up panel and validate them accordingly.
+
+	@return 	A flag representing the validity of all the text in the fields on the sign up panel.
+*/
 	public boolean signUpCheck()
 	{
 		return 		BugByteLibrary.isValidUsername(((JTextField)commonComponents[SIGN_UP_PANEL][0][1]).getText())
@@ -929,22 +1110,36 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				&&  BugByteLibrary.isValidEmailAddress(((JTextField)commonComponents[SIGN_UP_PANEL][3][1]).getText());
 	}
 
+/**
+	Check if an object corresponds to an element in a given panel.
+
+	@param 	n 		Identifier of panel to search.
+	@param 	obj 	Object to search for.
+*/
 	public boolean isInPanel(int n, Object obj)
 	{
+		//Loop through the elements on the panel of the identifier n in search of the object
 		for (int i = 0; i < commonComponents[n].length; i++)
 			if (obj == commonComponents[n][i][1])
 				return true;
 		return false;
 	}
 
+/**
+	Reset a component.
+
+	@param 	identifier 	Identifier of the component to reset.
+*/
 	public void resetComponent(int identifier)
 	{
+		//Reset all text fields and their backgrounds
 		for (int i = 0; i < commonComponents[identifier].length; i++)
 		{
 			((JTextField)commonComponents[identifier][i][1]).setText("");
 			commonComponents[identifier][i][1].setBackground(Color.WHITE);
 		}
 
+		//Panel specific reset procedures
 		if (identifier == SIGN_UP_PANEL)
 			failedSignUpLbl.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 		else if (identifier == FORGOT_USERNAME_PANEL)
@@ -955,17 +1150,27 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 			accountSummaryMessageLabel.setForeground(BugByteLibrary.BACKGROUND_COLOUR);
 	}
 
+/**
+	Reset all components.
+*/
 	public void resetAllComponents()
 	{
+		//Loop through all identifiers and reset components accordingly
 		for (int i = 0; i < commonComponents.length; i++)
 			resetComponent(i);
 	}
 
+/**
+	Submit a bug.
+*/
 	public void submitBug()
 	{
 		User user;
+
+		//If fetching a user account is successful
 		if ((user = bugReportSystem.getUserAccount(currentUserID, password)) != null)
 		{
+			//Pull user entries from the UI and send them to the bug report system
 			BugPriority priority;
 			switch(((JComboBox)commonComponents[VIEW_BUG_PANEL][3][1]).getSelectedIndex())
 			{
@@ -987,32 +1192,53 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				currentUserID);
 			bugReportSystem.writeToDisk();
 
+			//Reset the data on the JList in the bug view panel
 			bugList.setListData(generateBugList());
 		}
 
 	}
 
+/**
+	Create a new bug.
+*/
 	public void createNewBug()
 	{
+		//Reset fields in the view bug panel and create a new ID for a new bug
 		((JTextArea)commonComponents[VIEW_BUG_PANEL][2][1]).setText("");
 		((JTextField)commonComponents[VIEW_BUG_PANEL][0][1]).setText("");
 		String id = UUID.randomUUID().toString();
 		((JTextField)commonComponents[VIEW_BUG_PANEL][1][1]).setText(id);
 	}
 
+/**
+	Remove a bug from the system.
+*/
 	public void removeBug()
 	{
+		//Remove a bug from the system
 		String id = ((JTextField)commonComponents[VIEW_BUG_PANEL][1][1]).getText();
 		bugReportSystem.removeBug(id);
+
+		//Write the system to a file
 		bugReportSystem.writeToDisk();
+
+		//Refresh the bug list
 		bugList.setListData(generateBugList());
 	}
 
+/**
+	Load a bug from the bug report system based on what's selected in bugList.
+*/
 	public void loadBug()
 	{
+		//If nothing is selected
 		if (bugList.getSelectedIndex() < 0)
 			return;
+
+		//Fetch the user's keys
 		java.util.LinkedList<String> keys = bugReportSystem.getUserAccount(currentUserID, password).getKeys(password);
+
+		//Sets the fields accordingly to the information in the selected bug
 		Bug bug = bugReportSystem.getBug(keys.get(bugList.getSelectedIndex()));
 		((JTextField)commonComponents[VIEW_BUG_PANEL][0][1]).setText(bug.getName());
 		((JTextField)commonComponents[VIEW_BUG_PANEL][1][1]).setText(bug.getID());
@@ -1022,21 +1248,28 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 		((JComboBox)commonComponents[VIEW_BUG_PANEL][4][1]).setSelectedIndex(bug.getStatus().status);
 	}
 
+/**
+	Generate a user friendly string array to display bugs.
+
+	@return 	A string array of names to put onto the bugList.
+*/
 	public String[] generateBugList()
 	{
+		//Get keys from the user account
 		java.util.LinkedList<String> keys = bugReportSystem.getUserAccount(currentUserID, password).getKeys(password);
 
 		String array[] = new String[keys.size()];
 
+		//Compile an array of strings for displaying
 		for (int i = 0; i < keys.size(); i++)
 				array[i] = bugReportSystem.getBug(keys.get(i)).getName() + " (" + keys.get(i) + ")";
 		return array;
-
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		//Handle all action events
 		if (e.getSource() == backButton && previousComponent != null)
 			swapComponents(previousComponent);
 		if (e.getSource() == loginButton)
@@ -1068,6 +1301,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
+		//Handle all mouse events
 		if (!bugReportSystem.isLoggedIn(currentUserID))
 		{
 			if (e.getSource() == signUp)
@@ -1094,6 +1328,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
+		//Handle key events for all text fields and text areas in all components
 		if (e.getSource() == commonComponents[LOGIN_PANEL][0][1] || e.getSource() == commonComponents[LOGIN_PANEL][1][1])
 		{
 			loginButton.setEnabled(BugByteLibrary.isValidUsername(((JTextField)commonComponents[LOGIN_PANEL][0][1]).getText()) 
@@ -1215,6 +1450,7 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 	@Override
 	public void stateChanged(ChangeEvent e)
 	{
+		//Handle all change events
 		if (e.getSource() == dashboardPanel)
 		{
 			for (int i = 0; i < dashboardPanel.getTabCount(); i++)
@@ -1223,23 +1459,30 @@ public class BugByteUI implements ActionListener, MouseListener, KeyListener, Ch
 				dashboardPanel.setBackgroundAt(i, NOT_OSX ? BugByteLibrary.BACKGROUND_COLOUR : Color.BLACK);
 			}
 			dashboardPanel.setForegroundAt(dashboardPanel.getSelectedIndex(), NOT_OSX ? BugByteLibrary.BACKGROUND_COLOUR : BugByteLibrary.ACCENT_COLOUR);
+			
+			//Set visibilty of buttons accordingly
 			submitSummaryButton.setVisible(dashboardPanel.getSelectedIndex() == 1 && currentComponent == dashboardPanel);
 			saveButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
 			revertChangesButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
 			addButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
 			removeButton.setVisible(dashboardPanel.getSelectedIndex() == 0 && currentComponent == dashboardPanel);
 
+			//Recalculate graph if necessary
 			if (dashboardPanel.getSelectedIndex ()== 2)
-					grapher.recalculate();
+					graph.recalculate();
 		}
 	}
 	@Override
 	public void valueChanged(ListSelectionEvent e)
 	{
+		//Display information on the selected bug
 		if (e.getSource() == bugList)
 			loadBug();
 	}
 
+/**
+	Show the frame.
+*/
 	public void show()
 	{
 		frame.setVisible(true);

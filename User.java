@@ -151,6 +151,7 @@ public class User implements Serializable
 
 		//Remove the key from the user's key ring
 		keyRing.remove(key);
+		return true;
 	}
 	
 /**
