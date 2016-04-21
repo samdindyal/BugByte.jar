@@ -13,9 +13,6 @@ This is an application, written in Java as an assignment for CPS406 (Intro to So
 ## Compilation
 <br>
 
-***Please note that OS X/Linux and Windows users must compile BugByteLauncher differently.***
-
-
 BugByte can be compiled into an executable .jar file using the Makefile provided:
 
 ```bash
