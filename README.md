@@ -16,14 +16,9 @@ This is an application, written in Java as an assignment for CPS406 (Intro to So
 ***Please note that OS X/Linux and Windows users must compile BugByteLauncher differently.***
 
 
-<p>You can build an executable jar file by running the "make_jar.sh" script on OS X and Linux or the "make_jar.bat" batch file on Windows. This will also compile everything in addition to the jar creation.</p>
+BugByte can be compiled into an executable .jar file using the Makefile provided:
 
-#### OS X/Linux:
 ```bash
-javac -cp $CLASSPATH:lib/AppleJavaExtensions.jar BugByteLauncher.java
-```
-
-### Windows:
-```bash
-javac -cp ".;lib/AppleJavaExtensions.jar" BugByteLauncher.java
+make clean      # Clean the working directory
+make build      # Compile and build executable jar
 ```
