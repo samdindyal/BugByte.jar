@@ -12,3 +12,6 @@
 hs_err_pid*
 
 *DS_STORE
+*Manifest*
+logo
+*.bb
