@@ -1,4 +1,4 @@
-![alt tag](https://raw.github.com/samdindyal/BugByte/master/res/logo_full.png)
+![alt tag](https://raw.github.com/samdindyal/BugByte.jar/master/res/logo_full.png)
 ---
 <br>
 
